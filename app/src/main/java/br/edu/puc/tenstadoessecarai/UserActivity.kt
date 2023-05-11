@@ -19,16 +19,16 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
 
         supportActionBar?.hide()
 
-        binding.emailUsuario.text = SecurityPreferences(this).getString(Constants.KEY.Email)
+        binding.emailUsuario.text = SecurityPreferences(this).getString(Constants.KEY.EMAIL)
         binding.buttonLogout.setOnClickListener(this)
     }
 
     override fun onClick(v: View) {
         when(v.id) {
             R.id.button_logout -> {
-                SecurityPreferences(this).storeString(Constants.KEY.Save, "")
-                SecurityPreferences(this).storeString(Constants.KEY.Email, "")
-                SecurityPreferences(this).storeString(Constants.KEY.Password, "")
+                SecurityPreferences(this).storeString(Constants.KEY.SAVE, "")
+                SecurityPreferences(this).storeString(Constants.KEY.EMAIL, "")
+                SecurityPreferences(this).storeString(Constants.KEY.PASSWORD, "")
                 startActivity(Intent(this, TelaLogin::class.java))
                 finish()
             }

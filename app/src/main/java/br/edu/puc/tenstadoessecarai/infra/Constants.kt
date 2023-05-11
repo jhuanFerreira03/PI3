@@ -2,9 +2,9 @@ package br.edu.puc.tenstadoessecarai.infra
 
 class Constants {
     object KEY {
-        const val Email = "EMAIL"
-        const val Password = "PASSWORD"
-        const val Save = "SAVE"
-        const val Saved = "SAVED"
+        const val EMAIL = "EMAIL"
+        const val PASSWORD = "PASSWORD"
+        const val SAVE = "SAVE"
+        const val SAVED = "SAVED"
     }
 }
