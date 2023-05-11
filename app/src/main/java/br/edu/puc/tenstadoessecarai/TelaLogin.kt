@@ -56,10 +56,11 @@ class TelaLogin : AppCompatActivity(), View.OnClickListener {
         //Thread.sleep(3000)
 
         if(binding.checkManter.isChecked){
-            SecurityPreferences(this).storeString(Constants.KEY.SAVE, Constants.KEY.SAVED)
+            SecurityPreferences(this).storeString(Constants.KEY.SAVE_LOGIN, Constants.KEY.SAVED_LOGIN)
         }
-        SecurityPreferences(this).storeString(Constants.KEY.EMAIL, binding.email.text.toString().trim())
-        SecurityPreferences(this).storeString(Constants.KEY.PASSWORD, binding.email.text.toString().trim())
+        SecurityPreferences(this).storeString(Constants.KEY.EMAIL_LOGIN, binding.email.text.toString().trim())
+        SecurityPreferences(this).storeString(Constants.KEY.PASSWORD_LOGIN, binding.email.text.toString().trim())
+
         // Para fins de exemplo, vamos apenas abrir a tela de cadastro quando clicar no botão Entrar
         startActivity(Intent(this, UserActivity::class.java))
         finish()
@@ -89,9 +90,9 @@ class TelaLogin : AppCompatActivity(), View.OnClickListener {
     }
 
     fun verifyUser(){
-        if (SecurityPreferences(this).getString(Constants.KEY.SAVE) != "") {
-            if (SecurityPreferences(this).getString(Constants.KEY.EMAIL) != "" &&
-                SecurityPreferences(this).getString(Constants.KEY.PASSWORD) != ""
+        if (SecurityPreferences(this).getString(Constants.KEY.SAVE_LOGIN) != "") {
+            if (SecurityPreferences(this).getString(Constants.KEY.EMAIL_LOGIN) != "" &&
+                SecurityPreferences(this).getString(Constants.KEY.PASSWORD_LOGIN) != ""
             ) {
                 startActivity(Intent(this, UserActivity::class.java))
                 finish()

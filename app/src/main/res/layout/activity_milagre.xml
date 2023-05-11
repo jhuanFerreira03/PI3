@@ -1,31 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
     <RelativeLayout
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
-        android:layout_height="90dp"
+        android:layout_height="55dp"
         android:background="@color/white">
         <ImageView
-            android:id="@+id/image_arrow"
+            android:id="@+id/image_arrow_back"
             android:src="@drawable/ic_arrow"
             android:layout_width="40dp"
-            android:layout_height="30dp"
+            android:layout_height="32dp"
             android:layout_marginStart="15dp"
             android:layout_centerVertical="true" />
+        <ImageView
+            android:id="@+id/image_arrow_next"
+            android:src="@drawable/ic_arrow_next"
+            android:layout_width="40dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="15dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"/>
 
         <Button
             android:backgroundTint="@color/white"
             android:textColor="@color/purple_500"
-            android:id="@+id/btn_voltar"
+            android:id="@+id/btn_voltar_register"
             android:layout_width="120dp"
             android:layout_height="50dp"
             android:text="voltar"
             android:textSize="18sp"
             android:layout_centerInParent="true"
-            android:layout_alignStart="@+id/image_arrow"
+            android:layout_alignStart="@+id/image_arrow_back"
+            style="?android:attr/borderlessButtonStyle"/>
+
+        <Button
+            android:backgroundTint="@color/white"
+            android:textColor="@color/purple_500"
+            android:id="@+id/btn_avancar_register"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:text="Avançar"
+            android:textSize="18sp"
+            android:layout_marginEnd="15dp"
+            android:layout_centerInParent="true"
+            android:layout_alignEnd="@+id/image_arrow_next"
             style="?android:attr/borderlessButtonStyle"/>
 
     </RelativeLayout>
@@ -33,11 +55,12 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="15dp"
-        android:minHeight="100mm">
+        android:padding="12dp"
+        android:minHeight="100mm"
+        android:layout_centerInParent="true">
 
         <LinearLayout
-
+            android:id="@+id/linear_cont"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -45,7 +68,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp">
+                android:padding="8dp">
 
 
                 <!--<Button
@@ -74,7 +97,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/nome"
                 android:autofillHints=""
-                android:layout_marginBottom="10dp"/>
+                android:layout_marginBottom="5dp"/>
 
             <EditText
                 android:id="@+id/editTextEmail"
@@ -82,7 +105,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/e_mail"
                 android:minHeight="48dp"
-                android:layout_marginBottom="10dp"/>
+                android:layout_marginBottom="5dp"/>
 
             <EditText
                 android:id="@+id/editTextSenha"
@@ -91,7 +114,7 @@
                 android:hint="@string/senha"
                 android:inputType="textPassword"
                 android:minHeight="48dp"
-                android:layout_marginBottom="10dp"/>
+                android:layout_marginBottom="5dp"/>
 
             <EditText
                 android:id="@+id/editTextTelefone"
@@ -100,47 +123,108 @@
                 android:hint="@string/telefone"
                 android:inputType="number"
                 android:minHeight="48dp"
-                android:layout_marginBottom="10dp"/>
-            <LinearLayout
+                android:layout_marginBottom="5dp"/>
+
+        </LinearLayout>
+            <RelativeLayout
+                android:layout_marginTop="15dp"
                 android:id="@+id/address_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_below="@+id/linear_cont">
 
                 <TextView
+                    android:id="@+id/text_address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/endere_o"
-                    android:textStyle="bold" />
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"/>
 
                 <EditText
-                    android:id="@+id/address"
+                    android:id="@+id/address_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/endereço"
+                    android:hint="Nome do Endereço"
+                    android:minHeight="15dp"
+                    android:layout_marginBottom="3dp"
+                    android:layout_below="@+id/text_address"/>
+                <EditText
+                    android:id="@+id/address_street"
+                    android:layout_width="270dp"
+                    android:layout_height="wrap_content"
+                    android:hint="Rua"
+                    android:minHeight="15dp"
+                    android:layout_marginBottom="3dp"
+                    android:layout_below="@+id/address_name"/>
+                <EditText
+                    android:id="@+id/address_number"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:hint="Nº"
+                    android:minHeight="15dp"
+                    android:layout_marginStart="10dp"
+                    android:inputType="number"
+                    android:layout_toEndOf="@+id/address_street"
+                    android:layout_below="@id/address_name"/>
+                <EditText
+                    android:id="@+id/address_bairro"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Bairro"
                     android:minHeight="48dp"
-                    android:layout_marginBottom="10dp"/>
-
+                    android:layout_marginBottom="3dp"
+                    android:layout_below="@id/address_street"/>
+                <EditText
+                    android:id="@+id/address_cidade"
+                    android:layout_width="270dp"
+                    android:layout_height="wrap_content"
+                    android:hint="Cidade"
+                    android:minHeight="48dp"
+                    android:layout_marginBottom="3dp"
+                    android:layout_below="@+id/address_bairro"/>
+                <EditText
+                    android:id="@+id/address_estado"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Estado"
+                    android:minHeight="48dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginBottom="3dp"
+                    android:maxLength="2"
+                    android:layout_toEndOf="@id/address_cidade"
+                    android:layout_below="@+id/address_bairro"/>
                 <TextView
+                    android:id="@+id/text_end"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/endereço_adicional"
-                    android:textStyle="bold"
-                    android:textSize="17dp"/>
+                    android:text="Endereços salvos:"
+                    android:textSize="16sp"
+                    android:gravity="bottom"
+                    android:layout_below="@+id/add_address_button"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
 
                 <LinearLayout
                     android:id="@+id/additional_addresses_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"/>
+                    android:orientation="horizontal"
+                    android:layout_below="@+id/text_end">
+
+                </LinearLayout>
 
                 <Button
                     android:id="@+id/add_address_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/adicionar_endere_o_adicional" />
+                    android:text="Salvar Endereço"
+                    android:layout_below="@id/address_cidade"
+                    android:layout_alignParentEnd="true"/>
 
-            </LinearLayout>
+            </RelativeLayout>
 
 
             <!--<EditText
@@ -160,20 +244,20 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center" />-->
 
-        </LinearLayout>
 
 
-        <Button
-            android:id="@+id/buttonCadastro"
-            android:layout_width="130dp"
-            android:layout_height="50dp"
-            android:text="@string/cadastrar"
-            android:layout_gravity="center"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="30dp"
-            />
 
     </RelativeLayout>
 
-</LinearLayout>
+    <!-- <Button
+        android:id="@+id/buttonCadastro"
+        android:layout_width="130dp"
+        android:layout_height="50dp"
+        android:text="Avançar"
+        android:layout_gravity="center"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="15dp"
+        />-->
+
+</RelativeLayout>
