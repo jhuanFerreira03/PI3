@@ -3,7 +3,7 @@ package br.edu.puc.tenstadoessecarai.infra
 import android.content.Context
 
 class SecurityPreferences(context: Context) {
-    private val security = context.getSharedPreferences("TelaLogin", Context.MODE_PRIVATE)
+    private val security = context.getSharedPreferences("PI3", Context.MODE_PRIVATE)
 
     fun storeString (key: String, str : String){
         security.edit().putString(key, str).apply()

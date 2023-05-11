@@ -17,6 +17,8 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
         binding = ActivityUserBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        supportActionBar?.hide()
+
         binding.emailUsuario.text = SecurityPreferences(this).getString(Constants.KEY.Email)
         binding.buttonLogout.setOnClickListener(this)
     }

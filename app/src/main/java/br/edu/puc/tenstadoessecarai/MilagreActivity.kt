@@ -51,7 +51,7 @@ class MilagreActivity : AppCompatActivity(), View.OnClickListener{
         binding.btnVoltar.setOnClickListener(this)
     }
 
-    private fun cadastrarUsuario() {
+    private fun userRegister() {
         // Obtém os valores dos campos de nome, telefone, email e senha
         val nome = binding.editTextNome.text.toString().trim()
         val telefone = binding.editTextTelefone.text.toString().trim()
@@ -129,7 +129,7 @@ class MilagreActivity : AppCompatActivity(), View.OnClickListener{
             }
     }
 
-    private fun adicionarEndereco() {
+    private fun addAddress() {
         val additionalAddressesContainer = findViewById<LinearLayout>(R.id.additional_addresses_container)
         val newAddressEditText = EditText(this)
         newAddressEditText.layoutParams = LinearLayout.LayoutParams(
@@ -148,8 +148,8 @@ class MilagreActivity : AppCompatActivity(), View.OnClickListener{
 
     override fun onClick(v: View) {
         when(v.id) {
-            R.id.buttonCadastro -> cadastrarUsuario()
-            R.id.add_address_button -> adicionarEndereco()
+            R.id.buttonCadastro -> userRegister()
+            R.id.add_address_button -> addAddress()
             R.id.btn_voltar -> {
                 startActivity(Intent(this, TelaLogin::class.java))
                 finish()

@@ -34,7 +34,7 @@ class TelaLogin : AppCompatActivity(), View.OnClickListener {
         binding = ActivityTelaLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        verifyEmail()
+        verifyUser()
 
         supportActionBar?.hide()
 
@@ -42,7 +42,7 @@ class TelaLogin : AppCompatActivity(), View.OnClickListener {
         binding.registerText.setOnClickListener(this)
     }
 
-    private fun logarUsuario() {
+    private fun userLogin() {
         if (binding.email.text.toString().trim().isEmpty()) {
             binding.email.error = "Campo obrigatório"
             return
@@ -88,7 +88,7 @@ class TelaLogin : AppCompatActivity(), View.OnClickListener {
 
     }
 
-    fun verifyEmail(){
+    fun verifyUser(){
         if (SecurityPreferences(this).getString(Constants.KEY.Save) != "") {
             if (SecurityPreferences(this).getString(Constants.KEY.Email) != "" &&
                 SecurityPreferences(this).getString(Constants.KEY.Password) != ""
@@ -101,7 +101,7 @@ class TelaLogin : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(v: View) {
         when(v.id) {
-            R.id.login_button -> logarUsuario()
+            R.id.login_button -> userLogin()
             R.id.register_text -> {
                 startActivity(Intent(this, MilagreActivity::class.java))
                 finish()
