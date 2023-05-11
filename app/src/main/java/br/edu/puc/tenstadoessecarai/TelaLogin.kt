@@ -102,7 +102,10 @@ class TelaLogin : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View) {
         when(v.id) {
             R.id.login_button -> logarUsuario()
-            R.id.register_text -> startActivity(Intent(this, MilagreActivity::class.java))
+            R.id.register_text -> {
+                startActivity(Intent(this, MilagreActivity::class.java))
+                finish()
+            }
         }
     }
 }
