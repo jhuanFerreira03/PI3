@@ -68,25 +68,25 @@ class MilagreActivity : AppCompatActivity(), View.OnClickListener{
 
         // Verifica se o campo nome foi preenchido
         if (TextUtils.isEmpty(nome)) {
-            binding.editTextNome.error = "Campo obrigatório"
+            binding.editTextNome.error = Constants.PHRASE.EMPTY_FIELD
             return
         }
 
         // Verifica se o campo email foi preenchido
         if (TextUtils.isEmpty(email)) {
-            binding.editTextEmail.error = "Campo obrigatório"
+            binding.editTextEmail.error = Constants.PHRASE.EMPTY_FIELD
             return
         }
 
         // Verifica se o campo senha foi preenchido
         if (TextUtils.isEmpty(senha)) {
-            binding.editTextSenha.error = "Campo obrigatório"
+            binding.editTextSenha.error = Constants.PHRASE.EMPTY_FIELD
             return
         }
 
         // Verifica se o campo telefone foi preenchido
         if (TextUtils.isEmpty(telefone)) {
-            binding.editTextTelefone.error = "Campo obrigatório"
+            binding.editTextTelefone.error = Constants.PHRASE.EMPTY_FIELD
             return
         }
 
@@ -95,10 +95,10 @@ class MilagreActivity : AppCompatActivity(), View.OnClickListener{
             return
         }
 
-        SecurityPreferences(this).storeString(Constants.KEY.EMAIL_REGISTER, binding.editTextEmail.text.toString().trim())
-        SecurityPreferences(this).storeString(Constants.KEY.PASSWORD_REGISTER, binding.editTextSenha.text.toString().trim())
-        SecurityPreferences(this).storeString(Constants.KEY.PHONE_NUMBER_REGISTER, binding.editTextTelefone.text.toString().trim())
-        SecurityPreferences(this).storeString(Constants.KEY.NAME_REGISTER, binding.editTextNome.text.toString().trim())
+        SecurityPreferences(this).storeString(Constants.KEY.EMAIL_REGISTER, binding.editTextEmail.text.toString().trim().lowercase())
+        SecurityPreferences(this).storeString(Constants.KEY.PASSWORD_REGISTER, binding.editTextSenha.text.toString().trim().lowercase())
+        SecurityPreferences(this).storeString(Constants.KEY.PHONE_NUMBER_REGISTER, binding.editTextTelefone.text.toString().trim().lowercase())
+        SecurityPreferences(this).storeString(Constants.KEY.NAME_REGISTER, binding.editTextNome.text.toString().trim().lowercase())
 
         startActivity(Intent(this, RegisterActivity::class.java))
 
@@ -181,7 +181,7 @@ class MilagreActivity : AppCompatActivity(), View.OnClickListener{
                 binding.addressNumber.text.toString().trim().lowercase() + "," +
                 binding.addressBairro.text.toString().trim().lowercase() + "," +
                 binding.addressCidade.text.toString().trim().lowercase() + "," +
-                binding.addressEstado.text.toString().trim()
+                binding.addressEstado.text.toString().trim().lowercase()
 
         when(countAddress) {
             0 -> SecurityPreferences(this).storeString(Constants.KEY.ADDRESS_1_REGISTER, address)
