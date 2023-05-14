@@ -10,6 +10,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.marginEnd
 import br.edu.puc.tenstadoessecarai.databinding.ActivityMilagreBinding
 import br.edu.puc.tenstadoessecarai.infra.Constants
 import br.edu.puc.tenstadoessecarai.infra.SecurityPreferences
@@ -147,6 +148,10 @@ class MilagreActivity : AppCompatActivity(), View.OnClickListener{
             binding.addressBairro.error = Constants.PHRASE.EMPTY_FIELD
             return
         }
+        if(binding.addressCep.text.toString().trim().isEmpty()){
+            binding.addressCep.error = Constants.PHRASE.EMPTY_FIELD
+            return
+        }
         if(binding.addressCidade.text.toString().trim().isEmpty()){
             binding.addressCidade.error = Constants.PHRASE.EMPTY_FIELD
             return
@@ -160,6 +165,7 @@ class MilagreActivity : AppCompatActivity(), View.OnClickListener{
                 binding.addressStreet.text.toString().trim().lowercase() + "," +
                 binding.addressNumber.text.toString().trim().lowercase() + "," +
                 binding.addressBairro.text.toString().trim().lowercase() + "," +
+                binding.addressCep.text.toString().trim().lowercase() + "," +
                 binding.addressCidade.text.toString().trim().lowercase() + "," +
                 binding.addressEstado.text.toString().trim().lowercase()
 
@@ -173,14 +179,16 @@ class MilagreActivity : AppCompatActivity(), View.OnClickListener{
         val newAddressEditText = TextView(this)
 
         newAddressEditText.layoutParams = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.WRAP_CONTENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT,
+            0,
+            100,
+            1f
         )
         newAddressEditText.hint = getString(R.string.endereço)
         newAddressEditText.minHeight = resources.getDimensionPixelSize(R.dimen.text_field_size)
         newAddressEditText.text = binding.addressName.text.toString().trim()
         newAddressEditText.textSize = 24f
-        newAddressEditText.setTextColor(getResources().getColor(R.color.black))
+        newAddressEditText.setPadding(10, 8, 10, 8)
+        newAddressEditText.setTextColor(getResources().getColor(R.color.purple_500))
         newAddressEditText.id = View.generateViewId()
 
         additionalAddressesContainer.addView(newAddressEditText)
@@ -190,6 +198,7 @@ class MilagreActivity : AppCompatActivity(), View.OnClickListener{
         binding.addressStreet.setText("")
         binding.addressNumber.setText("")
         binding.addressBairro.setText("")
+        binding.addressCep.setText("")
         binding.addressCidade.setText("")
         binding.addressEstado.setText("")
     }

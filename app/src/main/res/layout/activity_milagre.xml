@@ -55,9 +55,9 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="12dp"
+        android:layout_centerInParent="true"
         android:minHeight="100mm"
-        android:layout_centerInParent="true">
+        android:padding="12dp">
 
         <LinearLayout
             android:id="@+id/linear_cont"
@@ -84,9 +84,9 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:text="Crie sua conta"
-                    android:textStyle="bold"
                     android:textColor="@color/black"
-                    android:textSize="25sp" />
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
 
             </RelativeLayout>
 
@@ -95,139 +95,159 @@
                 android:id="@+id/editTextNome"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/nome"
+                android:layout_marginBottom="5dp"
                 android:autofillHints=""
-                android:layout_marginBottom="5dp"/>
+                android:hint="@string/nome" />
 
             <EditText
                 android:id="@+id/editTextEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
                 android:hint="@string/e_mail"
-                android:minHeight="48dp"
-                android:layout_marginBottom="5dp"/>
+                android:minHeight="48dp" />
 
             <EditText
                 android:id="@+id/editTextSenha"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
                 android:hint="@string/senha"
                 android:inputType="textPassword"
-                android:minHeight="48dp"
-                android:layout_marginBottom="5dp"/>
+                android:minHeight="48dp" />
 
             <EditText
                 android:id="@+id/editTextTelefone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
                 android:hint="@string/telefone"
                 android:inputType="number"
-                android:minHeight="48dp"
-                android:layout_marginBottom="5dp"/>
+                android:minHeight="48dp" />
 
         </LinearLayout>
-            <RelativeLayout
-                android:layout_marginTop="15dp"
-                android:id="@+id/address_container"
+
+        <RelativeLayout
+            android:id="@+id/address_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/linear_cont"
+            android:layout_marginTop="15dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/text_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/endere_o"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/address_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_below="@+id/linear_cont">
+                android:layout_below="@+id/text_address"
+                android:layout_marginBottom="3dp"
+                android:hint="Nome do Endereço"
+                android:minHeight="15dp" />
 
-                <TextView
-                    android:id="@+id/text_address"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/endere_o"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"/>
+            <EditText
+                android:id="@+id/address_street"
+                android:layout_width="270dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/address_name"
+                android:layout_marginBottom="3dp"
+                android:hint="Rua"
+                android:minHeight="15dp" />
 
-                <EditText
-                    android:id="@+id/address_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Nome do Endereço"
-                    android:minHeight="15dp"
-                    android:layout_marginBottom="3dp"
-                    android:layout_below="@+id/text_address"/>
-                <EditText
-                    android:id="@+id/address_street"
-                    android:layout_width="270dp"
-                    android:layout_height="wrap_content"
-                    android:hint="Rua"
-                    android:minHeight="15dp"
-                    android:layout_marginBottom="3dp"
-                    android:layout_below="@+id/address_name"/>
-                <EditText
-                    android:id="@+id/address_number"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:hint="Nº"
-                    android:minHeight="15dp"
-                    android:layout_marginStart="10dp"
-                    android:inputType="number"
-                    android:layout_toEndOf="@+id/address_street"
-                    android:layout_below="@id/address_name"/>
-                <EditText
-                    android:id="@+id/address_bairro"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Bairro"
-                    android:minHeight="48dp"
-                    android:layout_marginBottom="3dp"
-                    android:layout_below="@id/address_street"/>
-                <EditText
-                    android:id="@+id/address_cidade"
-                    android:layout_width="270dp"
-                    android:layout_height="wrap_content"
-                    android:hint="Cidade"
-                    android:minHeight="48dp"
-                    android:layout_marginBottom="3dp"
-                    android:layout_below="@+id/address_bairro"/>
-                <EditText
-                    android:id="@+id/address_estado"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Estado"
-                    android:minHeight="48dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginBottom="3dp"
-                    android:maxLength="2"
-                    android:layout_toEndOf="@id/address_cidade"
-                    android:layout_below="@+id/address_bairro"/>
-                <TextView
-                    android:id="@+id/text_end"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Endereços salvos:"
-                    android:textSize="16sp"
-                    android:gravity="bottom"
-                    android:layout_below="@+id/add_address_button"
-                    android:textColor="@color/black"
-                    android:textStyle="bold" />
+            <EditText
+                android:id="@+id/address_number"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/address_name"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/address_street"
+                android:hint="Nº"
+                android:inputType="number"
+                android:minHeight="15dp" />
 
-                <LinearLayout
-                    android:id="@+id/additional_addresses_container"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_below="@+id/text_end">
+            <EditText
+                android:id="@+id/address_bairro"
+                android:layout_width="230dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/address_street"
+                android:layout_marginBottom="3dp"
+                android:hint="Bairro"
+                android:minHeight="48dp" />
 
-                </LinearLayout>
+            <EditText
+                android:id="@+id/address_cep"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/address_street"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="3dp"
+                android:layout_toEndOf="@+id/address_bairro"
+                android:hint="CEP"
+                android:maxLength="8"
+                android:minHeight="48dp"
+                android:inputType="number"/>
 
-                <Button
-                    android:id="@+id/add_address_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Salvar Endereço"
-                    android:layout_below="@id/address_cidade"
-                    android:layout_alignParentEnd="true"/>
+            <EditText
+                android:id="@+id/address_cidade"
+                android:layout_width="270dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/address_bairro"
+                android:layout_marginBottom="3dp"
+                android:hint="Cidade"
+                android:minHeight="48dp" />
 
-            </RelativeLayout>
+            <EditText
+                android:id="@+id/address_estado"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/address_bairro"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="3dp"
+                android:layout_toEndOf="@id/address_cidade"
+                android:hint="Estado"
+                android:maxLength="2"
+                android:minHeight="48dp" />
+
+            <TextView
+                android:id="@+id/text_end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/add_address_button"
+                android:gravity="bottom"
+                android:text="Endereços salvos:"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/additional_addresses_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/text_end"
+                android:orientation="horizontal">
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/add_address_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/address_cidade"
+                android:layout_alignParentEnd="true"
+                android:text="Salvar Endereço" />
+
+        </RelativeLayout>
 
 
-            <!--<EditText
+        <!--<EditText
                 android:id="@+id/editTextCurriculo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -243,8 +263,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center" />-->
-
-
 
 
     </RelativeLayout>
