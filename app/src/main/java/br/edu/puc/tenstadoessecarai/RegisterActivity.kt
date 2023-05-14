@@ -27,7 +27,7 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener{
     override fun onClick(v: View) {
         when(v.id){
             R.id.button_register -> {
-                Toast.makeText(this, "Sem banco de dados(por enquanto) irmão! ;-;", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, Constants.PHRASE.NO_DB, Toast.LENGTH_LONG).show()
             }
         }
     }

@@ -4,11 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
-import android.view.ActionProvider.VisibilityListener
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
 import br.edu.puc.tenstadoessecarai.databinding.ActivityTelaLoginBinding
 import br.edu.puc.tenstadoessecarai.infra.Constants
 import br.edu.puc.tenstadoessecarai.infra.SecurityPreferences
@@ -44,16 +41,14 @@ class TelaLogin : AppCompatActivity(), View.OnClickListener {
 
     private fun userLogin() {
         if (binding.email.text.toString().trim().isEmpty()) {
-            binding.email.error = "Campo obrigatório"
+            binding.email.error = Constants.PHRASE.EMPTY_FIELD
             return
         }
-        //Toast.makeText(this, "--${binding.email.text.trim()}--", Toast.LENGTH_SHORT).show()
         if (binding.password.text.toString().trim().isEmpty()) {
-            binding.password.error = "Campo obrigatório"
+            binding.password.error = Constants.PHRASE.EMPTY_FIELD
             return
         }
         binding.progressLogin.visibility = View.VISIBLE
-        //Thread.sleep(3000)
 
         if(binding.checkManter.isChecked){
             SecurityPreferences(this).storeString(Constants.KEY.SAVE_LOGIN, Constants.KEY.SAVED_LOGIN)
@@ -105,7 +100,8 @@ class TelaLogin : AppCompatActivity(), View.OnClickListener {
             R.id.login_button -> userLogin()
             R.id.register_text -> {
                 startActivity(Intent(this, MilagreActivity::class.java))
-                finish()
+                binding.email.setText("")
+                binding.password.setText("")
             }
         }
     }

@@ -3,7 +3,6 @@ package br.edu.puc.tenstadoessecarai
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.ContactsContract.CommonDataKinds.Email
 import android.view.View
 import br.edu.puc.tenstadoessecarai.databinding.ActivityUserBinding
 import br.edu.puc.tenstadoessecarai.infra.Constants

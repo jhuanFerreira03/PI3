@@ -5,21 +5,16 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.view.marginEnd
 import br.edu.puc.tenstadoessecarai.databinding.ActivityMilagreBinding
 import br.edu.puc.tenstadoessecarai.infra.Constants
 import br.edu.puc.tenstadoessecarai.infra.SecurityPreferences
 import com.google.android.gms.tasks.Task
-import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
-import com.google.api.Distribution.BucketOptions.Linear
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
@@ -59,37 +54,22 @@ class MilagreActivity : AppCompatActivity(), View.OnClickListener{
     }
 
     private fun userRegister() {
-        // Obtém os valores dos campos de nome, telefone, email e senha
-        val nome = binding.editTextNome.text.toString().trim()
-        val telefone = binding.editTextTelefone.text.toString().trim()
-        val email = binding.editTextEmail.text.toString().trim()
-        val senha = binding.editTextSenha.text.toString().trim()
-
-
-        // Verifica se o campo nome foi preenchido
-        if (TextUtils.isEmpty(nome)) {
+        if (binding.editTextNome.text.toString().trim().isEmpty()) {
             binding.editTextNome.error = Constants.PHRASE.EMPTY_FIELD
             return
         }
-
-        // Verifica se o campo email foi preenchido
-        if (TextUtils.isEmpty(email)) {
+        if (binding.editTextEmail.text.toString().trim().isEmpty()) {
             binding.editTextEmail.error = Constants.PHRASE.EMPTY_FIELD
             return
         }
-
-        // Verifica se o campo senha foi preenchido
-        if (TextUtils.isEmpty(senha)) {
+        if (binding.editTextSenha.text.toString().trim().isEmpty()) {
             binding.editTextSenha.error = Constants.PHRASE.EMPTY_FIELD
             return
         }
-
-        // Verifica se o campo telefone foi preenchido
-        if (TextUtils.isEmpty(telefone)) {
+        if (binding.editTextTelefone.text.toString().trim().isEmpty()) {
             binding.editTextTelefone.error = Constants.PHRASE.EMPTY_FIELD
             return
         }
-
         if(countAddress == 0){
             Toast.makeText(this, Constants.PHRASE.NO_ADDRESS, Toast.LENGTH_SHORT).show()
             return
@@ -202,7 +182,6 @@ class MilagreActivity : AppCompatActivity(), View.OnClickListener{
         newAddressEditText.textSize = 24f
         newAddressEditText.setTextColor(getResources().getColor(R.color.black))
         newAddressEditText.id = View.generateViewId()
-        Toast.makeText(this, newAddressEditText.id.toString(), Toast.LENGTH_SHORT).show()
 
         additionalAddressesContainer.addView(newAddressEditText)
         countAddress += 1
@@ -213,8 +192,6 @@ class MilagreActivity : AppCompatActivity(), View.OnClickListener{
         binding.addressBairro.setText("")
         binding.addressCidade.setText("")
         binding.addressEstado.setText("")
-
-        Toast.makeText(this, SecurityPreferences(this).getString(Constants.KEY.ADDRESS_1_REGISTER), Toast.LENGTH_SHORT).show()
     }
 
     companion object {
