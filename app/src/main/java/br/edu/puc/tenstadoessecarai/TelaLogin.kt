@@ -53,7 +53,7 @@ class TelaLogin : AppCompatActivity(), View.OnClickListener {
         if(binding.checkManter.isChecked){
             SecurityPreferences(this).storeString(Constants.KEY.SAVE_LOGIN, Constants.KEY.SAVED_LOGIN)
         }
-        SecurityPreferences(this).storeString(Constants.KEY.EMAIL_LOGIN, binding.email.text.toString().trim())
+        SecurityPreferences(this).storeString(Constants.KEY.EMAIL_LOGIN, binding.email.text.toString().trim().lowercase())
         SecurityPreferences(this).storeString(Constants.KEY.PASSWORD_LOGIN, binding.email.text.toString().trim())
 
         // Para fins de exemplo, vamos apenas abrir a tela de cadastro quando clicar no botão Entrar

@@ -130,37 +130,40 @@ class MilagreActivity : AppCompatActivity(), View.OnClickListener{
             }
     }
 
-
-    private fun addAddress() {
+    private fun verifyAddress():Boolean{
         if(binding.addressName.text.toString().trim().isEmpty()){
             binding.addressName.error = Constants.PHRASE.EMPTY_FIELD
-            return
+            return false
         }
         if(binding.addressStreet.text.toString().trim().isEmpty()){
             binding.addressStreet.error = Constants.PHRASE.EMPTY_FIELD
-            return
+            return false
         }
         if(binding.addressNumber.text.toString().trim().isEmpty()){
             binding.addressNumber.error = Constants.PHRASE.EMPTY_FIELD
-            return
+            return false
         }
         if(binding.addressBairro.text.toString().trim().isEmpty()){
             binding.addressBairro.error = Constants.PHRASE.EMPTY_FIELD
-            return
+            return false
         }
         if(binding.addressCep.text.toString().trim().isEmpty()){
             binding.addressCep.error = Constants.PHRASE.EMPTY_FIELD
-            return
+            return false
         }
         if(binding.addressCidade.text.toString().trim().isEmpty()){
             binding.addressCidade.error = Constants.PHRASE.EMPTY_FIELD
-            return
+            return false
         }
         if(binding.addressEstado.text.toString().trim().isEmpty()){
             binding.addressEstado.error = Constants.PHRASE.EMPTY_FIELD
-            return
+            return false
         }
+        return true
+    }
 
+    private fun addAddress(){
+        if(!verifyAddress()) return
         val address: String = binding.addressName.text.toString().trim().lowercase() + "," +
                 binding.addressStreet.text.toString().trim().lowercase() + "," +
                 binding.addressNumber.text.toString().trim().lowercase() + "," +
