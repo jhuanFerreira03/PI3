@@ -1,4 +1,4 @@
-package br.edu.puc.tenstadoessecarai
+package br.edu.puc.sorriso24h
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,9 +11,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.marginEnd
-import br.edu.puc.tenstadoessecarai.databinding.ActivityMilagreBinding
-import br.edu.puc.tenstadoessecarai.infra.Constants
-import br.edu.puc.tenstadoessecarai.infra.SecurityPreferences
+import br.edu.puc.sorriso24h.databinding.ActivityMilagreBinding
+import br.edu.puc.sorriso24h.infra.Constants
+import br.edu.puc.sorriso24h.infra.SecurityPreferences
 import com.google.android.gms.tasks.Task
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.FirebaseApp

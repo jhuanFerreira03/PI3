@@ -1,4 +1,4 @@
-package br.edu.puc.tenstadoessecarai
+package br.edu.puc.sorriso24h
 
 import android.content.Context
 import android.content.Intent
@@ -6,9 +6,9 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import br.edu.puc.tenstadoessecarai.databinding.ActivityTelaLoginBinding
-import br.edu.puc.tenstadoessecarai.infra.Constants
-import br.edu.puc.tenstadoessecarai.infra.SecurityPreferences
+import br.edu.puc.sorriso24h.databinding.ActivityTelaLoginBinding
+import br.edu.puc.sorriso24h.infra.Constants
+import br.edu.puc.sorriso24h.infra.SecurityPreferences
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.functions.FirebaseFunctions

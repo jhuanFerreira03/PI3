@@ -1,4 +1,4 @@
-package br.edu.puc.tenstadoessecarai
+package br.edu.puc.sorriso24h
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

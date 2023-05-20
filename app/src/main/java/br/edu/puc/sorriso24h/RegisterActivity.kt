@@ -1,12 +1,12 @@
-package br.edu.puc.tenstadoessecarai
+package br.edu.puc.sorriso24h
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import br.edu.puc.tenstadoessecarai.databinding.ActivityRegisterBinding
-import br.edu.puc.tenstadoessecarai.infra.Constants
-import br.edu.puc.tenstadoessecarai.infra.SecurityPreferences
+import br.edu.puc.sorriso24h.databinding.ActivityRegisterBinding
+import br.edu.puc.sorriso24h.infra.Constants
+import br.edu.puc.sorriso24h.infra.SecurityPreferences
 
 class RegisterActivity : AppCompatActivity(), View.OnClickListener{
 

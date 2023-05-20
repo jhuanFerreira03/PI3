@@ -1,4 +1,4 @@
-package br.edu.puc.tenstadoessecarai.infra
+package br.edu.puc.sorriso24h.infra
 
 import android.content.Context
 

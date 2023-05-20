@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace 'br.edu.puc.tenstadoessecarai'
+    namespace 'br.edu.puc.sorriso24h'
     compileSdk 33
 
     defaultConfig {
-        applicationId "br.edu.puc.tenstadoessecarai"
+        applicationId "br.edu.puc.sorriso24h"
         minSdk 29
         targetSdk 33
         versionCode 1

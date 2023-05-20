@@ -1,12 +1,12 @@
-package br.edu.puc.tenstadoessecarai
+package br.edu.puc.sorriso24h
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import br.edu.puc.tenstadoessecarai.databinding.ActivityUserBinding
-import br.edu.puc.tenstadoessecarai.infra.Constants
-import br.edu.puc.tenstadoessecarai.infra.SecurityPreferences
+import br.edu.puc.sorriso24h.databinding.ActivityUserBinding
+import br.edu.puc.sorriso24h.infra.Constants
+import br.edu.puc.sorriso24h.infra.SecurityPreferences
 
 class UserActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityUserBinding
