@@ -61,7 +61,17 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener{
                         "email" to email
                     )
 
-                    functions.getHttpsCallable("setUserAccount")
+                    functions.getHttpsCallable("cadastrarUsuario").call(dados).continueWith{ task ->
+                        val json = JSONObject(task.result?.data as String)
+                        val status = json.getString("status")
+                        val message = json.getString("message")
+                        if (status.uppercase() == Constants.PHRASE.ERROR) {
+                            Snackbar.make(
+                                binding.buttonRegister, message, Snackbar.LENGTH_LONG).show()
+                        }
+                    }
+
+                    /*functions.getHttpsCallable("setUserAccount")
                         .call(dados)
                         .continueWith { task ->
                             val result = task.result?.data as String?
@@ -78,8 +88,8 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener{
                                 ).show()
                                 false
                             }
-                        }
-                } else {
+                        }*/
+                }else {
                     Log.e("milagre_activity", "${task.exception}")
                     // Exibir mensagem de erro ao criar a conta
                     Log.e(TAG, task.exception?.message ?: "Erro ao criar a conta")
