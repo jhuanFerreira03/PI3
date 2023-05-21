@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">tenstadoessecarai</string>
+    <!--<string name="app_name">tenstadoessecarai</string>-->
     <string name="adicionar_endere_o_adicional">Adicionar endereço adicional</string>
     <string name="nome">Nome</string>
     <string name="e_mail">E-mail</string>

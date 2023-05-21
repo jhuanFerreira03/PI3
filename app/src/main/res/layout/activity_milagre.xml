@@ -3,12 +3,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/gray">
     <RelativeLayout
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="55dp"
-        android:background="@color/white">
+        android:background="@color/gray">
         <ImageView
             android:id="@+id/image_arrow_back"
             android:src="@drawable/ic_arrow"
@@ -92,38 +93,47 @@
 
 
             <EditText
-                android:id="@+id/editTextNome"
+                android:id="@+id/edit_nome_register"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
+                android:paddingStart="5dp"
                 android:autofillHints=""
-                android:hint="@string/nome" />
+                android:hint="@string/nome"
+                android:background="@drawable/edittext_border"
+                android:minHeight="48dp"/>
 
             <EditText
-                android:id="@+id/editTextEmail"
+                android:id="@+id/edit_email_register"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
+                android:paddingStart="5dp"
                 android:hint="@string/e_mail"
-                android:minHeight="48dp" />
+                android:minHeight="48dp"
+                android:background="@drawable/edittext_border"/>
 
             <EditText
-                android:id="@+id/editTextSenha"
+                android:id="@+id/edit_senha_register"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
+                android:paddingStart="5dp"
                 android:hint="@string/senha"
                 android:inputType="textPassword"
-                android:minHeight="48dp" />
+                android:minHeight="48dp"
+                android:background="@drawable/edittext_border"/>
 
             <EditText
-                android:id="@+id/editTextTelefone"
+                android:id="@+id/edit_telefone_register"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
+                android:paddingStart="5dp"
                 android:hint="@string/telefone"
                 android:inputType="number"
-                android:minHeight="48dp" />
+                android:minHeight="48dp"
+                android:background="@drawable/edittext_border"/>
 
         </LinearLayout>
 
@@ -150,8 +160,10 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/text_address"
                 android:layout_marginBottom="3dp"
+                android:paddingStart="5dp"
                 android:hint="Nome do Endereço"
-                android:minHeight="15dp" />
+                android:minHeight="48dp"
+                android:background="@drawable/edittext_border"/>
 
             <EditText
                 android:id="@+id/address_street"
@@ -159,8 +171,10 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/address_name"
                 android:layout_marginBottom="3dp"
+                android:paddingStart="5dp"
                 android:hint="Rua"
-                android:minHeight="15dp" />
+                android:minHeight="48dp"
+                android:background="@drawable/edittext_border"/>
 
             <EditText
                 android:id="@+id/address_number"
@@ -168,10 +182,12 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/address_name"
                 android:layout_marginStart="10dp"
+                android:paddingStart="5dp"
                 android:layout_toEndOf="@+id/address_street"
                 android:hint="Nº"
                 android:inputType="number"
-                android:minHeight="15dp" />
+                android:minHeight="48dp"
+                android:background="@drawable/edittext_border"/>
 
             <EditText
                 android:id="@+id/address_bairro"
@@ -179,8 +195,10 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/address_street"
                 android:layout_marginBottom="3dp"
+                android:paddingStart="5dp"
                 android:hint="Bairro"
-                android:minHeight="48dp" />
+                android:minHeight="48dp"
+                android:background="@drawable/edittext_border"/>
 
             <EditText
                 android:id="@+id/address_cep"
@@ -189,11 +207,13 @@
                 android:layout_below="@id/address_street"
                 android:layout_marginStart="10dp"
                 android:layout_marginBottom="3dp"
+                android:paddingStart="5dp"
                 android:layout_toEndOf="@+id/address_bairro"
                 android:hint="CEP"
                 android:maxLength="8"
                 android:minHeight="48dp"
-                android:inputType="number"/>
+                android:inputType="number"
+                android:background="@drawable/edittext_border"/>
 
             <EditText
                 android:id="@+id/address_cidade"
@@ -201,8 +221,10 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/address_bairro"
                 android:layout_marginBottom="3dp"
+                android:paddingStart="5dp"
                 android:hint="Cidade"
-                android:minHeight="48dp" />
+                android:minHeight="48dp"
+                android:background="@drawable/edittext_border"/>
 
             <EditText
                 android:id="@+id/address_estado"
@@ -211,10 +233,12 @@
                 android:layout_below="@+id/address_bairro"
                 android:layout_marginStart="10dp"
                 android:layout_marginBottom="3dp"
+                android:paddingStart="5dp"
                 android:layout_toEndOf="@id/address_cidade"
                 android:hint="Estado"
                 android:maxLength="2"
-                android:minHeight="48dp" />
+                android:minHeight="48dp"
+                android:background="@drawable/edittext_border"/>
 
             <TextView
                 android:id="@+id/text_end"

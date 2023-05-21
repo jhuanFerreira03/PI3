@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:485535495929:android:be97d9a02fc74001181428",
+        "mobilesdk_app_id": "1:546030057452:android:4617ce0b7fff326039f2c9",
         "android_client_info": {
-          "package_name": "br.edu.puc.tenstadoessecarai"
+          "package_name": "br.edu.puc.sorriso24h"
         }
       },
       "oauth_client": [
@@ -20,7 +20,7 @@
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBdARHMNTWlvqjIpZjHZHUVVPMYom7sDV8"
+          "current_key": "AIzaSyAe1MF2iJIA23XPEOHsVfzHUUnyh_Zgztw"
         }
       ],
       "services": {

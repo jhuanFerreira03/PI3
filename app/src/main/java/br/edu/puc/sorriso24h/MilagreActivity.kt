@@ -41,6 +41,8 @@ class MilagreActivity : AppCompatActivity(), View.OnClickListener{
 
         FirebaseApp.initializeApp(this)
 
+        Snackbar.make(binding.textViewTitle, "fodase kkkkk", Snackbar.LENGTH_SHORT).show()
+
         auth = FirebaseAuth.getInstance()
         functions = FirebaseFunctions.getInstance()
         db = FirebaseFirestore.getInstance()
@@ -55,20 +57,20 @@ class MilagreActivity : AppCompatActivity(), View.OnClickListener{
     }
 
     private fun userRegister() {
-        if (binding.editTextNome.text.toString().trim().isEmpty()) {
-            binding.editTextNome.error = Constants.PHRASE.EMPTY_FIELD
+        if (binding.editNomeRegister.text.toString().trim().isEmpty()) {
+            binding.editNomeRegister.error = Constants.PHRASE.EMPTY_FIELD
             return
         }
-        if (binding.editTextEmail.text.toString().trim().isEmpty()) {
-            binding.editTextEmail.error = Constants.PHRASE.EMPTY_FIELD
+        if (binding.editEmailRegister.text.toString().trim().isEmpty()) {
+            binding.editEmailRegister.error = Constants.PHRASE.EMPTY_FIELD
             return
         }
-        if (binding.editTextSenha.text.toString().trim().isEmpty()) {
-            binding.editTextSenha.error = Constants.PHRASE.EMPTY_FIELD
+        if (binding.editSenhaRegister.text.toString().trim().isEmpty()) {
+            binding.editSenhaRegister.error = Constants.PHRASE.EMPTY_FIELD
             return
         }
-        if (binding.editTextTelefone.text.toString().trim().isEmpty()) {
-            binding.editTextTelefone.error = Constants.PHRASE.EMPTY_FIELD
+        if (binding.editTelefoneRegister.text.toString().trim().isEmpty()) {
+            binding.editTelefoneRegister.error = Constants.PHRASE.EMPTY_FIELD
             return
         }
         if(countAddress == 0){
@@ -76,58 +78,14 @@ class MilagreActivity : AppCompatActivity(), View.OnClickListener{
             return
         }
 
-        SecurityPreferences(this).storeString(Constants.KEY.EMAIL_REGISTER, binding.editTextEmail.text.toString().trim().lowercase())
-        SecurityPreferences(this).storeString(Constants.KEY.PASSWORD_REGISTER, binding.editTextSenha.text.toString().trim().lowercase())
-        SecurityPreferences(this).storeString(Constants.KEY.PHONE_NUMBER_REGISTER, binding.editTextTelefone.text.toString().trim().lowercase())
-        SecurityPreferences(this).storeString(Constants.KEY.NAME_REGISTER, binding.editTextNome.text.toString().trim().lowercase())
+        SecurityPreferences(this).storeString(Constants.KEY.EMAIL_REGISTER, binding.editEmailRegister.text.toString().trim().lowercase())
+        SecurityPreferences(this).storeString(Constants.KEY.PASSWORD_REGISTER, binding.editSenhaRegister.text.toString().trim().lowercase())
+        SecurityPreferences(this).storeString(Constants.KEY.PHONE_NUMBER_REGISTER, binding.editTelefoneRegister.text.toString().trim().lowercase())
+        SecurityPreferences(this).storeString(Constants.KEY.NAME_REGISTER, binding.editNomeRegister.text.toString().trim().lowercase())
 
         startActivity(Intent(this, RegisterActivity::class.java))
 
         // Chama a função signUpNewAccount para criar uma nova conta de usuário
-        //signUpNewAccount(nome, telefone, email, senha)
-    }
-
-    private fun signUpNewAccount(nome: String, telefone: String, email: String, senha: String) {
-        auth.createUserWithEmailAndPassword(email, senha)
-            .addOnCompleteListener { task: Task<AuthResult> ->
-                if (task.isSuccessful) {
-                    val user = auth.currentUser
-                    val uid = user!!.uid
-
-                    // Enviar dados de usuário para o Cloud Functions
-                    val dados = hashMapOf(
-                        "uid" to uid,
-                        "nome" to nome,
-                        "telefone" to telefone,
-                        "email" to email
-                    )
-
-                    functions.getHttpsCallable("setUserAccount")
-                        .call(dados)
-                        .continueWith { task ->
-                            val result = task.result?.data as String?
-                            val json = JSONObject(result)
-                            val status = json.getString("status")
-                            val message = json.getString("message")
-
-                            // Verificar se houve algum erro ao criar a conta
-                            if (status == "error") {
-                                Snackbar.make(
-                                    binding.btnAvancarRegister,
-                                    message,
-                                    Snackbar.LENGTH_LONG
-                                ).show()
-                                false
-                            }
-                        }
-                } else {
-                    Log.e("milagre_activity", "${task.exception}")
-                    // Exibir mensagem de erro ao criar a conta
-                    Log.e(TAG, task.exception?.message ?: "Erro ao criar a conta")
-                    Snackbar.make(binding.btnAvancarRegister, "Erro ao criar a conta", Snackbar.LENGTH_LONG)
-                        .show()
-                }
-            }
     }
 
     private fun verifyAddress():Boolean{
@@ -214,11 +172,8 @@ class MilagreActivity : AppCompatActivity(), View.OnClickListener{
         when(v.id) {
             R.id.btn_avancar_register -> userRegister()
             R.id.add_address_button -> {
-                if(countAddress < 3) {
-                    addAddress()
-                }else{
-                    Toast.makeText(this, Constants.PHRASE.LIMIT_ADDRESS, Toast.LENGTH_SHORT).show()
-                }
+                if(countAddress < 3) addAddress()
+                else Toast.makeText(this, Constants.PHRASE.LIMIT_ADDRESS, Toast.LENGTH_SHORT).show()
             }
             R.id.btn_voltar_register -> {
                 startActivity(Intent(this, TelaLogin::class.java))
