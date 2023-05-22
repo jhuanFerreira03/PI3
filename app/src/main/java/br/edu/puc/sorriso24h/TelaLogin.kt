@@ -2,6 +2,7 @@ package br.edu.puc.sorriso24h
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
@@ -10,11 +11,14 @@ import br.edu.puc.sorriso24h.databinding.ActivityTelaLoginBinding
 import br.edu.puc.sorriso24h.infra.Constants
 import br.edu.puc.sorriso24h.infra.SecurityPreferences
 import com.google.android.gms.tasks.Task
+import com.google.android.material.snackbar.Snackbar
+import com.google.common.base.Verify
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.functions.FirebaseFunctions
 import com.google.firebase.functions.ktx.functions
 import com.google.firebase.ktx.Firebase
 import com.google.gson.GsonBuilder
+import kotlin.math.log
 
 class TelaLogin : AppCompatActivity(), View.OnClickListener {
 
@@ -31,9 +35,13 @@ class TelaLogin : AppCompatActivity(), View.OnClickListener {
         binding = ActivityTelaLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        verifyUser()
+        auth = FirebaseAuth.getInstance()
+
+        verifyUserlogado()
 
         supportActionBar?.hide()
+
+        binding.progressLogin.visibility = View.INVISIBLE
 
         binding.loginButton.setOnClickListener(this)
         binding.registerText.setOnClickListener(this)
@@ -50,47 +58,37 @@ class TelaLogin : AppCompatActivity(), View.OnClickListener {
         }
         binding.progressLogin.visibility = View.VISIBLE
 
-        if(binding.checkManter.isChecked){
-            SecurityPreferences(this).storeString(Constants.KEY.SAVE_LOGIN, Constants.KEY.SAVED_LOGIN)
-        }
-        SecurityPreferences(this).storeString(Constants.KEY.EMAIL_LOGIN, binding.email.text.toString().trim().lowercase())
-        SecurityPreferences(this).storeString(Constants.KEY.PASSWORD_LOGIN, binding.email.text.toString().trim())
+        if(binding.checkManter.isChecked) SecurityPreferences(this).storeString(Constants.KEY.SAVE_LOGIN, Constants.KEY.SAVED_LOGIN)
+        else SecurityPreferences(this).storeString(Constants.KEY.SAVE_LOGIN, "")
 
-        // Para fins de exemplo, vamos apenas abrir a tela de cadastro quando clicar no botão Entrar
-        startActivity(Intent(this, UserActivity::class.java))
-        finish()
+        SecurityPreferences(this).storeString(Constants.KEY.EMAIL_LOGIN, binding.email.text.toString().trim())
+        SecurityPreferences(this).storeString(Constants.KEY.PASSWORD_LOGIN, binding.password.text.toString().trim())
+
+        autenUser(binding.email.text.toString().trim(), binding.password.text.toString().trim())
     }
-    private fun updateUserProfile(nome: String, telefone: String, email: String, uid: String, fcmToken: String) : Task<CustomResponse> {
-        // chamar a function para atualizar o perfil.
-        functions = Firebase.functions("southamerica-east1")
 
-        // Create the arguments to the callable function.
-        val data = hashMapOf(
-            "nome" to nome,
-            "telefone" to telefone,
-            "email" to email,
-            "uid" to uid,
-            "fcmToken" to fcmToken
-        )
-
-        return functions
-            .getHttpsCallable("setUserProfile")
-            .call(data)
-            .continueWith { task ->
-
-                val result = gson.fromJson((task.result?.data as String), CustomResponse::class.java)
-                result
+    private fun autenUser(email:String, senha:String){
+        auth.signInWithEmailAndPassword(email, senha)
+            .addOnCompleteListener {auten ->
+                if(auten.isSuccessful){
+                    startActivity(Intent(this, UserActivity::class.java))
+                    finish()
+                }
+            }.addOnFailureListener{
+                    task ->
+                Snackbar.make(binding.loginButton, "Não foi possivel autenticar o usuario!\n" + task.message, Snackbar.LENGTH_LONG)
+                    .setBackgroundTint(Color.RED).show()
+                binding.progressLogin.visibility = View.INVISIBLE
             }
-
     }
 
-    fun verifyUser(){
+    private fun verifyUserlogado(){
         if (SecurityPreferences(this).getString(Constants.KEY.SAVE_LOGIN) != "") {
             if (SecurityPreferences(this).getString(Constants.KEY.EMAIL_LOGIN) != "" &&
                 SecurityPreferences(this).getString(Constants.KEY.PASSWORD_LOGIN) != ""
             ) {
-                startActivity(Intent(this, UserActivity::class.java))
-                finish()
+                autenUser(SecurityPreferences(this).getString(Constants.KEY.EMAIL_LOGIN).toString(),
+                    SecurityPreferences(this).getString(Constants.KEY.PASSWORD_LOGIN).toString())
             }
         }
     }

@@ -101,7 +101,8 @@
                 android:autofillHints=""
                 android:hint="@string/nome"
                 android:background="@drawable/edittext_border"
-                android:minHeight="48dp"/>
+                android:minHeight="48dp"
+                android:maxLines="1"/>
 
             <EditText
                 android:id="@+id/edit_email_register"
@@ -111,7 +112,8 @@
                 android:paddingStart="5dp"
                 android:hint="@string/e_mail"
                 android:minHeight="48dp"
-                android:background="@drawable/edittext_border"/>
+                android:background="@drawable/edittext_border"
+                android:maxLines="1"/>
 
             <EditText
                 android:id="@+id/edit_senha_register"
@@ -122,7 +124,8 @@
                 android:hint="@string/senha"
                 android:inputType="textPassword"
                 android:minHeight="48dp"
-                android:background="@drawable/edittext_border"/>
+                android:background="@drawable/edittext_border"
+                android:maxLines="1"/>
 
             <EditText
                 android:id="@+id/edit_telefone_register"
@@ -133,7 +136,8 @@
                 android:hint="@string/telefone"
                 android:inputType="number"
                 android:minHeight="48dp"
-                android:background="@drawable/edittext_border"/>
+                android:background="@drawable/edittext_border"
+                android:maxLines="1"/>
 
         </LinearLayout>
 
@@ -163,7 +167,8 @@
                 android:paddingStart="5dp"
                 android:hint="Nome do Endereço"
                 android:minHeight="48dp"
-                android:background="@drawable/edittext_border"/>
+                android:background="@drawable/edittext_border"
+                android:maxLines="1"/>
 
             <EditText
                 android:id="@+id/address_street"
@@ -174,7 +179,8 @@
                 android:paddingStart="5dp"
                 android:hint="Rua"
                 android:minHeight="48dp"
-                android:background="@drawable/edittext_border"/>
+                android:background="@drawable/edittext_border"
+                android:maxLines="1"/>
 
             <EditText
                 android:id="@+id/address_number"
@@ -187,7 +193,8 @@
                 android:hint="Nº"
                 android:inputType="number"
                 android:minHeight="48dp"
-                android:background="@drawable/edittext_border"/>
+                android:background="@drawable/edittext_border"
+                android:maxLines="1"/>
 
             <EditText
                 android:id="@+id/address_bairro"
@@ -198,7 +205,8 @@
                 android:paddingStart="5dp"
                 android:hint="Bairro"
                 android:minHeight="48dp"
-                android:background="@drawable/edittext_border"/>
+                android:background="@drawable/edittext_border"
+                android:maxLines="1"/>
 
             <EditText
                 android:id="@+id/address_cep"
@@ -213,7 +221,8 @@
                 android:maxLength="8"
                 android:minHeight="48dp"
                 android:inputType="number"
-                android:background="@drawable/edittext_border"/>
+                android:background="@drawable/edittext_border"
+                android:maxLines="1"/>
 
             <EditText
                 android:id="@+id/address_cidade"
@@ -224,7 +233,8 @@
                 android:paddingStart="5dp"
                 android:hint="Cidade"
                 android:minHeight="48dp"
-                android:background="@drawable/edittext_border"/>
+                android:background="@drawable/edittext_border"
+                android:maxLines="1"/>
 
             <EditText
                 android:id="@+id/address_estado"
@@ -238,7 +248,8 @@
                 android:hint="Estado"
                 android:maxLength="2"
                 android:minHeight="48dp"
-                android:background="@drawable/edittext_border"/>
+                android:background="@drawable/edittext_border"
+                android:maxLines="1"/>
 
             <TextView
                 android:id="@+id/text_end"

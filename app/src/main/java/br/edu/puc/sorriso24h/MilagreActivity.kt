@@ -41,8 +41,6 @@ class MilagreActivity : AppCompatActivity(), View.OnClickListener{
 
         FirebaseApp.initializeApp(this)
 
-        Snackbar.make(binding.textViewTitle, "fodase kkkkk", Snackbar.LENGTH_SHORT).show()
-
         auth = FirebaseAuth.getInstance()
         functions = FirebaseFunctions.getInstance()
         db = FirebaseFirestore.getInstance()
@@ -67,6 +65,10 @@ class MilagreActivity : AppCompatActivity(), View.OnClickListener{
         }
         if (binding.editSenhaRegister.text.toString().trim().isEmpty()) {
             binding.editSenhaRegister.error = Constants.PHRASE.EMPTY_FIELD
+            return
+        }
+        if (binding.editSenhaRegister.text.toString().trim().length < 8) {
+            binding.editSenhaRegister.error = Constants.PHRASE.MIN_LENGHT
             return
         }
         if (binding.editTelefoneRegister.text.toString().trim().isEmpty()) {
@@ -109,6 +111,10 @@ class MilagreActivity : AppCompatActivity(), View.OnClickListener{
             binding.addressCep.error = Constants.PHRASE.EMPTY_FIELD
             return false
         }
+        if(binding.addressCep.text.toString().trim().length != 8){
+            binding.addressCep.error = Constants.PHRASE.MIN_LENGHT
+            return false
+        }
         if(binding.addressCidade.text.toString().trim().isEmpty()){
             binding.addressCidade.error = Constants.PHRASE.EMPTY_FIELD
             return false
@@ -137,22 +143,22 @@ class MilagreActivity : AppCompatActivity(), View.OnClickListener{
         }
 
         val additionalAddressesContainer = findViewById<LinearLayout>(R.id.additional_addresses_container)
-        val newAddressEditText = TextView(this)
+        val newAddressTextView = TextView(this)
 
-        newAddressEditText.layoutParams = LinearLayout.LayoutParams(
+        newAddressTextView.layoutParams = LinearLayout.LayoutParams(
             0,
             100,
             1f
         )
-        newAddressEditText.hint = getString(R.string.endereço)
-        newAddressEditText.minHeight = resources.getDimensionPixelSize(R.dimen.text_field_size)
-        newAddressEditText.text = binding.addressName.text.toString().trim()
-        newAddressEditText.textSize = 24f
-        newAddressEditText.setPadding(10, 8, 10, 8)
-        newAddressEditText.setTextColor(getResources().getColor(R.color.purple_500))
-        newAddressEditText.id = View.generateViewId()
+        newAddressTextView.hint = getString(R.string.endereço)
+        newAddressTextView.minHeight = resources.getDimensionPixelSize(R.dimen.text_field_size)
+        newAddressTextView.text = binding.addressName.text.toString().trim()
+        newAddressTextView.textSize = 24f
+        newAddressTextView.setPadding(10, 8, 10, 8)
+        newAddressTextView.setTextColor(getResources().getColor(R.color.purple_500))
+        newAddressTextView.id = View.generateViewId()
 
-        additionalAddressesContainer.addView(newAddressEditText)
+        additionalAddressesContainer.addView(newAddressTextView)
         countAddress += 1
 
         binding.addressName.setText("")
@@ -181,7 +187,6 @@ class MilagreActivity : AppCompatActivity(), View.OnClickListener{
             }
         }
     }
-
 }
 
 data class CustomResponse(val status: String?, val message: String?, val payload: Any?)

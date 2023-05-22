@@ -21,6 +21,7 @@ class Constants {
         const val EMPTY_FIELD = "Campo obrigatório!"
         const val NO_ADDRESS = "Obrigatório no MÍNIMO 1 endereço salvo!"
         const val NO_DB = "Sem banco de dados(por enquanto) irmão! ;-;"
+        const val MIN_LENGHT = "Minimo de 8 digitos!"
 
         const val ERROR = "ERROR"
     }

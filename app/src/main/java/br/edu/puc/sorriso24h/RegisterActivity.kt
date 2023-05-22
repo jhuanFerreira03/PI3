@@ -1,18 +1,24 @@
 package br.edu.puc.sorriso24h
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import br.edu.puc.sorriso24h.databinding.ActivityRegisterBinding
 import br.edu.puc.sorriso24h.infra.Constants
 import br.edu.puc.sorriso24h.infra.SecurityPreferences
 import com.google.android.gms.tasks.Task
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.FirebaseApp
+import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.functions.FirebaseFunctions
 import com.google.gson.GsonBuilder
@@ -35,6 +41,8 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener{
 
         FirebaseApp.initializeApp(this)
 
+        binding.imageArrowBack.setColorFilter(ContextCompat.getColor(this, R.color.purple_500))
+
         auth = FirebaseAuth.getInstance()
         functions = FirebaseFunctions.getInstance()
         db = FirebaseFirestore.getInstance()
@@ -42,8 +50,7 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener{
         supportActionBar?.hide()
 
         binding.buttonRegister.setOnClickListener(this)
-
-        binding.textNameEnd.setText(SecurityPreferences(this).getString(Constants.KEY.NAME_REGISTER))
+        binding.btnVoltarRegister.setOnClickListener(this)
     }
 
     private fun signUpNewAccount(nome: String, telefone: String, email: String, senha: String) {
@@ -61,7 +68,7 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener{
                         "email" to email
                     )
 
-                    functions.getHttpsCallable("cadastrarUsuario").call(dados).continueWith{ task ->
+                    functions.getHttpsCallable("addUser").call(dados).continueWith{ task ->
                         val json = JSONObject(task.result?.data as String)
                         val status = json.getString("status")
                         val message = json.getString("message")
@@ -89,17 +96,28 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener{
                                 false
                             }
                         }*/
-                }else {
+                }/*else {
                     Log.e("milagre_activity", "${task.exception}")
                     // Exibir mensagem de erro ao criar a conta
                     Log.e(TAG, task.exception?.message ?: "Erro ao criar a conta")
                     Snackbar.make(binding.buttonRegister, "Erro ao criar a conta", Snackbar.LENGTH_LONG).show()
+                }*/
+            }.addOnFailureListener{ exception ->
+                val messageError = when(exception) {
+                    is FirebaseAuthWeakPasswordException -> "Digite uma nova senha com no minimo 6 digitos!"
+                    is FirebaseAuthInvalidCredentialsException -> "Digite um email valido!"
+                    is FirebaseAuthUserCollisionException -> "Esta conja ja existe!"
+                    is FirebaseNetworkException -> "Sem conexão com a internet!"
+                    else -> "Erro ao cadastrar usuario!"
                 }
+
+                Snackbar.make(binding.buttonRegister, messageError, Snackbar.LENGTH_LONG).show()
             }
     }
 
     override fun onClick(v: View) {
         when(v.id){
+            R.id.btn_voltar_register -> startActivity(Intent(this, MilagreActivity::class.java))
             R.id.button_register -> {
                 signUpNewAccount(SecurityPreferences(this).getString(Constants.KEY.NAME_REGISTER).toString(),
                     SecurityPreferences(this).getString(Constants.KEY.PHONE_NUMBER_REGISTER).toString(),
