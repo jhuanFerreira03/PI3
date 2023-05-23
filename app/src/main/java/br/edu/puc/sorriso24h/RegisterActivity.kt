@@ -112,7 +112,7 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener{
                     return
                 }
                 binding.progressRegister.visibility = View.VISIBLE
-                SecurityPreferences(this).storeString(Constants.KEY.ADDRESS_1_REGISTER, "")
+                SecurityPreferences(this).storeString(Constants.KEY.ADDRESS_1_REGISTER, binding.editMiniCurriculo.text.toString())
 
                 NewAccount(SecurityPreferences(this).getString(Constants.KEY.NAME_REGISTER).toString(),
                     SecurityPreferences(this).getString(Constants.KEY.PHONE_NUMBER_REGISTER).toString(),
