@@ -14,6 +14,7 @@ class Constants {
         const val ADDRESS_1_REGISTER = "ADDRESS_1_REGISTER"
         const val ADDRESS_2_REGISTER = "ADDRESS_2_REGISTER"
         const val ADDRESS_3_REGISTER = "ADDRESS_3_REGISTER"
+        const val CURRICULUM = "CURRICULUM"
     }
 
     object PHRASE {

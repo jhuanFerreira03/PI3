@@ -55,7 +55,7 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener{
         binding.btnVoltarRegister.setOnClickListener(this)
     }
 
-    private fun NewAccount(nome: String, telefone: String, email: String, senha: String, endereco: String, curriculo:String) {
+    private fun NewAccount(nome: String, telefone: String, email: String, senha: String, endereco: String, curriculo: String) {
         auth.createUserWithEmailAndPassword(email, senha)
             .addOnCompleteListener { task: Task<AuthResult> ->
                 if (task.isSuccessful) {
@@ -112,14 +112,14 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener{
                     return
                 }
                 binding.progressRegister.visibility = View.VISIBLE
-                SecurityPreferences(this).storeString(Constants.KEY.ADDRESS_1_REGISTER, binding.editMiniCurriculo.text.toString())
+                SecurityPreferences(this).storeString(Constants.KEY.CURRICULUM, binding.editMiniCurriculo.text.toString())
 
                 NewAccount(SecurityPreferences(this).getString(Constants.KEY.NAME_REGISTER).toString(),
                     SecurityPreferences(this).getString(Constants.KEY.PHONE_NUMBER_REGISTER).toString(),
                     SecurityPreferences(this).getString(Constants.KEY.EMAIL_REGISTER).toString(),
                     SecurityPreferences(this).getString(Constants.KEY.PASSWORD_REGISTER).toString(),
                     SecurityPreferences(this).getString(Constants.KEY.ADDRESS_1_REGISTER).toString(),
-                    SecurityPreferences(this).getString(Constants.KEY.ADDRESS_1_REGISTER).toString())
+                    SecurityPreferences(this).getString(Constants.KEY.CURRICULUM).toString())
             }
         }
     }
