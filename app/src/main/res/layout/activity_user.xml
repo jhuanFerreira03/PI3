@@ -34,11 +34,10 @@
         android:text="Ativar Notificação"
         android:textSize="20sp"
         android:textColor="#000000"
-        android:thumbTint="#DA030A"
-        android:trackTint="#2EFF00"
+        android:thumbTint="@color/purple_500"
         android:layout_below="@+id/linnear_princ"
         android:layout_centerHorizontal="true"
-        android:paddingTop="80dp"/>
+        android:paddingTop="80dp" />
 
     <Button
         android:id="@+id/button_logout"

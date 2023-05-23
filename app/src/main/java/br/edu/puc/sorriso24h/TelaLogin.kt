@@ -31,13 +31,12 @@ class TelaLogin : AppCompatActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        verifyUserlogado()
 
         binding = ActivityTelaLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         auth = FirebaseAuth.getInstance()
-
-        verifyUserlogado()
 
         supportActionBar?.hide()
 
@@ -66,11 +65,17 @@ class TelaLogin : AppCompatActivity(), View.OnClickListener {
             .addOnCompleteListener {auten ->
                 if(auten.isSuccessful){
                     if(save) {
-                        if (binding.checkManter.isChecked) SecurityPreferences(this).storeString(
-                            Constants.KEY.SAVE_LOGIN,
-                            Constants.KEY.SAVED_LOGIN
-                        )
-                        else SecurityPreferences(this).storeString(Constants.KEY.SAVE_LOGIN, "")
+                        if (binding.checkManter.isChecked) {
+                            SecurityPreferences(this).storeString(
+                                Constants.KEY.SAVE_LOGIN,
+                                Constants.KEY.SAVED_LOGIN
+                            )
+                            SecurityPreferences(this).storeString(Constants.KEY.NOTI, Constants.KEY.FALSE)
+                        }
+                        else {
+                            SecurityPreferences(this).storeString(Constants.KEY.SAVE_LOGIN, "")
+                            SecurityPreferences(this).storeString(Constants.KEY.NOTI, "")
+                        }
 
                         SecurityPreferences(this).storeString(
                             Constants.KEY.EMAIL_LOGIN,
@@ -94,6 +99,7 @@ class TelaLogin : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun verifyUserlogado(){
+
         if (SecurityPreferences(this).getString(Constants.KEY.SAVE_LOGIN) != "") {
             if (SecurityPreferences(this).getString(Constants.KEY.EMAIL_LOGIN) != "" &&
                 SecurityPreferences(this).getString(Constants.KEY.PASSWORD_LOGIN) != ""

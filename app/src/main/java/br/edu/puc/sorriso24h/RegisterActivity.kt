@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat
 import br.edu.puc.sorriso24h.databinding.ActivityRegisterBinding
 import br.edu.puc.sorriso24h.infra.Constants
 import br.edu.puc.sorriso24h.infra.SecurityPreferences
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.FirebaseApp
@@ -21,6 +22,7 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.functions.FirebaseFunctions
+import com.google.firebase.messaging.FirebaseMessaging
 import com.google.gson.GsonBuilder
 import io.grpc.util.OutlierDetectionLoadBalancer.OutlierDetectionLoadBalancerConfig.SuccessRateEjection
 import org.json.JSONObject
@@ -29,6 +31,7 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener{
 
     private lateinit var db: FirebaseFirestore
     private lateinit var auth: FirebaseAuth
+    private lateinit var messaging : FirebaseMessaging
     private val gson = GsonBuilder().enableComplexMapKeySerialization().create()
     private lateinit var functions: FirebaseFunctions
     private val TAG = "SignUpFragment"
@@ -48,6 +51,7 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener{
         auth = FirebaseAuth.getInstance()
         functions = FirebaseFunctions.getInstance("southamerica-east1")
         db = FirebaseFirestore.getInstance()
+        messaging = FirebaseMessaging.getInstance()
 
         supportActionBar?.hide()
 
@@ -62,6 +66,10 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener{
                     val user = auth.currentUser
                     val uid = user!!.uid
 
+                    lateinit var token : String
+                    lateinit var msg : String
+
+
                     val dados = hashMapOf(
                         "uid" to uid,
                         "nome" to nome,
@@ -69,6 +77,7 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener{
                         "telefone" to telefone,
                         "endereco" to endereco,
                         "curriculo" to curriculo,
+                        "status" to false,
                     )
 
                     /*auth.signInWithEmailAndPassword(email, senha).addOnCompleteListener { log ->
