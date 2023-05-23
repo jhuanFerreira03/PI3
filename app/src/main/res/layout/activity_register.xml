@@ -24,7 +24,7 @@
             android:id="@+id/btn_voltar_register"
             android:layout_width="120dp"
             android:layout_height="50dp"
-            android:text="voltar"
+            android:text="@string/voltar"
             android:textSize="18sp"
             android:layout_centerInParent="true"
             android:layout_alignStart="@+id/image_arrow_back"
@@ -54,18 +54,39 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_margin="10dp"
-        android:layout_marginTop="40dp"
-        android:hint="Escreva aqui "
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:hint="@string/escreva_aqui"
         android:padding="15dp"
-        android:textStyle="italic" />
+        android:textStyle="italic"
+        android:maxLength="2000"/>
+    <ProgressBar
+        android:id="@+id/progress_register"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:layout_below="@+id/edit_mini_curriculo"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="35dp"
+        android:layout_marginEnd="10dp"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/purple_700"
+        android:visibility="visible" />
+    <TextView
+        android:id="@+id/text_error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edit_mini_curriculo"
+        android:layout_centerHorizontal="true"
+        android:textSize="20sp"/>
     <Button
         android:id="@+id/button_register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Cadastrar"
+        android:text="@string/cadastrar"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="30dp"/>
-
+        android:layout_marginBottom="40dp"/>
 </RelativeLayout>

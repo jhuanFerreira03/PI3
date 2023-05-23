@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "485535495929",
-    "project_id": "projeto-integrador3",
-    "storage_bucket": "projeto-integrador3.appspot.com"
+    "project_number": "728739790069",
+    "project_id": "projeto-integrador3-442ef",
+    "storage_bucket": "projeto-integrador3-442ef.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:546030057452:android:4617ce0b7fff326039f2c9",
+        "mobilesdk_app_id": "1:728739790069:android:17c0ed70e5703ba76919bc",
         "android_client_info": {
           "package_name": "br.edu.puc.sorriso24h"
         }
       },
       "oauth_client": [
         {
-          "client_id": "485535495929-irlm51bmke0cs43s7ue1h263ulnn8q0g.apps.googleusercontent.com",
+          "client_id": "728739790069-622d9m6ijc5omuhdd1s0u5i2biciouai.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAe1MF2iJIA23XPEOHsVfzHUUnyh_Zgztw"
+          "current_key": "AIzaSyAstw4X8ebXFVTUXhLjXa0zfF6WxPRyaGg"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "485535495929-irlm51bmke0cs43s7ue1h263ulnn8q0g.apps.googleusercontent.com",
+              "client_id": "728739790069-622d9m6ijc5omuhdd1s0u5i2biciouai.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

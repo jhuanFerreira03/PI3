@@ -58,19 +58,30 @@ class TelaLogin : AppCompatActivity(), View.OnClickListener {
         }
         binding.progressLogin.visibility = View.VISIBLE
 
-        if(binding.checkManter.isChecked) SecurityPreferences(this).storeString(Constants.KEY.SAVE_LOGIN, Constants.KEY.SAVED_LOGIN)
-        else SecurityPreferences(this).storeString(Constants.KEY.SAVE_LOGIN, "")
-
-        SecurityPreferences(this).storeString(Constants.KEY.EMAIL_LOGIN, binding.email.text.toString().trim())
-        SecurityPreferences(this).storeString(Constants.KEY.PASSWORD_LOGIN, binding.password.text.toString().trim())
-
-        autenUser(binding.email.text.toString().trim(), binding.password.text.toString().trim())
+        autenUser(binding.email.text.toString().trim(), binding.password.text.toString().trim(), true)
     }
 
-    private fun autenUser(email:String, senha:String){
+    private fun autenUser(email:String, senha:String, save:Boolean){
         auth.signInWithEmailAndPassword(email, senha)
             .addOnCompleteListener {auten ->
                 if(auten.isSuccessful){
+                    if(save) {
+                        if (binding.checkManter.isChecked) SecurityPreferences(this).storeString(
+                            Constants.KEY.SAVE_LOGIN,
+                            Constants.KEY.SAVED_LOGIN
+                        )
+                        else SecurityPreferences(this).storeString(Constants.KEY.SAVE_LOGIN, "")
+
+                        SecurityPreferences(this).storeString(
+                            Constants.KEY.EMAIL_LOGIN,
+                            binding.email.text.toString().trim()
+                        )
+                        SecurityPreferences(this).storeString(
+                            Constants.KEY.PASSWORD_LOGIN,
+                            binding.password.text.toString().trim()
+                        )
+                    }
+
                     startActivity(Intent(this, UserActivity::class.java))
                     finish()
                 }
@@ -88,7 +99,8 @@ class TelaLogin : AppCompatActivity(), View.OnClickListener {
                 SecurityPreferences(this).getString(Constants.KEY.PASSWORD_LOGIN) != ""
             ) {
                 autenUser(SecurityPreferences(this).getString(Constants.KEY.EMAIL_LOGIN).toString(),
-                    SecurityPreferences(this).getString(Constants.KEY.PASSWORD_LOGIN).toString())
+                    SecurityPreferences(this).getString(Constants.KEY.PASSWORD_LOGIN).toString(),
+                    false)
             }
         }
     }

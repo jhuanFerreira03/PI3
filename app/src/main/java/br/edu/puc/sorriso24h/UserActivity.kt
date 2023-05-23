@@ -7,14 +7,20 @@ import android.view.View
 import br.edu.puc.sorriso24h.databinding.ActivityUserBinding
 import br.edu.puc.sorriso24h.infra.Constants
 import br.edu.puc.sorriso24h.infra.SecurityPreferences
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class UserActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityUserBinding
+    private lateinit var auth: FirebaseAuth
+    private lateinit var db: FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityUserBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        auth = FirebaseAuth.getInstance()
 
         supportActionBar?.hide()
 
@@ -28,6 +34,7 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
                 SecurityPreferences(this).storeString(Constants.KEY.SAVE_LOGIN, "")
                 SecurityPreferences(this).storeString(Constants.KEY.EMAIL_LOGIN, "")
                 SecurityPreferences(this).storeString(Constants.KEY.PASSWORD_LOGIN, "")
+                auth.signOut()
                 startActivity(Intent(this, TelaLogin::class.java))
                 finish()
             }

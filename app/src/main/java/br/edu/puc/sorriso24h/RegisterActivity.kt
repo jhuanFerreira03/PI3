@@ -22,6 +22,7 @@ import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.functions.FirebaseFunctions
 import com.google.gson.GsonBuilder
+import io.grpc.util.OutlierDetectionLoadBalancer.OutlierDetectionLoadBalancerConfig.SuccessRateEjection
 import org.json.JSONObject
 
 class RegisterActivity : AppCompatActivity(), View.OnClickListener{
@@ -42,9 +43,10 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener{
         FirebaseApp.initializeApp(this)
 
         binding.imageArrowBack.setColorFilter(ContextCompat.getColor(this, R.color.purple_500))
+        binding.progressRegister.visibility = View.INVISIBLE
 
         auth = FirebaseAuth.getInstance()
-        functions = FirebaseFunctions.getInstance()
+        functions = FirebaseFunctions.getInstance("southamerica-east1")
         db = FirebaseFirestore.getInstance()
 
         supportActionBar?.hide()
@@ -53,60 +55,46 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener{
         binding.btnVoltarRegister.setOnClickListener(this)
     }
 
-    private fun signUpNewAccount(nome: String, telefone: String, email: String, senha: String) {
+    private fun NewAccount(nome: String, telefone: String, email: String, senha: String, endereco: String, curriculo:String) {
         auth.createUserWithEmailAndPassword(email, senha)
             .addOnCompleteListener { task: Task<AuthResult> ->
                 if (task.isSuccessful) {
                     val user = auth.currentUser
                     val uid = user!!.uid
 
-                    // Enviar dados de usuário para o Cloud Functions
                     val dados = hashMapOf(
                         "uid" to uid,
                         "nome" to nome,
+                        "email" to email,
                         "telefone" to telefone,
-                        "email" to email
+                        "endereco" to endereco,
+                        "curriculo" to curriculo,
                     )
 
-                    functions.getHttpsCallable("addUser").call(dados).continueWith{ task ->
-                        val json = JSONObject(task.result?.data as String)
+                    /*auth.signInWithEmailAndPassword(email, senha).addOnCompleteListener { log ->
+                        if(log.isSuccessful){
+                            db.collection("User").document().set(dados).addOnCompleteListener { add ->
+                                Log.d("db", "Sucesso meu bom!")
+                            }.addOnFailureListener{ exception ->
+                                binding.textError.setText(exception.toString())
+                                Snackbar.make(binding.buttonRegister, "ih rapaz..."+ exception, Snackbar.LENGTH_LONG).show()
+                            }
+                        }
+                    }*/
+
+                    functions.getHttpsCallable("addUsers").call(dados).continueWith { task1 ->
+                        val json = JSONObject(task1.result?.data as String)
                         val status = json.getString("status")
                         val message = json.getString("message")
-                        if (status.uppercase() == Constants.PHRASE.ERROR) {
-                            Snackbar.make(
-                                binding.buttonRegister, message, Snackbar.LENGTH_LONG).show()
-                        }
                     }
-
-                    /*functions.getHttpsCallable("setUserAccount")
-                        .call(dados)
-                        .continueWith { task ->
-                            val result = task.result?.data as String?
-                            val json = JSONObject(result)
-                            val status = json.getString("status")
-                            val message = json.getString("message")
-
-                            // Verificar se houve algum erro ao criar a conta
-                            if (status == "error") {
-                                Snackbar.make(
-                                    binding.buttonRegister,
-                                    message,
-                                    Snackbar.LENGTH_LONG
-                                ).show()
-                                false
-                            }
-                        }*/
-                }/*else {
-                    Log.e("milagre_activity", "${task.exception}")
-                    // Exibir mensagem de erro ao criar a conta
-                    Log.e(TAG, task.exception?.message ?: "Erro ao criar a conta")
-                    Snackbar.make(binding.buttonRegister, "Erro ao criar a conta", Snackbar.LENGTH_LONG).show()
-                }*/
+                    startActivity(Intent(this, SuccessfulRegisterActivity::class.java))
+                    finish()
+                }
             }.addOnFailureListener{ exception ->
                 val messageError = when(exception) {
                     is FirebaseAuthWeakPasswordException -> "Digite uma nova senha com no minimo 6 digitos!"
                     is FirebaseAuthInvalidCredentialsException -> "Digite um email valido!"
-                    is FirebaseAuthUserCollisionException -> "Esta conja ja existe!"
+                    is FirebaseAuthUserCollisionException -> "Esta conta ja existe!"
                     is FirebaseNetworkException -> "Sem conexão com a internet!"
                     else -> "Erro ao cadastrar usuario!"
                 }
@@ -119,11 +107,19 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener{
         when(v.id){
             R.id.btn_voltar_register -> startActivity(Intent(this, MilagreActivity::class.java))
             R.id.button_register -> {
-                signUpNewAccount(SecurityPreferences(this).getString(Constants.KEY.NAME_REGISTER).toString(),
+                if(binding.editMiniCurriculo.length() == 0){
+                    Snackbar.make(binding.buttonRegister, "Faça um mini curriculo!", Snackbar.LENGTH_LONG).show()
+                    return
+                }
+                binding.progressRegister.visibility = View.VISIBLE
+                SecurityPreferences(this).storeString(Constants.KEY.ADDRESS_1_REGISTER, "")
+
+                NewAccount(SecurityPreferences(this).getString(Constants.KEY.NAME_REGISTER).toString(),
                     SecurityPreferences(this).getString(Constants.KEY.PHONE_NUMBER_REGISTER).toString(),
                     SecurityPreferences(this).getString(Constants.KEY.EMAIL_REGISTER).toString(),
-                    SecurityPreferences(this).getString(Constants.KEY.PASSWORD_REGISTER).toString())
-                //Toast.makeText(this, Constants.PHRASE.NO_DB, Toast.LENGTH_LONG).show()
+                    SecurityPreferences(this).getString(Constants.KEY.PASSWORD_REGISTER).toString(),
+                    SecurityPreferences(this).getString(Constants.KEY.ADDRESS_1_REGISTER).toString(),
+                    SecurityPreferences(this).getString(Constants.KEY.ADDRESS_1_REGISTER).toString())
             }
         }
     }

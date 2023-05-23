@@ -12,4 +12,8 @@
     <string name="cadastrar">Cadastrar</string>
     <string name="cadastre_se">Cadastre-se</string>
     <string name="name_app">Sorriso24H</string>
+    <string name="cadastro_realizado">Cadastro Realizado Com Sucesso!</string>
+    <string name="login">Login</string>
+    <string name="escreva_aqui">Escreva aqui</string>
+    <string name="voltar">Voltar</string>
 </resources>
