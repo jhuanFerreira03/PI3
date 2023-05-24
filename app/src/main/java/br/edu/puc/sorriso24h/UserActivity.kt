@@ -38,6 +38,7 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
 
         binding.emailUsuario.text = SecurityPreferences(this).getString(Constants.KEY.EMAIL_LOGIN)
         binding.buttonLogout.setOnClickListener(this)
+        binding.buttonEmergencyList.setOnClickListener(this)
 
         binding.switchButton.setOnClickListener{
             if(binding.switchButton.isChecked) updateStatus(true)
@@ -81,6 +82,9 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
                 auth.signOut()
                 startActivity(Intent(this, TelaLogin::class.java))
                 finish()
+            }
+            R.id.button_emergencyList -> {
+                startActivity(Intent(this, EmergencyActivity::class.java))
             }
         }
     }

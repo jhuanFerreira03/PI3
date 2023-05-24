@@ -17,4 +17,6 @@
     <string name="escreva_aqui">Escreva aqui</string>
     <string name="voltar">Voltar</string>
     <string name="msg_token_fmt" />
+    <string name="lista_emergencias">Lista de Emergências</string>
+    <string name="logout">Logout</string>
 </resources>

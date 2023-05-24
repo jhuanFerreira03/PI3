@@ -38,14 +38,22 @@
         android:layout_below="@+id/linnear_princ"
         android:layout_centerHorizontal="true"
         android:paddingTop="80dp" />
+    <Button
+        android:id="@+id/button_emergencyList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/lista_emergencias"
+        android:layout_above="@+id/button_logout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="60dp"/>
 
     <Button
         android:id="@+id/button_logout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Logout"
+        android:text="@string/logout"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="30dp"/>
+        android:layout_marginBottom="40dp"/>
 
 </RelativeLayout>
