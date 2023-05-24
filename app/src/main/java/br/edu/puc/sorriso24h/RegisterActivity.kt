@@ -67,8 +67,8 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener{
                     val uid = user!!.uid
 
                     lateinit var token : String
-                    lateinit var msg : String
 
+                    token = messaging.token.result
 
                     val dados = hashMapOf(
                         "uid" to uid,
@@ -77,6 +77,7 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener{
                         "telefone" to telefone,
                         "endereco" to endereco,
                         "curriculo" to curriculo,
+                        "fcmToken" to token,
                         "status" to false,
                     )
 

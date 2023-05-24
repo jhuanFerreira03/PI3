@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import br.edu.puc.sorriso24h.databinding.ActivitySuccessfulRegisterBinding
+import br.edu.puc.sorriso24h.infra.SecurityPreferences
 
 class SuccessfulRegisterActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivitySuccessfulRegisterBinding

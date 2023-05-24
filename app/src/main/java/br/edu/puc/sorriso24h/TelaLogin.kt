@@ -31,12 +31,12 @@ class TelaLogin : AppCompatActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        auth = FirebaseAuth.getInstance()
         verifyUserlogado()
 
         binding = ActivityTelaLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        auth = FirebaseAuth.getInstance()
 
         supportActionBar?.hide()
 
