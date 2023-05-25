@@ -1,4 +1,4 @@
-package br.edu.puc.sorriso24h
+package br.edu.puc.sorriso24h.views
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -7,8 +7,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.widget.RemoteViews
-import android.widget.RemoteViews.RemoteView
 import androidx.core.app.NotificationCompat
+import br.edu.puc.sorriso24h.R
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 

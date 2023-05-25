@@ -1,16 +1,14 @@
-package br.edu.puc.sorriso24h
+package br.edu.puc.sorriso24h.views
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.core.content.ContextCompat
+import br.edu.puc.sorriso24h.R
 import br.edu.puc.sorriso24h.databinding.ActivityRegisterBinding
 import br.edu.puc.sorriso24h.infra.Constants
 import br.edu.puc.sorriso24h.infra.SecurityPreferences
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.FirebaseApp
@@ -24,7 +22,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.functions.FirebaseFunctions
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.gson.GsonBuilder
-import io.grpc.util.OutlierDetectionLoadBalancer.OutlierDetectionLoadBalancerConfig.SuccessRateEjection
 import org.json.JSONObject
 
 class RegisterActivity : AppCompatActivity(), View.OnClickListener{

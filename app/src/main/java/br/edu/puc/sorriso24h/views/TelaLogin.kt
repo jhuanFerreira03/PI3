@@ -1,24 +1,18 @@
-package br.edu.puc.sorriso24h
+package br.edu.puc.sorriso24h.views
 
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import br.edu.puc.sorriso24h.R
 import br.edu.puc.sorriso24h.databinding.ActivityTelaLoginBinding
 import br.edu.puc.sorriso24h.infra.Constants
 import br.edu.puc.sorriso24h.infra.SecurityPreferences
-import com.google.android.gms.tasks.Task
 import com.google.android.material.snackbar.Snackbar
-import com.google.common.base.Verify
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.functions.FirebaseFunctions
-import com.google.firebase.functions.ktx.functions
-import com.google.firebase.ktx.Firebase
 import com.google.gson.GsonBuilder
-import kotlin.math.log
 
 class TelaLogin : AppCompatActivity(), View.OnClickListener {
 

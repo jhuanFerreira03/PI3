@@ -1,28 +1,22 @@
-package br.edu.puc.sorriso24h
+package br.edu.puc.sorriso24h.views
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.TextUtils
-import android.util.Log
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.view.marginEnd
+import br.edu.puc.sorriso24h.R
 import br.edu.puc.sorriso24h.databinding.ActivityMilagreBinding
 import br.edu.puc.sorriso24h.infra.Constants
 import br.edu.puc.sorriso24h.infra.SecurityPreferences
-import com.google.android.gms.tasks.Task
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.FirebaseApp
-import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.functions.FirebaseFunctions
 import com.google.gson.GsonBuilder
-import org.json.JSONObject
 
 class MilagreActivity : AppCompatActivity(), View.OnClickListener{
 

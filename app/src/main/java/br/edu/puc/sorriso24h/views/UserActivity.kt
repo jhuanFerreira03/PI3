@@ -1,17 +1,10 @@
-package br.edu.puc.sorriso24h
+package br.edu.puc.sorriso24h.views
 
-import android.app.Application
-import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.content.res.Configuration
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.ScaleGestureDetector
 import android.view.View
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContextCompat
+import br.edu.puc.sorriso24h.R
 import br.edu.puc.sorriso24h.databinding.ActivityUserBinding
 import br.edu.puc.sorriso24h.infra.Constants
 import br.edu.puc.sorriso24h.infra.SecurityPreferences
@@ -20,8 +13,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.messaging.FirebaseMessaging
-import com.google.firebase.messaging.FirebaseMessagingService
-import kotlinx.coroutines.awaitAll
 
 class UserActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityUserBinding

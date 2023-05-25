@@ -27,7 +27,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/text_nome"
+                android:id="@+id/text_nome_list"
                 android:layout_marginStart="8dp"
                 android:text="telefone"
                 android:textColor="@color/black"
@@ -50,7 +50,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/text_telefone"
+                android:id="@+id/text_telefone_list"
                 android:layout_marginStart="8dp"
                 android:text="telefone"
                 android:textColor="@color/black"

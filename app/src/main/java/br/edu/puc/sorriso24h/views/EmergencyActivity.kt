@@ -1,29 +1,25 @@
-package br.edu.puc.sorriso24h
+package br.edu.puc.sorriso24h.views
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.View.INVISIBLE
-import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import br.edu.puc.sorriso24h.Adapter.ListAdapter
 import br.edu.puc.sorriso24h.Adapter.MyAdapter
 import br.edu.puc.sorriso24h.Adapter.User
+import br.edu.puc.sorriso24h.R
 import br.edu.puc.sorriso24h.databinding.ActivityEmergencyBinding
+import br.edu.puc.sorriso24h.listener.ListListener
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentChange
-import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.messaging.FirebaseMessaging
-import kotlin.reflect.typeOf
 
 class EmergencyActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityEmergencyBinding
@@ -60,11 +56,15 @@ class EmergencyActivity : AppCompatActivity(), View.OnClickListener {
 
         recyclerView.adapter = myAdapter
 
+
+        val listener = object : ListListener{
+            override fun onClick(adapterPosition: Int) {
+                Snackbar.make(binding.textView3, "fui cliked", Snackbar.LENGTH_LONG).show()
+            }
+        }
+        myAdapter.attListener(listener)
+
         EventChangeListener()
-
-        //binding.recyclerEmergencyList.layoutManager = LinearLayoutManager(this)
-
-        //binding.recyclerEmergencyList.adapter = ListAdapter()
     }
 
     private fun EventChangeListener() {
