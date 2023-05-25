@@ -57,11 +57,11 @@ class EmergencyActivity : AppCompatActivity(), View.OnClickListener {
 
         recyclerView.adapter = myAdapter
 
-
         val listener = object : ListListener{
             override fun onClick(adapterPosition: Int) {
                 SecurityPreferences(myAdapter.context).storeString(Constants.KEY.ARRAY_NAME, arrayList.get(adapterPosition).nome.trim())
                 SecurityPreferences(myAdapter.context).storeString(Constants.KEY.ARRAY_TEL, arrayList.get(adapterPosition).telefone.trim())
+                SecurityPreferences(myAdapter.context).storeInt(Constants.KEY.ARRAY_ADAPT, adapterPosition)
                 startActivity(Intent(myAdapter.context, EmergencyDetailActivity::class.java))
             }
         }
@@ -69,9 +69,8 @@ class EmergencyActivity : AppCompatActivity(), View.OnClickListener {
 
         EventChangeListener()
     }
-
     private fun EventChangeListener() {
-        db.collection("DadosSocorristas").whereEqualTo("status", "pendente")
+        db.collection("DadosSocorristas").whereEqualTo("statusEncerrada", false)
             .addSnapshotListener{
             result, erro ->
             if(erro != null){
@@ -86,7 +85,6 @@ class EmergencyActivity : AppCompatActivity(), View.OnClickListener {
                     myAdapter.notifyDataSetChanged()
                 }
             }
-
         }
     }
     override fun onClick(v: View) {

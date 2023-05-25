@@ -55,7 +55,6 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener{
         binding.buttonRegister.setOnClickListener(this)
         binding.btnVoltarRegister.setOnClickListener(this)
     }
-
     private fun NewAccount(nome: String, telefone: String, email: String, senha: String, endereco: String, curriculo: String) {
         auth.createUserWithEmailAndPassword(email, senha)
             .addOnCompleteListener { task: Task<AuthResult> ->
@@ -105,11 +104,9 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener{
                     is FirebaseNetworkException -> "Sem conexão com a internet!"
                     else -> "Erro ao cadastrar usuario!"
                 }
-
                 Snackbar.make(binding.buttonRegister, messageError, Snackbar.LENGTH_LONG).show()
             }
     }
-
     override fun onClick(v: View) {
         when(v.id){
             R.id.btn_voltar_register -> startActivity(Intent(this, MilagreActivity::class.java))

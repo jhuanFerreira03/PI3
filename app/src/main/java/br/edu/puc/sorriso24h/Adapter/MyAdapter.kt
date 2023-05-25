@@ -18,21 +18,18 @@ class MyAdapter(var context: Context,var arrayList: ArrayList<User>) :
         val v : View = LayoutInflater.from(context).inflate(R.layout.item, parent, false)
         return MyViewHolder(v, listen)
     }
-
     override fun onBindViewHolder(holder: MyAdapter.MyViewHolder, position: Int) {
         val user : User = arrayList.get(position)
 
         holder.nome.setText(user.nome)
         holder.telefone.setText(user.telefone)
     }
-
     override fun getItemCount(): Int {
         return arrayList.size
     }
     fun attListener(lis : ListListener){
         this.listen = lis
     }
-
 
     class MyViewHolder(item: View, listen: ListListener) : RecyclerView.ViewHolder(item) {
         var nome : TextView

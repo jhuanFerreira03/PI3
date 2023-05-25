@@ -11,4 +11,10 @@ class SecurityPreferences(context: Context) {
     fun getString(key:String):String?{
         return security.getString(key, "")
     }
+    fun storeInt (key: String, num : Int){
+        security.edit().putInt(key, num).apply()
+    }
+    fun getInt(key:String):Int?{
+        return security.getInt(key, 0)
+    }
 }
