@@ -19,4 +19,5 @@
     <string name="msg_token_fmt" />
     <string name="lista_emergencias">Lista de Emergências</string>
     <string name="logout">Logout</string>
+    <string name="lista_emergen">Lista de Emergências</string>
 </resources>

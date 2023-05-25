@@ -14,6 +14,9 @@ import br.edu.puc.sorriso24h.Adapter.MyAdapter
 import br.edu.puc.sorriso24h.Adapter.User
 import br.edu.puc.sorriso24h.R
 import br.edu.puc.sorriso24h.databinding.ActivityEmergencyBinding
+import br.edu.puc.sorriso24h.databinding.ActivityEmergencyDetailBinding
+import br.edu.puc.sorriso24h.infra.Constants
+import br.edu.puc.sorriso24h.infra.SecurityPreferences
 import br.edu.puc.sorriso24h.listener.ListListener
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
@@ -40,8 +43,6 @@ class EmergencyActivity : AppCompatActivity(), View.OnClickListener {
         db = FirebaseFirestore.getInstance()
         messaging = FirebaseMessaging.getInstance()
 
-        sla()
-
         supportActionBar?.hide()
 
         binding.imageArrowBack.setColorFilter(ContextCompat.getColor(this, R.color.purple_500))
@@ -59,7 +60,9 @@ class EmergencyActivity : AppCompatActivity(), View.OnClickListener {
 
         val listener = object : ListListener{
             override fun onClick(adapterPosition: Int) {
-                Snackbar.make(binding.textView3, "fui cliked", Snackbar.LENGTH_LONG).show()
+                SecurityPreferences(myAdapter.context).storeString(Constants.KEY.ARRAY_NAME, arrayList.get(adapterPosition).nome.trim())
+                SecurityPreferences(myAdapter.context).storeString(Constants.KEY.ARRAY_TEL, arrayList.get(adapterPosition).telefone.trim())
+                startActivity(Intent(myAdapter.context, EmergencyDetailActivity::class.java))
             }
         }
         myAdapter.attListener(listener)
@@ -68,7 +71,8 @@ class EmergencyActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun EventChangeListener() {
-        db.collection("DadosSocorristas").addSnapshotListener{
+        db.collection("DadosSocorristas").whereEqualTo("status", "pendente")
+            .addSnapshotListener{
             result, erro ->
             if(erro != null){
                 Log.e("Firestore error", erro.message.toString())
@@ -83,14 +87,6 @@ class EmergencyActivity : AppCompatActivity(), View.OnClickListener {
                 }
             }
 
-        }
-    }
-
-    private fun sla(){
-        db.collection("DadosSocorristas").document("DzVyhYJS2oRg0PSZXpMT").addSnapshotListener{it, e ->
-            if (it != null) {
-                binding.textTest.setText(it.get("nome").toString() + "\n" + it.get("telefone").toString())
-            }
         }
     }
     override fun onClick(v: View) {

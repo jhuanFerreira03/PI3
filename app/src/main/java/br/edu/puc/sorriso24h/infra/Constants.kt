@@ -18,6 +18,8 @@ class Constants {
         const val NOTI = "NOTI"
         const val TRUE = "TRUE"
         const val FALSE = "FALSE"
+        const val ARRAY_NAME = "ARRAY_NAME"
+        const val ARRAY_TEL = "ARRAY_TEL"
     }
 
     object PHRASE {
