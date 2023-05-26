@@ -61,22 +61,22 @@ class TelaLogin : AppCompatActivity(), View.OnClickListener {
                     if(save) {
                         if (binding.checkManter.isChecked) {
                             SecurityPreferences(this).storeString(
-                                Constants.KEY.SAVE_LOGIN,
-                                Constants.KEY.SAVED_LOGIN
+                                Constants.KEY_SHARED.SAVE_LOGIN,
+                                Constants.KEY_SHARED.SAVED_LOGIN
                             )
-                            SecurityPreferences(this).storeString(Constants.KEY.NOTI, Constants.KEY.FALSE)
+                            SecurityPreferences(this).storeString(Constants.OTHERS.NOTI, Constants.OTHERS.FALSE)
                         }
                         else {
-                            SecurityPreferences(this).storeString(Constants.KEY.SAVE_LOGIN, "")
-                            SecurityPreferences(this).storeString(Constants.KEY.NOTI, "")
+                            SecurityPreferences(this).storeString(Constants.KEY_SHARED.SAVE_LOGIN, "")
+                            SecurityPreferences(this).storeString(Constants.OTHERS.NOTI, "")
                         }
 
                         SecurityPreferences(this).storeString(
-                            Constants.KEY.EMAIL_LOGIN,
+                            Constants.KEY_SHARED.EMAIL_LOGIN,
                             binding.email.text.toString().trim()
                         )
                         SecurityPreferences(this).storeString(
-                            Constants.KEY.PASSWORD_LOGIN,
+                            Constants.KEY_SHARED.PASSWORD_LOGIN,
                             binding.password.text.toString().trim()
                         )
                     }
@@ -94,12 +94,12 @@ class TelaLogin : AppCompatActivity(), View.OnClickListener {
 
     private fun verifyUserlogado(){
 
-        if (SecurityPreferences(this).getString(Constants.KEY.SAVE_LOGIN) != "") {
-            if (SecurityPreferences(this).getString(Constants.KEY.EMAIL_LOGIN) != "" &&
-                SecurityPreferences(this).getString(Constants.KEY.PASSWORD_LOGIN) != ""
+        if (SecurityPreferences(this).getString(Constants.KEY_SHARED.SAVE_LOGIN) != "") {
+            if (SecurityPreferences(this).getString(Constants.KEY_SHARED.EMAIL_LOGIN) != "" &&
+                SecurityPreferences(this).getString(Constants.KEY_SHARED.PASSWORD_LOGIN) != ""
             ) {
-                autenUser(SecurityPreferences(this).getString(Constants.KEY.EMAIL_LOGIN).toString(),
-                    SecurityPreferences(this).getString(Constants.KEY.PASSWORD_LOGIN).toString(),
+                autenUser(SecurityPreferences(this).getString(Constants.KEY_SHARED.EMAIL_LOGIN).toString(),
+                    SecurityPreferences(this).getString(Constants.KEY_SHARED.PASSWORD_LOGIN).toString(),
                     false)
             }
         }

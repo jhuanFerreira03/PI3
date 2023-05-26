@@ -15,7 +15,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.messaging.FirebaseMessaging
 
 class UserActivity : AppCompatActivity(), View.OnClickListener {
-    private lateinit var binding: ActivityUserBinding
+    private lateinit var binding : ActivityUserBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
     private lateinit var messaging : FirebaseMessaging
@@ -34,7 +34,7 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
         updateToken()
         verifyStatus()
 
-        binding.emailUsuario.text = SecurityPreferences(this).getString(Constants.KEY.EMAIL_LOGIN)
+        binding.emailUsuario.text = SecurityPreferences(this).getString(Constants.KEY_SHARED.EMAIL_LOGIN)
         binding.buttonLogout.setOnClickListener(this)
         binding.buttonEmergencyList.setOnClickListener(this)
 
@@ -47,58 +47,58 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
         val dados = hashMapOf(
             "status" to status
         )
-        db.collection("Users").whereEqualTo("email", SecurityPreferences(this).getString(Constants.KEY.EMAIL_LOGIN))
+        db.collection(Constants.DB.DENTISTAS).whereEqualTo(Constants.DB.FIELD.EMAIL_DB, SecurityPreferences(this).getString(Constants.KEY_SHARED.EMAIL_LOGIN))
             .get().addOnCompleteListener {
-                val doc : DocumentSnapshot = it.getResult().documents.get(0)
+                val doc : DocumentSnapshot = it.result.documents[0]
                 val docId : String = doc.id
-                db.collection("Users").document(docId).update(dados as Map<String, Any>).addOnCompleteListener {}
+                db.collection(Constants.DB.DENTISTAS).document(docId).update(dados as Map<String, Any>).addOnCompleteListener {}
             }
         if (status) {
             Snackbar.make(binding.buttonLogout, "Notificações ativadas!", Snackbar.LENGTH_LONG).show()
-            SecurityPreferences(this).storeString(Constants.KEY.NOTI, Constants.KEY.TRUE)
+            SecurityPreferences(this).storeString(Constants.OTHERS.NOTI, Constants.OTHERS.TRUE)
         }
         else {
             Snackbar.make(binding.buttonLogout, "Notificações desativadas!", Snackbar.LENGTH_LONG).show()
-            SecurityPreferences(this).storeString(Constants.KEY.NOTI, Constants.KEY.FALSE)
+            SecurityPreferences(this).storeString(Constants.OTHERS.NOTI, Constants.OTHERS.FALSE)
         }
     }
     private fun updateToken(){
         val token : String = messaging.token.result
         val uid : String = auth.uid.toString()
 
-        db.collection("Users").whereEqualTo("uid", uid).get().addOnCompleteListener {
-            val doc : DocumentSnapshot = it.getResult().documents.get(0)
+        db.collection(Constants.DB.DENTISTAS).whereEqualTo("uid", uid).get().addOnCompleteListener {
+            val doc : DocumentSnapshot = it.result.documents[0]
             val docId : String = doc.id
-            db.collection("Users").document(docId).update("fcmToken", token).addOnCompleteListener {}
+            db.collection(Constants.DB.DENTISTAS).document(docId).update("fcmToken", token).addOnCompleteListener {}
         }
     }
     private fun verifyStatus (){
-        db.collection("Users")
-                .whereEqualTo("email", SecurityPreferences(this).getString(Constants.KEY.EMAIL_LOGIN)).
+        db.collection(Constants.DB.DENTISTAS)
+                .whereEqualTo(Constants.DB.FIELD.EMAIL_DB, SecurityPreferences(this).getString(Constants.KEY_SHARED.EMAIL_LOGIN)).
                 get().addOnCompleteListener {
-                    val doc : DocumentSnapshot = it.result.documents.get(0)
+                    val doc : DocumentSnapshot = it.result.documents[0]
                     val docId : String = doc.id
-                    db.collection("Users").document(docId).addSnapshotListener{ doc, e ->
+                    db.collection(Constants.DB.DENTISTAS).document(docId).addSnapshotListener{ doc, e ->
                         SecurityPreferences(this).storeString("sta", doc?.get("status").toString())
                     }
                 }
-        if(SecurityPreferences(this).getString("sta").toString() == Constants.KEY.FALSE.lowercase()) return
-        else if (SecurityPreferences(this).getString("sta").toString() == Constants.KEY.TRUE.lowercase()) {
+        if(SecurityPreferences(this).getString("sta").toString() == Constants.OTHERS.FALSE.lowercase()) return
+        else if (SecurityPreferences(this).getString("sta").toString() == Constants.OTHERS.TRUE.lowercase()) {
             binding.switchButton.isChecked = true
         }
     }
     override fun onClick(v: View) {
         when(v.id) {
             R.id.button_logout -> {
-                SecurityPreferences(this).storeString(Constants.KEY.SAVE_LOGIN, "")
-                SecurityPreferences(this).storeString(Constants.KEY.EMAIL_LOGIN, "")
-                SecurityPreferences(this).storeString(Constants.KEY.PASSWORD_LOGIN, "")
+                SecurityPreferences(this).storeString(Constants.KEY_SHARED.SAVE_LOGIN, "")
+                SecurityPreferences(this).storeString(Constants.KEY_SHARED.EMAIL_LOGIN, "")
+                SecurityPreferences(this).storeString(Constants.KEY_SHARED.PASSWORD_LOGIN, "")
                 auth.signOut()
                 startActivity(Intent(this, TelaLogin::class.java))
                 finish()
             }
             R.id.button_emergencyList -> {
-                startActivity(Intent(this, EmergencyActivity::class.java))
+                startActivity(Intent(this, EmergenciesActivity::class.java))
             }
         }
     }

@@ -25,7 +25,6 @@ class MilagreActivity : AppCompatActivity(), View.OnClickListener{
     private val gson = GsonBuilder().enableComplexMapKeySerialization().create()
     private lateinit var functions: FirebaseFunctions
     private lateinit var binding:ActivityMilagreBinding
-    private val TAG = "SignUpFragment"
     private var countAddress : Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,14 +73,12 @@ class MilagreActivity : AppCompatActivity(), View.OnClickListener{
             return
         }
 
-        SecurityPreferences(this).storeString(Constants.KEY.EMAIL_REGISTER, binding.editEmailRegister.text.toString().trim().lowercase())
-        SecurityPreferences(this).storeString(Constants.KEY.PASSWORD_REGISTER, binding.editSenhaRegister.text.toString().trim().lowercase())
-        SecurityPreferences(this).storeString(Constants.KEY.PHONE_NUMBER_REGISTER, binding.editTelefoneRegister.text.toString().trim().lowercase())
-        SecurityPreferences(this).storeString(Constants.KEY.NAME_REGISTER, binding.editNomeRegister.text.toString().trim().lowercase())
+        SecurityPreferences(this).storeString(Constants.KEY_SHARED.EMAIL_REGISTER, binding.editEmailRegister.text.toString().trim().lowercase())
+        SecurityPreferences(this).storeString(Constants.KEY_SHARED.PASSWORD_REGISTER, binding.editSenhaRegister.text.toString().trim().lowercase())
+        SecurityPreferences(this).storeString(Constants.KEY_SHARED.PHONE_NUMBER_REGISTER, binding.editTelefoneRegister.text.toString().trim().lowercase())
+        SecurityPreferences(this).storeString(Constants.KEY_SHARED.NAME_REGISTER, binding.editNomeRegister.text.toString().trim().lowercase())
 
         startActivity(Intent(this, RegisterActivity::class.java))
-
-        // Chama a função signUpNewAccount para criar uma nova conta de usuário
     }
 
     private fun verifyAddress():Boolean{
@@ -131,9 +128,9 @@ class MilagreActivity : AppCompatActivity(), View.OnClickListener{
                 binding.addressEstado.text.toString().trim().lowercase()
 
         when(countAddress) {
-            0 -> SecurityPreferences(this).storeString(Constants.KEY.ADDRESS_1_REGISTER, address)
-            1 -> SecurityPreferences(this).storeString(Constants.KEY.ADDRESS_2_REGISTER, address)
-            2 -> SecurityPreferences(this).storeString(Constants.KEY.ADDRESS_3_REGISTER, address)
+            0 -> SecurityPreferences(this).storeString(Constants.KEY_SHARED.ADDRESS_1_REGISTER, address)
+            1 -> SecurityPreferences(this).storeString(Constants.KEY_SHARED.ADDRESS_2_REGISTER, address)
+            2 -> SecurityPreferences(this).storeString(Constants.KEY_SHARED.ADDRESS_3_REGISTER, address)
         }
 
         val additionalAddressesContainer = findViewById<LinearLayout>(R.id.additional_addresses_container)
@@ -163,11 +160,6 @@ class MilagreActivity : AppCompatActivity(), View.OnClickListener{
         binding.addressCidade.setText("")
         binding.addressEstado.setText("")
     }
-
-    companion object {
-        private const val TAG = "MilagreActivity"
-    }
-
     override fun onClick(v: View) {
         when(v.id) {
             R.id.btn_avancar_register -> userRegister()

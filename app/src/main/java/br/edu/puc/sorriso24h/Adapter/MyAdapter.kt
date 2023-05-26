@@ -19,10 +19,10 @@ class MyAdapter(var context: Context,var arrayList: ArrayList<User>) :
         return MyViewHolder(v, listen)
     }
     override fun onBindViewHolder(holder: MyAdapter.MyViewHolder, position: Int) {
-        val user : User = arrayList.get(position)
+        val user : User = arrayList[position]
 
-        holder.nome.setText(user.nome)
-        holder.telefone.setText(user.telefone)
+        holder.nome.text = user.nome
+        holder.telefone.text = user.telefone
     }
     override fun getItemCount(): Int {
         return arrayList.size

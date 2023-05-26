@@ -41,42 +41,47 @@ class EmergencyDetailActivity : AppCompatActivity(), View.OnClickListener {
 
         binding.imageArrowBack.setColorFilter(ContextCompat.getColor(this, R.color.purple_500))
 
-        binding.textNomeDetalhe.setText(SecurityPreferences(this).getString(Constants.KEY.ARRAY_NAME)?.uppercase())
-        binding.textTelefoneDetalhe.setText(SecurityPreferences(this).getString(Constants.KEY.ARRAY_TEL)?.uppercase())
+        binding.textNomeDetalhe.text = SecurityPreferences(this).getString(Constants.KEY_SHARED.ARRAY_NAME)?.uppercase()
+        binding.textTelefoneDetalhe.text = SecurityPreferences(this).getString(Constants.KEY_SHARED.ARRAY_TEL)?.uppercase()
 
         binding.btnVoltarRegister.setOnClickListener(this)
         binding.buttonAceitarEmergencia.setOnClickListener(this)
     }
     private fun aceitarEmergencia(){
-        db.collection("DadosSocorristas").whereEqualTo("nome", SecurityPreferences(this).getString(Constants.KEY.ARRAY_NAME).toString())
-            .get().addOnCompleteListener {
-                val doc : DocumentSnapshot = it.getResult().documents.get(0)
-                val docId : String = doc.id
-                val dad : HashMap<String?, Any?> = doc.getData() as HashMap<String?, Any?>
-                var x  = 0
-                do {
-                    x++
-                    val d : Task<QuerySnapshot> = db.collection("Users")
-                        .whereEqualTo("email", SecurityPreferences(this).getString(Constants.KEY.EMAIL_LOGIN).toString())
-                        .get().addOnCompleteListener {}
-                    if(!dad.containsKey("dentista_${x}")){
-                        db.collection("DadosSocorristas").document(docId).update("dentista_${x}", it.result.documents.get(0).id)
-                        Snackbar.make(binding.buttonAceitarEmergencia, "Voce aceitou essa Emergencia, Aguarde o retorno!", Snackbar.LENGTH_LONG).show()
-                        return@addOnCompleteListener
-                    }
-                    else{
-                        if (dad.get("dentista_${x}") == it.result.documents.get(0).id){
-                            Snackbar.make(binding.buttonAceitarEmergencia, "Voce ja aceitou essa emergencia, Aguarde o retorno!", Snackbar.LENGTH_LONG).show()
-                            return@addOnCompleteListener
+        db.collection(Constants.DB.EMERGENCIAS)
+            .whereEqualTo(Constants.DB.FIELD.PHONE, SecurityPreferences(this).getString(Constants.KEY_SHARED.ARRAY_TEL).toString()).get().addOnCompleteListener {
+                it ->
+                val itId = it.result.documents[0].id
+                db.collection(Constants.DB.DENTISTAS).whereEqualTo("email", SecurityPreferences(this).getString(Constants.KEY_SHARED.EMAIL_LOGIN))
+                    .get().addOnCompleteListener {
+                    uid ->
+                    val uidId = uid.result.documents[0].id
+                    val cop : HashMap<String?, Any?> = it.result.documents[0].data as HashMap<String?, Any?>
+                    var x = 1
+                    if(!cop.containsValue(uidId)) {
+                        for (count in cop.keys) {
+                           if (count.toString() == "dentista_${x}") {
+                               x++
+                           }
                         }
+                        db.collection(Constants.DB.EMERGENCIAS).document(itId)
+                            .update("dentista_${x}", uidId)
+
+                        Snackbar.make(binding.buttonAceitarEmergencia, Constants.PHRASE.EMERGENCY_ACCEPTED, Snackbar.LENGTH_LONG).show()
+
                     }
-                }while (true)
+                    Snackbar.make(
+                        binding.buttonAceitarEmergencia,
+                        Constants.PHRASE.ALREADY_ACCEPTED_EMERGENCY,
+                        Snackbar.LENGTH_LONG
+                    ).show()
+                }
             }
     }
     override fun onClick(v: View) {
         when (v.id){
             R.id.btn_voltar_register -> {
-                startActivity(Intent(this, EmergencyActivity::class.java))
+                startActivity(Intent(this, EmergenciesActivity::class.java))
                 finish()
             }
             R.id.button_aceitar_emergencia -> {
@@ -85,6 +90,3 @@ class EmergencyDetailActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 }
-/*db.collection("Users")
-.whereEqualTo("email", SecurityPreferences(this)
-.getString(Constants.KEY.EMAIL_LOGIN).toString()).get().result.documents.get(0).id)*/

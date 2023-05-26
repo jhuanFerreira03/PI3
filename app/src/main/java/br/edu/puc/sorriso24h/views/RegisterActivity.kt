@@ -31,7 +31,6 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener{
     private lateinit var messaging : FirebaseMessaging
     private val gson = GsonBuilder().enableComplexMapKeySerialization().create()
     private lateinit var functions: FirebaseFunctions
-    private val TAG = "SignUpFragment"
 
     private lateinit var binding : ActivityRegisterBinding
 
@@ -46,7 +45,7 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener{
         binding.progressRegister.visibility = View.INVISIBLE
 
         auth = FirebaseAuth.getInstance()
-        functions = FirebaseFunctions.getInstance("southamerica-east1")
+        functions = FirebaseFunctions.getInstance(Constants.DB.REGIAO)
         db = FirebaseFirestore.getInstance()
         messaging = FirebaseMessaging.getInstance()
 
@@ -76,33 +75,21 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener{
                         "fcmToken" to token,
                         "status" to false,
                     )
-
-                    /*auth.signInWithEmailAndPassword(email, senha).addOnCompleteListener { log ->
-                        if(log.isSuccessful){
-                            db.collection("User").document().set(dados).addOnCompleteListener { add ->
-                                Log.d("db", "Sucesso meu bom!")
-                            }.addOnFailureListener{ exception ->
-                                binding.textError.setText(exception.toString())
-                                Snackbar.make(binding.buttonRegister, "ih rapaz..."+ exception, Snackbar.LENGTH_LONG).show()
-                            }
-                        }
-                    }*/
-
-                    functions.getHttpsCallable("addUsers").call(dados).continueWith { task1 ->
+                    functions.getHttpsCallable(Constants.DB.ADD_DENTIST_FUNCTION).call(dados).continueWith { task1 ->
                         val json = JSONObject(task1.result?.data as String)
-                        val status = json.getString("status")
-                        val message = json.getString("message")
+                        //val status = json.getString("status")
+                        //val message = json.getString("message")
                     }
                     startActivity(Intent(this, SuccessfulRegisterActivity::class.java))
                     finish()
                 }
             }.addOnFailureListener{ exception ->
                 val messageError = when(exception) {
-                    is FirebaseAuthWeakPasswordException -> "Digite uma nova senha com no minimo 6 digitos!"
-                    is FirebaseAuthInvalidCredentialsException -> "Digite um email valido!"
-                    is FirebaseAuthUserCollisionException -> "Esta conta ja existe!"
-                    is FirebaseNetworkException -> "Sem conexão com a internet!"
-                    else -> "Erro ao cadastrar usuario!"
+                    is FirebaseAuthWeakPasswordException -> Constants.PHRASE.PASSWORD_ERROR_REGISTER
+                    is FirebaseAuthInvalidCredentialsException -> Constants.PHRASE.INVALID_EMAIL
+                    is FirebaseAuthUserCollisionException -> Constants.PHRASE.USER_ALREADY_EXISTS
+                    is FirebaseNetworkException -> Constants.PHRASE.NO_INTERNET
+                    else -> Constants.PHRASE.GENERIC_ERROR
                 }
                 Snackbar.make(binding.buttonRegister, messageError, Snackbar.LENGTH_LONG).show()
             }
@@ -112,18 +99,18 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener{
             R.id.btn_voltar_register -> startActivity(Intent(this, MilagreActivity::class.java))
             R.id.button_register -> {
                 if(binding.editMiniCurriculo.length() == 0){
-                    Snackbar.make(binding.buttonRegister, "Faça um mini curriculo!", Snackbar.LENGTH_LONG).show()
+                    Snackbar.make(binding.buttonRegister, Constants.PHRASE.MINI_CURR, Snackbar.LENGTH_LONG).show()
                     return
                 }
                 binding.progressRegister.visibility = View.VISIBLE
-                SecurityPreferences(this).storeString(Constants.KEY.CURRICULUM, binding.editMiniCurriculo.text.toString())
+                SecurityPreferences(this).storeString(Constants.KEY_SHARED.CURRICULUM, binding.editMiniCurriculo.text.toString())
 
-                NewAccount(SecurityPreferences(this).getString(Constants.KEY.NAME_REGISTER).toString(),
-                    SecurityPreferences(this).getString(Constants.KEY.PHONE_NUMBER_REGISTER).toString(),
-                    SecurityPreferences(this).getString(Constants.KEY.EMAIL_REGISTER).toString(),
-                    SecurityPreferences(this).getString(Constants.KEY.PASSWORD_REGISTER).toString(),
-                    SecurityPreferences(this).getString(Constants.KEY.ADDRESS_1_REGISTER).toString(),
-                    SecurityPreferences(this).getString(Constants.KEY.CURRICULUM).toString())
+                NewAccount(SecurityPreferences(this).getString(Constants.KEY_SHARED.NAME_REGISTER).toString(),
+                    SecurityPreferences(this).getString(Constants.KEY_SHARED.PHONE_NUMBER_REGISTER).toString(),
+                    SecurityPreferences(this).getString(Constants.KEY_SHARED.EMAIL_REGISTER).toString(),
+                    SecurityPreferences(this).getString(Constants.KEY_SHARED.PASSWORD_REGISTER).toString(),
+                    SecurityPreferences(this).getString(Constants.KEY_SHARED.ADDRESS_1_REGISTER).toString(),
+                    SecurityPreferences(this).getString(Constants.KEY_SHARED.CURRICULUM).toString())
             }
         }
     }
