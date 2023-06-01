@@ -57,7 +57,7 @@ class EmergenciesActivity : AppCompatActivity(), View.OnClickListener {
 
         recyclerView.adapter = myAdapter
 
-        val listener = object : ListListener{
+        val listener = object : ListListener {
             override fun onClick(adapterPosition: Int) {
                 SecurityPreferences(myAdapter.context).storeString(Constants.KEY_SHARED.ARRAY_NAME, arrayList[adapterPosition].nome.trim())
                 SecurityPreferences(myAdapter.context).storeString(Constants.KEY_SHARED.ARRAY_TEL, arrayList[adapterPosition].telefone.trim())
@@ -72,7 +72,8 @@ class EmergenciesActivity : AppCompatActivity(), View.OnClickListener {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun EventChangeListener() {
-        db.collection(Constants.DB.EMERGENCIAS).whereEqualTo(Constants.DB.FIELD.CLOSED_STATUS, false)
+        db.collection(Constants.DB.EMERGENCIAS)
+            .whereEqualTo(Constants.DB.FIELD.CLOSED_STATUS, false)
             .addSnapshotListener { result, erro ->
                 if (erro != null) {
                     Log.e("Firestore error", erro.message.toString())

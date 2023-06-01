@@ -20,9 +20,10 @@ class Constants {
         const val ARRAY_TEL = "ARRAY_TEL"
         const val ARRAY_ADAPT = "ARRAY_ADAPT"
 
+        const val NOTI = "NOTI"
+
     }
     object OTHERS {
-        const val NOTI = "NOTI"
         const val TRUE = "TRUE"
         const val FALSE = "FALSE"
     }

@@ -61,9 +61,7 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener{
                     val user = auth.currentUser
                     val uid = user!!.uid
 
-                    lateinit var token : String
-
-                    token = messaging.token.result
+                    val token : String = messaging.token.result
 
                     val dados = hashMapOf(
                         "uid" to uid,
@@ -75,7 +73,9 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener{
                         "fcmToken" to token,
                         "status" to false,
                     )
-                    functions.getHttpsCallable(Constants.DB.ADD_DENTIST_FUNCTION).call(dados).continueWith { task1 ->
+                    functions.getHttpsCallable(Constants.DB.ADD_DENTIST_FUNCTION)
+                        .call(dados)
+                        .continueWith{ task1 ->
                         val json = JSONObject(task1.result?.data as String)
                         //val status = json.getString("status")
                         //val message = json.getString("message")

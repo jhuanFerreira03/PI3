@@ -78,7 +78,7 @@ class MilagreActivity : AppCompatActivity(), View.OnClickListener{
         SecurityPreferences(this).storeString(Constants.KEY_SHARED.PHONE_NUMBER_REGISTER, binding.editTelefoneRegister.text.toString().trim().lowercase())
         SecurityPreferences(this).storeString(Constants.KEY_SHARED.NAME_REGISTER, binding.editNomeRegister.text.toString().trim().lowercase())
 
-        startActivity(Intent(this, RegisterActivity::class.java))
+        startActivity(Intent(this, PhotoRegisterActivity::class.java))
     }
 
     private fun verifyAddress():Boolean{

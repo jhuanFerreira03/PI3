@@ -26,7 +26,7 @@ class TelaLogin : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         auth = FirebaseAuth.getInstance()
-        verifyUserlogado()
+        //verifyUserlogado()
 
         binding = ActivityTelaLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -64,11 +64,11 @@ class TelaLogin : AppCompatActivity(), View.OnClickListener {
                                 Constants.KEY_SHARED.SAVE_LOGIN,
                                 Constants.KEY_SHARED.SAVED_LOGIN
                             )
-                            SecurityPreferences(this).storeString(Constants.OTHERS.NOTI, Constants.OTHERS.FALSE)
+                            SecurityPreferences(this).storeString(Constants.KEY_SHARED.NOTI, Constants.OTHERS.FALSE)
                         }
                         else {
                             SecurityPreferences(this).storeString(Constants.KEY_SHARED.SAVE_LOGIN, "")
-                            SecurityPreferences(this).storeString(Constants.OTHERS.NOTI, "")
+                            SecurityPreferences(this).storeString(Constants.KEY_SHARED.NOTI, "")
                         }
 
                         SecurityPreferences(this).storeString(

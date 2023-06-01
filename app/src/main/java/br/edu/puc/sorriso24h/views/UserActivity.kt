@@ -15,9 +15,10 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.messaging.FirebaseMessaging
 
 class UserActivity : AppCompatActivity(), View.OnClickListener {
+
     private lateinit var binding : ActivityUserBinding
-    private lateinit var auth: FirebaseAuth
-    private lateinit var db: FirebaseFirestore
+    private lateinit var auth : FirebaseAuth
+    private lateinit var db : FirebaseFirestore
     private lateinit var messaging : FirebaseMessaging
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,38 +48,55 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
         val dados = hashMapOf(
             "status" to status
         )
-        db.collection(Constants.DB.DENTISTAS).whereEqualTo(Constants.DB.FIELD.EMAIL_DB, SecurityPreferences(this).getString(Constants.KEY_SHARED.EMAIL_LOGIN))
-            .get().addOnCompleteListener {
+        db.collection(Constants.DB.DENTISTAS)
+            .whereEqualTo(Constants.DB.FIELD.EMAIL_DB, SecurityPreferences(this).getString(Constants.KEY_SHARED.EMAIL_LOGIN))
+            .get()
+            .addOnCompleteListener {
                 val doc : DocumentSnapshot = it.result.documents[0]
                 val docId : String = doc.id
-                db.collection(Constants.DB.DENTISTAS).document(docId).update(dados as Map<String, Any>).addOnCompleteListener {}
+
+                db.collection(Constants.DB.DENTISTAS)
+                    .document(docId)
+                    .update(dados as Map<String, Any>)
+                    .addOnCompleteListener {}
             }
         if (status) {
             Snackbar.make(binding.buttonLogout, "Notificações ativadas!", Snackbar.LENGTH_LONG).show()
-            SecurityPreferences(this).storeString(Constants.OTHERS.NOTI, Constants.OTHERS.TRUE)
+            SecurityPreferences(this).storeString(Constants.KEY_SHARED.NOTI, Constants.OTHERS.TRUE)
         }
         else {
             Snackbar.make(binding.buttonLogout, "Notificações desativadas!", Snackbar.LENGTH_LONG).show()
-            SecurityPreferences(this).storeString(Constants.OTHERS.NOTI, Constants.OTHERS.FALSE)
+            SecurityPreferences(this).storeString(Constants.KEY_SHARED.NOTI, Constants.OTHERS.FALSE)
         }
     }
     private fun updateToken(){
         val token : String = messaging.token.result
         val uid : String = auth.uid.toString()
 
-        db.collection(Constants.DB.DENTISTAS).whereEqualTo("uid", uid).get().addOnCompleteListener {
+        db.collection(Constants.DB.DENTISTAS)
+            .whereEqualTo("uid", uid)
+            .get()
+            .addOnCompleteListener {
             val doc : DocumentSnapshot = it.result.documents[0]
             val docId : String = doc.id
-            db.collection(Constants.DB.DENTISTAS).document(docId).update("fcmToken", token).addOnCompleteListener {}
+
+            db.collection(Constants.DB.DENTISTAS)
+                .document(docId)
+                .update("fcmToken", token)
+                .addOnCompleteListener{}
         }
     }
     private fun verifyStatus (){
         db.collection(Constants.DB.DENTISTAS)
-                .whereEqualTo(Constants.DB.FIELD.EMAIL_DB, SecurityPreferences(this).getString(Constants.KEY_SHARED.EMAIL_LOGIN)).
-                get().addOnCompleteListener {
+                .whereEqualTo(Constants.DB.FIELD.EMAIL_DB, SecurityPreferences(this).getString(Constants.KEY_SHARED.EMAIL_LOGIN))
+                .get()
+                .addOnCompleteListener {
                     val doc : DocumentSnapshot = it.result.documents[0]
                     val docId : String = doc.id
-                    db.collection(Constants.DB.DENTISTAS).document(docId).addSnapshotListener{ doc, e ->
+
+                    db.collection(Constants.DB.DENTISTAS)
+                        .document(docId)
+                        .addSnapshotListener{ doc, e ->
                         SecurityPreferences(this).storeString("sta", doc?.get("status").toString())
                     }
                 }

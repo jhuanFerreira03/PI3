@@ -49,11 +49,15 @@ class EmergencyDetailActivity : AppCompatActivity(), View.OnClickListener {
     }
     private fun aceitarEmergencia(){
         db.collection(Constants.DB.EMERGENCIAS)
-            .whereEqualTo(Constants.DB.FIELD.PHONE, SecurityPreferences(this).getString(Constants.KEY_SHARED.ARRAY_TEL).toString()).get().addOnCompleteListener {
+            .whereEqualTo(Constants.DB.FIELD.PHONE, SecurityPreferences(this).getString(Constants.KEY_SHARED.ARRAY_TEL).toString())
+            .get()
+            .addOnCompleteListener{
                 it ->
                 val itId = it.result.documents[0].id
-                db.collection(Constants.DB.DENTISTAS).whereEqualTo("email", SecurityPreferences(this).getString(Constants.KEY_SHARED.EMAIL_LOGIN))
-                    .get().addOnCompleteListener {
+                db.collection(Constants.DB.DENTISTAS)
+                    .whereEqualTo(Constants.DB.FIELD.EMAIL_DB, SecurityPreferences(this).getString(Constants.KEY_SHARED.EMAIL_LOGIN))
+                    .get()
+                    .addOnCompleteListener {
                     uid ->
                     val uidId = uid.result.documents[0].id
                     val cop : HashMap<String?, Any?> = it.result.documents[0].data as HashMap<String?, Any?>
@@ -64,7 +68,8 @@ class EmergencyDetailActivity : AppCompatActivity(), View.OnClickListener {
                                x++
                            }
                         }
-                        db.collection(Constants.DB.EMERGENCIAS).document(itId)
+                        db.collection(Constants.DB.EMERGENCIAS)
+                            .document(itId)
                             .update("dentista_${x}", uidId)
 
                         Snackbar.make(binding.buttonAceitarEmergencia, Constants.PHRASE.EMERGENCY_ACCEPTED, Snackbar.LENGTH_LONG).show()
