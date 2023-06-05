@@ -38,7 +38,9 @@ class MilagreActivity : AppCompatActivity(), View.OnClickListener{
         functions = FirebaseFunctions.getInstance()
         db = FirebaseFirestore.getInstance()
 
+        SecurityPreferences(this).storeString("ft_perfil", "")
         supportActionBar?.hide()
+
         binding.imageArrowBack.setColorFilter(ContextCompat.getColor(this, R.color.purple_500))
         binding.imageArrowNext.setColorFilter(ContextCompat.getColor(this, R.color.purple_500))
 

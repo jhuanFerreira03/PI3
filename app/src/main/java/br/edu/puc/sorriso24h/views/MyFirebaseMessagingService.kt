@@ -9,24 +9,33 @@ import android.os.Build
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import br.edu.puc.sorriso24h.R
+import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
 const val channelId = "notification_channel"
 const val channelName = "br.edu.puc.sorriso24h"
 class MyFirebaseMessagingService: FirebaseMessagingService() {
+
+    private var message = FirebaseMessaging.getInstance()
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
-        generateNotification(remoteMessage.notification!!.title!!, remoteMessage.notification!!.body!!)
+        val dados = remoteMessage.data
+
+        if (dados == null) return
+
+        generateNotification(dados["title"].toString(), dados["text"].toString())
+
     }
     fun getRemoteView(title: String, message: String): RemoteViews {
         val remoteView = RemoteViews(channelName, R.layout.notification)
         remoteView.setTextViewText(R.id.text_noti, title)
+        remoteView.setTextViewText(R.id.text_noti_text, message)
 
         return remoteView
     }
 
     fun generateNotification(title: String, message: String){
-        val intent = Intent(this, UserActivity::class.java)
+        val intent = Intent(this, EmergencyDetailActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
 
         val pendingIntent = PendingIntent.getActivity(

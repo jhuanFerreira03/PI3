@@ -4,26 +4,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="@color/gray">
 
     <LinearLayout
         android:layout_centerHorizontal="true"
         android:id="@+id/linnear_princ"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="horizontal"
+        android:layout_marginTop="30dp">
 
         <TextView
             android:id="@+id/nome_usuario"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nome do usuário" />
+            android:text="Olá,"
+            android:textSize="22sp"
+            android:textColor="@color/purple_500"
+            android:layout_marginEnd="6dp"/>
 
         <TextView
             android:id="@+id/email_usuario"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="E-mail do usuário" />
+            android:textSize="22sp"
+            android:textColor="@color/purple_500"
+            android:textStyle="bold"
+            android:text="@string/empty" />
     </LinearLayout>
 
 
@@ -37,11 +45,22 @@
         android:thumbTint="@color/purple_500"
         android:layout_below="@+id/linnear_princ"
         android:layout_centerHorizontal="true"
-        android:paddingTop="80dp" />
+        android:paddingTop="65dp" />
+
+    <Button
+        android:id="@+id/button_details"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_above="@+id/button_emergencyList"
+        android:layout_alignStart="@+id/button_emergencyList"
+        android:layout_alignEnd="@+id/button_emergencyList"
+        android:layout_marginBottom="15dp"
+        android:text="Detalhes da Conta" />
+
     <Button
         android:id="@+id/button_emergencyList"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:text="@string/lista_emergencias"
         android:layout_above="@+id/button_logout"
         android:layout_centerHorizontal="true"
@@ -50,7 +69,7 @@
     <Button
         android:id="@+id/button_logout"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:text="@string/logout"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"

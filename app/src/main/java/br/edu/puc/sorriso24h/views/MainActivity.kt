@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         auth = FirebaseAuth.getInstance()
 
-        verifyUserlogado()
+        verifyUserlogin()
 
     }
 
@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
     }
 
-    private fun verifyUserlogado(){
+    private fun verifyUserlogin(){
         if (SecurityPreferences(this).getString(Constants.KEY_SHARED.SAVE_LOGIN) != "") {
             if (SecurityPreferences(this).getString(Constants.KEY_SHARED.EMAIL_LOGIN) != "" &&
                 SecurityPreferences(this).getString(Constants.KEY_SHARED.PASSWORD_LOGIN) != ""

@@ -34,15 +34,25 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
 
         updateToken()
         verifyStatus()
+        setName()
 
-        binding.emailUsuario.text = SecurityPreferences(this).getString(Constants.KEY_SHARED.EMAIL_LOGIN)
         binding.buttonLogout.setOnClickListener(this)
         binding.buttonEmergencyList.setOnClickListener(this)
+        binding.buttonDetails.setOnClickListener(this)
 
         binding.switchButton.setOnClickListener{
             if(binding.switchButton.isChecked) updateStatus(true)
             else updateStatus(false)
         }
+    }
+    private fun setName(){
+        db.collection(Constants.DB.DENTISTAS)
+            .whereEqualTo("uid", auth.currentUser!!.uid)
+            .get()
+            .addOnCompleteListener {
+                doc ->
+                binding.emailUsuario.setText(doc.result.documents[0].get("nome").toString())
+            }
     }
     private fun updateStatus(status: Boolean) {
         val dados = hashMapOf(
@@ -117,6 +127,9 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
             }
             R.id.button_emergencyList -> {
                 startActivity(Intent(this, EmergenciesActivity::class.java))
+            }
+            R.id.button_details -> {
+                startActivity(Intent(this, AccountDetailsActivity::class.java))
             }
         }
     }

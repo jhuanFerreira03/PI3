@@ -17,6 +17,9 @@
         android:theme="@style/Theme.sorriso24h"
         tools:targetApi="31">
         <activity
+            android:name=".views.AccountDetailsActivity"
+            android:exported="false" />
+        <activity
             android:name=".views.PhotoRegisterActivity"
             android:exported="false" />
         <activity

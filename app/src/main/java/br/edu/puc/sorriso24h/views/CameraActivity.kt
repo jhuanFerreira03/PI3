@@ -1,7 +1,9 @@
 package br.edu.puc.sorriso24h.views
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -16,8 +18,13 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import br.edu.puc.sorriso24h.R
 import br.edu.puc.sorriso24h.databinding.ActivityCameraBinding
+import br.edu.puc.sorriso24h.infra.SecurityPreferences
 import com.google.android.material.snackbar.Snackbar
 import com.google.common.util.concurrent.ListenableFuture
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.ktx.storage
+import io.grpc.Context.Storage
 import java.io.File
 import java.lang.Exception
 import java.util.concurrent.ExecutorService
@@ -31,6 +38,7 @@ class CameraActivity : AppCompatActivity() , View.OnClickListener{
     private lateinit var cameraSelector : CameraSelector
     private var imageCapture : ImageCapture?= null
     private lateinit var imgCaptureExecutor : ExecutorService
+    private lateinit var storage : FirebaseStorage
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +50,7 @@ class CameraActivity : AppCompatActivity() , View.OnClickListener{
         cameraProviderFuture = ProcessCameraProvider.getInstance(this)
         cameraSelector = CameraSelector.DEFAULT_FRONT_CAMERA
         imgCaptureExecutor = Executors.newSingleThreadExecutor()
+        storage = Firebase.storage
 
         binding.buttonTakePhoto.setOnClickListener(this)
 
@@ -76,6 +85,18 @@ class CameraActivity : AppCompatActivity() , View.OnClickListener{
                 imgCaptureExecutor,
                 object : ImageCapture.OnImageSavedCallback {
                     override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
+                        val filearq = Uri.fromFile(file)
+                        SecurityPreferences(binding.root.context).storeString("ft_perfil", filearq.toString())
+                        startActivity(Intent(binding.root.context, PhotoRegisterActivity::class.java))
+                        finish()
+                        /*val filearq = Uri.fromFile(file)
+                        val riversRef = storage.reference.child("images/${fileName}")
+                        val uploadTask = riversRef.putFile(filearq)
+                        uploadTask.addOnFailureListener {
+                            Snackbar.make(binding.root, "Imagem enviada!", Snackbar.LENGTH_LONG).setBackgroundTint(Color.GREEN).show()
+                        }.addOnSuccessListener { taskSnapshot ->
+                            Snackbar.make(binding.root, "Imagem não enviada!", Snackbar.LENGTH_LONG).setBackgroundTint(Color.RED).show()
+                        }*/
                         Log.i("CameraPreview", "A Imagem foi salva no diretorio: ${file.toURI()}")
                     }
                     override fun onError(exception: ImageCaptureException) {

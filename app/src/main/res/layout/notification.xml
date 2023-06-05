@@ -7,23 +7,22 @@
         android:padding="10dp"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/image_noti"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="10dp"
-            android:src="@drawable/ic_arrow_back"
-            android:background="@color/purple_500"/>
-
         <TextView
             android:id="@+id/text_noti"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="tittle"
             android:textSize="17sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/text_noti_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="tittle"
+            android:textSize="17sp"
             android:textStyle="bold"
-            android:layout_toEndOf="@+id/image_noti"/>
+            android:layout_below="@+id/text_noti" />
     </RelativeLayout>
 
 </RelativeLayout>

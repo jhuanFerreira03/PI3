@@ -22,4 +22,5 @@
     <string name="lista_emergen">Lista de Emergências</string>
     <string name="sem_emergencias">Sem emergencias no momento!</string>
     <string name="aguarde">Aguarde...</string>
+    <string name="empty">...</string>
 </resources>
