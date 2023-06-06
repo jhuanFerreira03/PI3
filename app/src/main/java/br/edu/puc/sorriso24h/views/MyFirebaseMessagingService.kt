@@ -9,6 +9,8 @@ import android.os.Build
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import br.edu.puc.sorriso24h.R
+import br.edu.puc.sorriso24h.infra.Constants
+import br.edu.puc.sorriso24h.infra.SecurityPreferences
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
@@ -23,8 +25,10 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
 
         if (dados == null) return
 
-        generateNotification(dados["title"].toString(), dados["text"].toString())
+        SecurityPreferences(this).storeString(Constants.KEY_SHARED.ARRAY_NAME, dados["nome"].toString())
+        SecurityPreferences(this).storeString(Constants.KEY_SHARED.ARRAY_TEL, dados["telefone"].toString())
 
+        generateNotification(dados["title"].toString(), dados["nome"].toString() + " " + dados["telefone"].toString())
     }
     fun getRemoteView(title: String, message: String): RemoteViews {
         val remoteView = RemoteViews(channelName, R.layout.notification)

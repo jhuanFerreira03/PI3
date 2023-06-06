@@ -69,7 +69,6 @@ class EmergenciesActivity : AppCompatActivity(), View.OnClickListener {
 
         EventChangeListener()
     }
-
     @SuppressLint("NotifyDataSetChanged")
     private fun EventChangeListener() {
         db.collection(Constants.DB.EMERGENCIAS)
@@ -82,6 +81,7 @@ class EmergenciesActivity : AppCompatActivity(), View.OnClickListener {
                 arrayList.clear()
                 binding.progressLogin.isVisible = false
                 binding.textView3.isVisible = false
+
                 for (doc: DocumentChange in result!!.documentChanges) {
                     if (doc.type == DocumentChange.Type.ADDED) {
                         arrayList.add(doc.document.toObject(User().javaClass))

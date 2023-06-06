@@ -73,6 +73,7 @@ class EmergencyDetailActivity : AppCompatActivity(), View.OnClickListener {
                             .update("dentista_${x}", uidId)
 
                         Snackbar.make(binding.buttonAceitarEmergencia, Constants.PHRASE.EMERGENCY_ACCEPTED, Snackbar.LENGTH_LONG).show()
+                        return@addOnCompleteListener
 
                     }
                     Snackbar.make(
