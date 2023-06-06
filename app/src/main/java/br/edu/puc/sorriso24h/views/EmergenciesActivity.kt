@@ -85,8 +85,8 @@ class EmergenciesActivity : AppCompatActivity(), View.OnClickListener {
                 for (doc: DocumentChange in result!!.documentChanges) {
                     if (doc.type == DocumentChange.Type.ADDED) {
                         arrayList.add(doc.document.toObject(User().javaClass))
-                        myAdapter.notifyDataSetChanged()
                     }
+                    myAdapter.notifyDataSetChanged()
                 }
             }
     }

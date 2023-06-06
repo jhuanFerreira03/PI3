@@ -15,11 +15,9 @@ import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
-const val channelId = "notification_channel"
-const val channelName = "br.edu.puc.sorriso24h"
 class MyFirebaseMessagingService: FirebaseMessagingService() {
-
-    private var message = FirebaseMessaging.getInstance()
+    private val channelId = "notification_channel"
+    private val channelName = "br.edu.puc.sorriso24h"
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         val dados = remoteMessage.data
 
@@ -30,15 +28,14 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
 
         generateNotification(dados["title"].toString(), dados["nome"].toString() + " " + dados["telefone"].toString())
     }
-    fun getRemoteView(title: String, message: String): RemoteViews {
+    private fun getRemoteView(title: String, message: String): RemoteViews {
         val remoteView = RemoteViews(channelName, R.layout.notification)
         remoteView.setTextViewText(R.id.text_noti, title)
         remoteView.setTextViewText(R.id.text_noti_text, message)
 
         return remoteView
     }
-
-    fun generateNotification(title: String, message: String){
+    private fun generateNotification(title: String, message: String){
         val intent = Intent(this, EmergencyDetailActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
 
