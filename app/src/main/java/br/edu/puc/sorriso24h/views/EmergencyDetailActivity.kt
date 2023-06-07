@@ -1,6 +1,7 @@
 package br.edu.puc.sorriso24h.views
 
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.ScaleGestureDetector
@@ -72,15 +73,15 @@ class EmergencyDetailActivity : AppCompatActivity(), View.OnClickListener {
                             .document(itId)
                             .update("dentista_${x}", uidId)
 
-                        Snackbar.make(binding.buttonAceitarEmergencia, Constants.PHRASE.EMERGENCY_ACCEPTED, Snackbar.LENGTH_LONG).show()
+                        Snackbar.make(binding.buttonAceitarEmergencia, Constants.PHRASE.EMERGENCY_ACCEPTED, Snackbar.LENGTH_LONG)
+                            .setBackgroundTint(Color.GREEN)
+                            .show()
                         return@addOnCompleteListener
 
                     }
-                    Snackbar.make(
-                        binding.buttonAceitarEmergencia,
-                        Constants.PHRASE.ALREADY_ACCEPTED_EMERGENCY,
-                        Snackbar.LENGTH_LONG
-                    ).show()
+                    Snackbar.make(binding.buttonAceitarEmergencia, Constants.PHRASE.ALREADY_ACCEPTED_EMERGENCY, Snackbar.LENGTH_LONG)
+                        .setBackgroundTint(Color.RED)
+                        .show()
                 }
             }
     }

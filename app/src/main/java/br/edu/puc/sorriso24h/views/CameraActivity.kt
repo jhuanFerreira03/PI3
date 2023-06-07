@@ -1,6 +1,7 @@
 package br.edu.puc.sorriso24h.views
 
 import android.content.Intent
+import android.graphics.Camera
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
@@ -48,11 +49,17 @@ class CameraActivity : AppCompatActivity() , View.OnClickListener{
         supportActionBar?.hide()
 
         cameraProviderFuture = ProcessCameraProvider.getInstance(this)
-        cameraSelector = CameraSelector.DEFAULT_FRONT_CAMERA
+        if (SecurityPreferences(this).getString("photo") == "front") {
+            cameraSelector = CameraSelector.DEFAULT_FRONT_CAMERA
+        }
+        else if(SecurityPreferences(this).getString("photo") == "back"){
+            cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
+        }
         imgCaptureExecutor = Executors.newSingleThreadExecutor()
         storage = Firebase.storage
 
         binding.buttonTakePhoto.setOnClickListener(this)
+        binding.buttonSwitchCamera.setOnClickListener(this)
 
         startCamera()
     }
@@ -109,6 +116,16 @@ class CameraActivity : AppCompatActivity() , View.OnClickListener{
             )
         }
     }
+    private fun switchCamera(){
+        if (cameraSelector == CameraSelector.DEFAULT_BACK_CAMERA){
+            SecurityPreferences(this).storeString("photo", "front")
+            recreate()
+        }
+        else{
+            SecurityPreferences(this).storeString("photo", "back")
+            recreate()
+        }
+    }
     @RequiresApi(Build.VERSION_CODES.M)
     private fun blindPreviw(){
         binding.root.postDelayed({
@@ -126,6 +143,7 @@ class CameraActivity : AppCompatActivity() , View.OnClickListener{
                     blindPreviw()
                 }
             }
+            R.id.button_switchCamera -> switchCamera()
         }
     }
 }

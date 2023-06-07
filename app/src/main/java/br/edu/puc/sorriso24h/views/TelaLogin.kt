@@ -35,6 +35,7 @@ class TelaLogin : AppCompatActivity(), View.OnClickListener {
         supportActionBar?.hide()
 
         binding.progressLogin.visibility = View.INVISIBLE
+        binding.checkManter.isChecked = true
 
         binding.loginButton.setOnClickListener(this)
         binding.registerText.setOnClickListener(this)

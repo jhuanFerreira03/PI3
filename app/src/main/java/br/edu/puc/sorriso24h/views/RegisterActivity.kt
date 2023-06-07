@@ -21,6 +21,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.functions.FirebaseFunctions
 import com.google.firebase.ktx.Firebase
@@ -88,17 +89,51 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener{
                         //val status = json.getString("status")
                         //val message = json.getString("message")
                     }
-                    startActivity(Intent(this, SuccessfulRegisterActivity::class.java))
-                    finish()
+                    /*if (SecurityPreferences(this).getString(Constants.KEY_SHARED.ADDRESS_2_REGISTER).toString() != "") {
+                        val end2 = hashMapOf(
+                            "endereco_2" to SecurityPreferences(this).getString(Constants.KEY_SHARED.ADDRESS_2_REGISTER).toString()
+                        )
+                        db.collection(Constants.DB.DENTISTAS)
+                            .whereEqualTo(Constants.DB.FIELD.UID, auth.currentUser!!.uid)
+                            .get()
+                            .addOnCompleteListener {
+                                val doc : DocumentSnapshot = it.result.documents[0]
+                                val docId : String = doc.id
 
+                                db.collection(Constants.DB.DENTISTAS)
+                                    .document(docId)
+                                    .update(end2 as Map<String, Any>)
+                                    .addOnCompleteListener {}
+                            }.addOnFailureListener{
+                            }
+                    }
+                    if (SecurityPreferences(this).getString(Constants.KEY_SHARED.ADDRESS_3_REGISTER).toString() != "") {
+                        val end3 = hashMapOf(
+                            "endereco_3" to SecurityPreferences(this).getString(Constants.KEY_SHARED.ADDRESS_3_REGISTER).toString()
+                        )
+                        db.collection(Constants.DB.DENTISTAS)
+                            .whereEqualTo(Constants.DB.FIELD.UID, auth.currentUser!!.uid)
+                            .get()
+                            .addOnCompleteListener {
+                                val doc : DocumentSnapshot = it.result.documents[0]
+                                val docId : String = doc.id
+
+                                db.collection(Constants.DB.DENTISTAS)
+                                    .document(docId)
+                                    .update(end3 as Map<String, Any>)
+                                    .addOnCompleteListener {}
+                            }
+                    }*/
                     //val filearq = Uri.fromFile(file)
-                    val riversRef = storage.reference.child("images/${auth.currentUser?.uid}")
+                    val riversRef = storage.reference.child("images_user/${auth.currentUser?.uid}")
                     val uploadTask = riversRef.putFile(SecurityPreferences(this).getString("ft_perfil")!!.toUri())
                     uploadTask.addOnFailureListener {
                         Snackbar.make(binding.root, "Imagem enviada!", Snackbar.LENGTH_LONG).setBackgroundTint(Color.GREEN).show()
                     }.addOnSuccessListener { taskSnapshot ->
                         Snackbar.make(binding.root, "Imagem não enviada!", Snackbar.LENGTH_LONG).setBackgroundTint(Color.RED).show()
                     }
+
+                    startActivity(Intent(this, SuccessfulRegisterActivity::class.java))
                 }
             }.addOnFailureListener{ exception ->
                 val messageError = when(exception) {

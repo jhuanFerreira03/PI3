@@ -1,6 +1,7 @@
 package br.edu.puc.sorriso24h.views
 
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -59,7 +60,7 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
             "status" to status
         )
         db.collection(Constants.DB.DENTISTAS)
-            .whereEqualTo(Constants.DB.FIELD.EMAIL_DB, SecurityPreferences(this).getString(Constants.KEY_SHARED.EMAIL_LOGIN))
+            .whereEqualTo(Constants.DB.FIELD.UID, auth.currentUser!!.uid)
             .get()
             .addOnCompleteListener {
                 val doc : DocumentSnapshot = it.result.documents[0]
@@ -71,11 +72,15 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
                     .addOnCompleteListener {}
             }
         if (status) {
-            Snackbar.make(binding.buttonLogout, "Notificações ativadas!", Snackbar.LENGTH_LONG).show()
+            Snackbar.make(binding.buttonLogout, "Notificações ativadas!", Snackbar.LENGTH_LONG)
+                .setBackgroundTint(Color.GREEN)
+                .show()
             SecurityPreferences(this).storeString(Constants.KEY_SHARED.NOTI, Constants.OTHERS.TRUE)
         }
         else {
-            Snackbar.make(binding.buttonLogout, "Notificações desativadas!", Snackbar.LENGTH_LONG).show()
+            Snackbar.make(binding.buttonLogout, "Notificações desativadas!", Snackbar.LENGTH_LONG)
+                .setBackgroundTint(Color.RED)
+                .show()
             SecurityPreferences(this).storeString(Constants.KEY_SHARED.NOTI, Constants.OTHERS.FALSE)
         }
     }

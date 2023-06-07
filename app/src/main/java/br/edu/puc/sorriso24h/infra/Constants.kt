@@ -37,6 +37,7 @@ class Constants {
             const val NAME_DB = "nome"
             const val EMAIL_DB = "email"
             const val PHONE = "telefone"
+            const val UID = "uid"
         }
     }
 

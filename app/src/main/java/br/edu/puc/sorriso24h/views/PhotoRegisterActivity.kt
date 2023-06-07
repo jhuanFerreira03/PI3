@@ -38,6 +38,8 @@ class PhotoRegisterActivity : AppCompatActivity(), View.OnClickListener {
         binding.imageArrowBack.setColorFilter(ContextCompat.getColor(this, R.color.purple_500))
         binding.imageArrowNext.setColorFilter(ContextCompat.getColor(this, R.color.purple_500))
 
+        SecurityPreferences(this).storeString("photo", "front")
+
         binding.buttonOpenCam.setOnClickListener(this)
         binding.btnAvancarRegister.setOnClickListener(this)
         binding.btnVoltarRegister.setOnClickListener(this)
