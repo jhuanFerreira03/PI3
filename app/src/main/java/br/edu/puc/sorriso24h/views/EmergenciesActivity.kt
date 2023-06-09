@@ -45,7 +45,7 @@ class EmergenciesActivity : AppCompatActivity(), View.OnClickListener {
 
         supportActionBar?.hide()
 
-        binding.imageArrowBack.setColorFilter(ContextCompat.getColor(this, R.color.purple_500))
+        binding.imageArrowBack.setColorFilter(ContextCompat.getColor(this, R.color.second))
         binding.btnVoltarRegister.setOnClickListener(this)
 
         recyclerView = findViewById(R.id.recycle)

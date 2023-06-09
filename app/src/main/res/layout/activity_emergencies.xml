@@ -18,13 +18,12 @@
     <RelativeLayout
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:layout_height="70dp"
         android:layout_marginBottom="19dp"
-        android:background="@color/gray"
-        android:backgroundTint="@color/white"
+        android:background="@color/princ"
         app:layout_constraintBottom_toTopOf="@+id/textView2"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.761"
+        app:layout_constraintVertical_bias="0.0"
         tools:layout_editor_absoluteX="0dp">
 
         <ImageView
@@ -39,13 +38,14 @@
             android:id="@+id/btn_voltar_register"
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="120dp"
-            android:layout_height="50dp"
+            android:layout_height="70dp"
             android:layout_alignStart="@+id/image_arrow_back"
+            android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginStart="-1dp"
+            android:layout_marginStart="-2dp"
             android:backgroundTint="@color/white"
             android:text="@string/voltar"
-            android:textColor="@color/purple_500"
+            android:textColor="@color/second"
             android:textSize="18sp" />
 
     </RelativeLayout>
@@ -71,7 +71,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Carregando emergências..."
-        android:textColor="@color/purple_500"
+        android:textColor="@color/second"
         android:textSize="13sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"

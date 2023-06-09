@@ -40,7 +40,7 @@ class EmergencyDetailActivity : AppCompatActivity(), View.OnClickListener {
 
         supportActionBar?.hide()
 
-        binding.imageArrowBack.setColorFilter(ContextCompat.getColor(this, R.color.purple_500))
+        binding.imageArrowBack.setColorFilter(ContextCompat.getColor(this, R.color.second))
 
         binding.textNomeDetalhe.text = SecurityPreferences(this).getString(Constants.KEY_SHARED.ARRAY_NAME)?.uppercase()
         binding.textTelefoneDetalhe.text = SecurityPreferences(this).getString(Constants.KEY_SHARED.ARRAY_TEL)?.uppercase()
@@ -74,13 +74,13 @@ class EmergencyDetailActivity : AppCompatActivity(), View.OnClickListener {
                             .update("dentista_${x}", uidId)
 
                         Snackbar.make(binding.buttonAceitarEmergencia, Constants.PHRASE.EMERGENCY_ACCEPTED, Snackbar.LENGTH_LONG)
-                            .setBackgroundTint(Color.GREEN)
+                            .setBackgroundTint(Color.rgb(0,191,54))
                             .show()
                         return@addOnCompleteListener
 
                     }
                     Snackbar.make(binding.buttonAceitarEmergencia, Constants.PHRASE.ALREADY_ACCEPTED_EMERGENCY, Snackbar.LENGTH_LONG)
-                        .setBackgroundTint(Color.RED)
+                        .setBackgroundTint(Color.rgb(229,0,37))
                         .show()
                 }
             }

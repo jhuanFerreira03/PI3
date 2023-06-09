@@ -21,7 +21,11 @@ class Constants {
         const val ARRAY_ADAPT = "ARRAY_ADAPT"
 
         const val NOTI = "NOTI"
-
+        const val PHOTO = "PHOTO"
+    }
+    object CAMERA {
+        const val FRONT = "FRONT"
+        const val BACK = "BACK"
     }
     object OTHERS {
         const val TRUE = "TRUE"

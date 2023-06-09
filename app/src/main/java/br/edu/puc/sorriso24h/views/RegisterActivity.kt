@@ -5,9 +5,12 @@ import android.graphics.Color
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
+import androidx.core.widget.addTextChangedListener
 import br.edu.puc.sorriso24h.R
 import br.edu.puc.sorriso24h.databinding.ActivityRegisterBinding
 import br.edu.puc.sorriso24h.infra.Constants
@@ -36,7 +39,6 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener{
     private lateinit var db: FirebaseFirestore
     private lateinit var auth: FirebaseAuth
     private lateinit var messaging : FirebaseMessaging
-    private val gson = GsonBuilder().enableComplexMapKeySerialization().create()
     private lateinit var functions: FirebaseFunctions
     private lateinit var storage : FirebaseStorage
 
@@ -49,7 +51,7 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener{
 
         FirebaseApp.initializeApp(this)
 
-        binding.imageArrowBack.setColorFilter(ContextCompat.getColor(this, R.color.purple_500))
+        binding.imageArrowBack.setColorFilter(ContextCompat.getColor(this, R.color.second))
         binding.progressRegister.visibility = View.INVISIBLE
 
         auth = FirebaseAuth.getInstance()
@@ -62,6 +64,16 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener{
 
         binding.buttonRegister.setOnClickListener(this)
         binding.btnVoltarRegister.setOnClickListener(this)
+
+        binding.editMiniCurriculo.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {}
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                binding.textCount.text = s!!.length.toString()
+            }
+        })
     }
     private fun NewAccount(nome: String, telefone: String, email: String, senha: String, endereco: String, curriculo: String) {
         auth.createUserWithEmailAndPassword(email, senha)
@@ -84,52 +96,22 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener{
                     )
                     functions.getHttpsCallable(Constants.DB.ADD_DENTIST_FUNCTION)
                         .call(dados)
-                        .continueWith{ task1 ->
-                        val json = JSONObject(task1.result?.data as String)
-                        //val status = json.getString("status")
-                        //val message = json.getString("message")
-                    }
-                    /*if (SecurityPreferences(this).getString(Constants.KEY_SHARED.ADDRESS_2_REGISTER).toString() != "") {
-                        val end2 = hashMapOf(
-                            "endereco_2" to SecurityPreferences(this).getString(Constants.KEY_SHARED.ADDRESS_2_REGISTER).toString()
-                        )
-                        db.collection(Constants.DB.DENTISTAS)
-                            .whereEqualTo(Constants.DB.FIELD.UID, auth.currentUser!!.uid)
-                            .get()
-                            .addOnCompleteListener {
-                                val doc : DocumentSnapshot = it.result.documents[0]
-                                val docId : String = doc.id
-
-                                db.collection(Constants.DB.DENTISTAS)
-                                    .document(docId)
-                                    .update(end2 as Map<String, Any>)
-                                    .addOnCompleteListener {}
-                            }.addOnFailureListener{
+                        .continueWith{
+                            if (SecurityPreferences(this).getString(Constants.KEY_SHARED.ADDRESS_2_REGISTER).toString() != "") {
+                                addAd("endereco_2", SecurityPreferences(this).getString(Constants.KEY_SHARED.ADDRESS_2_REGISTER).toString())
+                                SecurityPreferences(this).storeString(Constants.KEY_SHARED.ADDRESS_2_REGISTER, "")
+                            }
+                            if (SecurityPreferences(this).getString(Constants.KEY_SHARED.ADDRESS_3_REGISTER).toString() != "") {
+                                addAd("endereco_3", SecurityPreferences(this).getString(Constants.KEY_SHARED.ADDRESS_3_REGISTER).toString())
+                                SecurityPreferences(this).storeString(Constants.KEY_SHARED.ADDRESS_3_REGISTER, "")
                             }
                     }
-                    if (SecurityPreferences(this).getString(Constants.KEY_SHARED.ADDRESS_3_REGISTER).toString() != "") {
-                        val end3 = hashMapOf(
-                            "endereco_3" to SecurityPreferences(this).getString(Constants.KEY_SHARED.ADDRESS_3_REGISTER).toString()
-                        )
-                        db.collection(Constants.DB.DENTISTAS)
-                            .whereEqualTo(Constants.DB.FIELD.UID, auth.currentUser!!.uid)
-                            .get()
-                            .addOnCompleteListener {
-                                val doc : DocumentSnapshot = it.result.documents[0]
-                                val docId : String = doc.id
-
-                                db.collection(Constants.DB.DENTISTAS)
-                                    .document(docId)
-                                    .update(end3 as Map<String, Any>)
-                                    .addOnCompleteListener {}
-                            }
-                    }*/
                     //val filearq = Uri.fromFile(file)
                     val riversRef = storage.reference.child("images_user/${auth.currentUser?.uid}")
                     val uploadTask = riversRef.putFile(SecurityPreferences(this).getString("ft_perfil")!!.toUri())
                     uploadTask.addOnFailureListener {
                         Snackbar.make(binding.root, "Imagem enviada!", Snackbar.LENGTH_LONG).setBackgroundTint(Color.GREEN).show()
-                    }.addOnSuccessListener { taskSnapshot ->
+                    }.addOnSuccessListener {
                         Snackbar.make(binding.root, "Imagem não enviada!", Snackbar.LENGTH_LONG).setBackgroundTint(Color.RED).show()
                     }
 
@@ -146,12 +128,32 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener{
                 Snackbar.make(binding.buttonRegister, messageError, Snackbar.LENGTH_LONG).show()
             }
     }
+    private fun addAd(end : String, value : String){
+        val add = hashMapOf(
+            end to value
+        )
+        db.collection(Constants.DB.DENTISTAS)
+            .whereEqualTo(Constants.DB.FIELD.UID, auth.currentUser!!.uid)
+            .get()
+            .addOnCompleteListener {
+                val doc : DocumentSnapshot = it.result.documents[0]
+                val docId : String = doc.id
+
+                db.collection(Constants.DB.DENTISTAS)
+                    .document(docId)
+                    .update(add as Map<String, Any>)
+                    .addOnCompleteListener {}
+            }.addOnFailureListener{
+            }
+    }
     override fun onClick(v: View) {
         when(v.id){
             R.id.btn_voltar_register -> startActivity(Intent(this, PhotoRegisterActivity::class.java))
             R.id.button_register -> {
                 if(binding.editMiniCurriculo.length() == 0){
-                    Snackbar.make(binding.buttonRegister, Constants.PHRASE.MINI_CURR, Snackbar.LENGTH_LONG).show()
+                    Snackbar.make(binding.buttonRegister, Constants.PHRASE.MINI_CURR, Snackbar.LENGTH_LONG)
+                        .setBackgroundTint(Color.rgb(229,0,37))
+                        .show()
                     return
                 }
                 binding.progressRegister.visibility = View.VISIBLE

@@ -5,6 +5,8 @@ import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.toColor
 import br.edu.puc.sorriso24h.R
 import br.edu.puc.sorriso24h.databinding.ActivityUserBinding
 import br.edu.puc.sorriso24h.infra.Constants
@@ -73,13 +75,13 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
             }
         if (status) {
             Snackbar.make(binding.buttonLogout, "Notificações ativadas!", Snackbar.LENGTH_LONG)
-                .setBackgroundTint(Color.GREEN)
+                .setBackgroundTint(Color.rgb(0,191,54))
                 .show()
             SecurityPreferences(this).storeString(Constants.KEY_SHARED.NOTI, Constants.OTHERS.TRUE)
         }
         else {
             Snackbar.make(binding.buttonLogout, "Notificações desativadas!", Snackbar.LENGTH_LONG)
-                .setBackgroundTint(Color.RED)
+                .setBackgroundTint(Color.rgb(229,0,37))
                 .show()
             SecurityPreferences(this).storeString(Constants.KEY_SHARED.NOTI, Constants.OTHERS.FALSE)
         }

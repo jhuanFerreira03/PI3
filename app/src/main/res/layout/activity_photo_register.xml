@@ -9,14 +9,12 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:background="@color/gray"
-        app:layout_constraintBottom_toTopOf="@+id/image_photo_perfil"
+        android:layout_height="70dp"
+        android:background="@color/princ"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.16">
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/image_arrow_back"
@@ -44,7 +42,7 @@
             android:layout_centerInParent="true"
             android:backgroundTint="@color/white"
             android:text="voltar"
-            android:textColor="@color/purple_500"
+            android:textColor="@color/second"
             android:textSize="18sp" />
 
         <Button
@@ -57,50 +55,51 @@
             android:layout_marginEnd="15dp"
             android:backgroundTint="@color/white"
             android:text="Avançar"
-            android:textColor="@color/purple_500"
+            android:textColor="@color/second"
             android:textSize="18sp" />
 
     </RelativeLayout>
 
-    <ImageView
-        android:id="@+id/image_photo_perfil"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:background="@color/teal_200"
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/image_photo_mini"
+        android:layout_width="161dp"
+        android:layout_height="175dp"
         android:src="@drawable/ic_photo_perfil"
-        app:layout_constraintBottom_toTopOf="@+id/textView5"
+        app:civ_border_color="@color/princ"
+        app:civ_border_width="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.925" />
+        app:layout_constraintVertical_bias="0.384" />
 
     <TextView
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="288dp"
         android:text="Foto de Perfil"
-        android:textColor="@color/purple_500"
+        android:textColor="@color/second"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/button_openCam"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.16" />
+        app:layout_constraintVertical_bias="0.21" />
 
     <Button
         android:id="@+id/button_openCam"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/button_border"
         android:text="Abrir camera"
-        android:background="@color/purple_500"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.588" />
+        app:layout_constraintVertical_bias="0.77" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

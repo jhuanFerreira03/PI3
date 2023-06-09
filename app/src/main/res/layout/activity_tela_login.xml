@@ -3,9 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/gray">
+    <ImageView
+        android:id="@+id/image_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="120dp"
+        android:src="@drawable/sorriso_24h_logoo"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/email"
+        android:layout_marginBottom="80dp"/>
 
     <!-- Nome do aplicativo no topo da tela -->
-    <TextView
+   <!-- <TextView
         android:id="@+id/app_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -14,7 +22,7 @@
         android:text="@string/name_app"
         android:textColor="#000000"
         android:textSize="24sp"
-        android:textStyle="bold" />
+        android:textStyle="italic"/>-->
 
     <!-- Campo de email -->
     <EditText
@@ -22,8 +30,8 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_above="@+id/password"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:paddingStart="5dp"
         android:background="@drawable/edittext_border"
         android:hint="@string/e_mail"
@@ -36,10 +44,10 @@
         android:id="@+id/password"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_above="@+id/check_manter"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:paddingStart="5dp"
+        android:layout_centerVertical="true"
         android:background="@drawable/edittext_border"
         android:hint="@string/senha"
         android:inputType="textPassword"
@@ -54,32 +62,36 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/check_manter"
         android:layout_gravity="center_horizontal"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:padding="8dp"
         android:text="@string/login"
         android:textSize="18sp"/>
+
+    <!-- Texto para ir para a tela de cadastro -->
 
     <CheckBox
         android:id="@+id/check_manter"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:layout_centerVertical="true"
-        android:layout_margin="18dp"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="22dp"
+        android:layout_marginBottom="18dp"
         android:text="Mantenha-me conectado"
         android:textColor="@color/purple_700"
-        android:textSize="15sp" />
+        android:textSize="15sp"
+        android:layout_below="@id/password"/>
 
-    <!-- Texto para ir para a tela de cadastro -->
     <ProgressBar
         android:id="@+id/progress_login"
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:layout_width="match_parent"
         android:layout_height="8dp"
         android:layout_below="@+id/login_button"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="15dp"
         android:layout_marginTop="35dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginEnd="15dp"
         android:indeterminate="true"
         android:indeterminateTint="@color/purple_700"
         android:visibility="visible" />
@@ -104,7 +116,7 @@
         android:layout_marginBottom="30dp"
         android:layout_toEndOf="@+id/text_comp"
         android:text="@string/cadastre_se"
-        android:textColor="#0000FF"
+        android:textColor="@color/teal_700"
         android:textSize="18sp" />
 
 </RelativeLayout>

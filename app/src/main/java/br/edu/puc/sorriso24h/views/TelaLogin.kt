@@ -1,10 +1,12 @@
 package br.edu.puc.sorriso24h.views
 
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import br.edu.puc.sorriso24h.R
 import br.edu.puc.sorriso24h.databinding.ActivityTelaLoginBinding
 import br.edu.puc.sorriso24h.infra.Constants
@@ -12,20 +14,22 @@ import br.edu.puc.sorriso24h.infra.SecurityPreferences
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.functions.FirebaseFunctions
+import com.google.firebase.storage.FirebaseStorage
 import com.google.gson.GsonBuilder
+import java.io.File
 
 class TelaLogin : AppCompatActivity(), View.OnClickListener {
 
-    private val TAG = "SignUpFragment"
     private lateinit var auth: FirebaseAuth
     private lateinit var functions: FirebaseFunctions
-    private val gson = GsonBuilder().enableComplexMapKeySerialization().create()
+    private lateinit var storage : FirebaseStorage
 
     private lateinit var binding:ActivityTelaLoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         auth = FirebaseAuth.getInstance()
+        storage = FirebaseStorage.getInstance()
         //verifyUserlogado()
 
         binding = ActivityTelaLoginBinding.inflate(layoutInflater)
@@ -34,13 +38,14 @@ class TelaLogin : AppCompatActivity(), View.OnClickListener {
 
         supportActionBar?.hide()
 
+        setLogo()
+
         binding.progressLogin.visibility = View.INVISIBLE
         binding.checkManter.isChecked = true
 
         binding.loginButton.setOnClickListener(this)
         binding.registerText.setOnClickListener(this)
     }
-
     private fun userLogin() {
         if (binding.email.text.toString().trim().isEmpty()) {
             binding.email.error = Constants.PHRASE.EMPTY_FIELD
@@ -88,7 +93,7 @@ class TelaLogin : AppCompatActivity(), View.OnClickListener {
             }.addOnFailureListener{
                     task ->
                 Snackbar.make(binding.loginButton, "Não foi possivel autenticar o usuario!\n" + task.message, Snackbar.LENGTH_LONG)
-                    .setBackgroundTint(Color.RED).show()
+                    .setBackgroundTint(Color.rgb(229,0,37)).show()
                 binding.progressLogin.visibility = View.INVISIBLE
             }
     }
@@ -107,13 +112,20 @@ class TelaLogin : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onClick(v: View) {
-        when(v.id) {
+        when (v.id) {
             R.id.login_button -> userLogin()
             R.id.register_text -> {
-                startActivity(Intent(this, MilagreActivity::class.java))
+                startActivity(Intent(this, Register1Activity::class.java))
                 binding.email.setText("")
                 binding.password.setText("")
             }
+        }
+    }
+    private fun setLogo(){
+        val file : File = File.createTempFile("tempfile", ".jpg")
+        storage.getReference("logo/sorriso_24h_logoo.png").getFile(file).addOnSuccessListener {
+            binding.imageLogo.setBackgroundColor(ContextCompat.getColor(this, R.color.gray))
+            binding.imageLogo.setImageBitmap(BitmapFactory.decodeFile(file.absolutePath))
         }
     }
 }

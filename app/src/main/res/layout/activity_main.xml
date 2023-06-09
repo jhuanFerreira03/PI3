@@ -17,7 +17,7 @@
         android:paddingBottom="10dp"
         android:textStyle="bold"
         android:textSize="20sp"
-        android:textColor="@color/purple_500"/>
+        android:textColor="@color/second"/>
 
     <ProgressBar
         android:id="@+id/progress_main"

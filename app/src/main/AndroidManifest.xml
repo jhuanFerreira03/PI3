@@ -17,6 +17,12 @@
         android:theme="@style/Theme.sorriso24h"
         tools:targetApi="31">
         <activity
+            android:name=".views.PhotoViewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.Register1Activity"
+            android:exported="false" />
+        <activity
             android:name=".views.AccountDetailsActivity"
             android:exported="false" />
         <activity
@@ -60,9 +66,6 @@
             android:exported="false" />
         <activity
             android:name=".views.UserActivity"
-            android:exported="false" />
-        <activity
-            android:name=".views.MilagreActivity"
             android:exported="false" />
         <activity
             android:name=".views.TelaLogin"

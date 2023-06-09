@@ -13,7 +13,7 @@
         android:text="@string/cadastro_realizado"
         android:textSize="24sp"
         android:textStyle="bold"
-        android:textColor="@color/purple_500"
+        android:textColor="@color/second"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,6 +31,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginBottom="40dp"
+        android:background="@drawable/button_border"
         android:backgroundTint="@color/purple_500"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

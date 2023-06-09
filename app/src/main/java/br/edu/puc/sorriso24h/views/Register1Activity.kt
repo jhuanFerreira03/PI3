@@ -1,7 +1,9 @@
 package br.edu.puc.sorriso24h.views
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
+import android.provider.ContactsContract.CommonDataKinds.Identity
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -9,27 +11,28 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import br.edu.puc.sorriso24h.R
-import br.edu.puc.sorriso24h.databinding.ActivityMilagreBinding
+import br.edu.puc.sorriso24h.databinding.ActivityRegister1Binding
 import br.edu.puc.sorriso24h.infra.Constants
 import br.edu.puc.sorriso24h.infra.SecurityPreferences
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.functions.FirebaseFunctions
 import com.google.gson.GsonBuilder
 
-class MilagreActivity : AppCompatActivity(), View.OnClickListener{
+class Register1Activity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var db: FirebaseFirestore
     private lateinit var auth: FirebaseAuth
     private val gson = GsonBuilder().enableComplexMapKeySerialization().create()
     private lateinit var functions: FirebaseFunctions
-    private lateinit var binding:ActivityMilagreBinding
+    private lateinit var binding:ActivityRegister1Binding
     private var countAddress : Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMilagreBinding.inflate(layoutInflater)
+        binding = ActivityRegister1Binding.inflate(layoutInflater)
         setContentView(binding.root)
 
         FirebaseApp.initializeApp(this)
@@ -38,11 +41,12 @@ class MilagreActivity : AppCompatActivity(), View.OnClickListener{
         functions = FirebaseFunctions.getInstance()
         db = FirebaseFirestore.getInstance()
 
-        SecurityPreferences(this).storeString("ft_perfil", "")
         supportActionBar?.hide()
 
-        binding.imageArrowBack.setColorFilter(ContextCompat.getColor(this, R.color.purple_500))
-        binding.imageArrowNext.setColorFilter(ContextCompat.getColor(this, R.color.purple_500))
+        SecurityPreferences(this).storeString("ft_perfil", "")
+
+        binding.imageArrowBack.setColorFilter(ContextCompat.getColor(this, R.color.second))
+        binding.imageArrowNext.setColorFilter(ContextCompat.getColor(this, R.color.second))
 
         binding.btnAvancarRegister.setOnClickListener(this)
         binding.btnVoltarRegister.setOnClickListener(this)
@@ -148,7 +152,7 @@ class MilagreActivity : AppCompatActivity(), View.OnClickListener{
         newAddressTextView.text = binding.addressName.text.toString().trim()
         newAddressTextView.textSize = 24f
         newAddressTextView.setPadding(10, 8, 10, 8)
-        newAddressTextView.setTextColor(getResources().getColor(R.color.purple_500))
+        newAddressTextView.setTextColor(ContextCompat.getColorStateList(this, R.color.purple_500))
         newAddressTextView.id = View.generateViewId()
 
         additionalAddressesContainer.addView(newAddressTextView)
@@ -167,7 +171,9 @@ class MilagreActivity : AppCompatActivity(), View.OnClickListener{
             R.id.btn_avancar_register -> userRegister()
             R.id.add_address_button -> {
                 if(countAddress < 3) addAddress()
-                else Toast.makeText(this, Constants.PHRASE.LIMIT_ADDRESS, Toast.LENGTH_SHORT).show()
+                else Snackbar.make(binding.root, Constants.PHRASE.LIMIT_ADDRESS, Snackbar.LENGTH_SHORT)
+                    .setBackgroundTint(Color.rgb(229,0,37))
+                    .show()
             }
             R.id.btn_voltar_register -> {
                 startActivity(Intent(this, TelaLogin::class.java))
@@ -176,5 +182,3 @@ class MilagreActivity : AppCompatActivity(), View.OnClickListener{
         }
     }
 }
-
-data class CustomResponse(val status: String?, val message: String?, val payload: Any?)

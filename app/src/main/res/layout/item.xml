@@ -29,8 +29,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/text_nome_list"
                 android:layout_marginStart="8dp"
-                android:text="telefone"
-                android:textColor="@color/black"
+                android:text="nome"
+                android:textColor="@color/second"
                 android:textSize="18sp"
                 android:textStyle="italic"/>
         </LinearLayout>
@@ -53,7 +53,7 @@
                 android:id="@+id/text_telefone_list"
                 android:layout_marginStart="8dp"
                 android:text="telefone"
-                android:textColor="@color/black"
+                android:textColor="@color/second"
                 android:textSize="18sp"
                 android:textStyle="italic"/>
         </LinearLayout>
