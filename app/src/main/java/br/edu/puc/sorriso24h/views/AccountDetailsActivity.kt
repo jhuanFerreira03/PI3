@@ -261,7 +261,7 @@ class AccountDetailsActivity : AppCompatActivity(), View.OnClickListener {
                 .show()
         }
     }
-    private fun setVisibleEdit(){
+    private fun setVisibleEdit() {
         if(binding.imagePhotoEdit.isVisible) {
             binding.imagePhotoEdit.visibility = View.INVISIBLE
         }

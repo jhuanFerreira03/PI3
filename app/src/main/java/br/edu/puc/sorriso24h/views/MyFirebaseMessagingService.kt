@@ -19,14 +19,25 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
     private val channelId = "notification_channel"
     private val channelName = "br.edu.puc.sorriso24h"
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
-        val dados = remoteMessage.data
-
-        if (dados == null) return
+        val dados = remoteMessage.data ?: return
 
         SecurityPreferences(this).storeString(Constants.KEY_SHARED.ARRAY_NAME, dados["nome"].toString())
         SecurityPreferences(this).storeString(Constants.KEY_SHARED.ARRAY_TEL, dados["telefone"].toString())
-
-        generateNotification(dados["title"].toString(), dados["nome"].toString() + " " + dados["telefone"].toString())
+        if(dados["nome"] != null && dados["telefone"] != null) {
+            generateNotification(
+                dados["title"].toString(),
+                dados["nome"].toString() + " " + dados["telefone"].toString(),
+                "first"
+            )
+        }
+        else{
+            generateNotification(
+                dados["title"].toString(),
+                "Clique para ver os detalhes",
+                "second"
+            )
+            SecurityPreferences(this).storeString("emergencyNoti", dados["em"].toString())
+        }
     }
     private fun getRemoteView(title: String, message: String): RemoteViews {
         val remoteView = RemoteViews(channelName, R.layout.notification)
@@ -35,8 +46,14 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
 
         return remoteView
     }
-    private fun generateNotification(title: String, message: String){
-        val intent = Intent(this, EmergencyDetailActivity::class.java)
+    private fun generateNotification(title: String, message: String, type: String) {
+        lateinit var intent : Intent
+        if (type == "first") {
+            intent = Intent(this, EmergencyDetailActivity::class.java)
+        }
+        else if(type == "second"){
+            intent = Intent(this, ServiceConfirmActivity::class.java)
+        }
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
 
         val pendingIntent = PendingIntent.getActivity(
@@ -47,7 +64,7 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
         )
 
         var builder: NotificationCompat.Builder = NotificationCompat.Builder(applicationContext, channelId)
-            .setSmallIcon(R.drawable.ic_arrow_back)
+            .setSmallIcon(R.drawable.logo)
             .setAutoCancel(true)
             .setOnlyAlertOnce(true)
             .setContentIntent(pendingIntent)

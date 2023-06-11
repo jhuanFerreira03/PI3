@@ -56,7 +56,7 @@ class EmergencyDetailActivity : AppCompatActivity(), View.OnClickListener {
                 it ->
                 val itId = it.result.documents[0].id
                 db.collection(Constants.DB.DENTISTAS)
-                    .whereEqualTo(Constants.DB.FIELD.EMAIL_DB, SecurityPreferences(this).getString(Constants.KEY_SHARED.EMAIL_LOGIN))
+                    .whereEqualTo(Constants.DB.FIELD.UID, auth.currentUser!!.uid)
                     .get()
                     .addOnCompleteListener {
                     uid ->

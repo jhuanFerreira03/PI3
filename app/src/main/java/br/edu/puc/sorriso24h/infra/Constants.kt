@@ -20,6 +20,7 @@ class Constants {
         const val ARRAY_TEL = "ARRAY_TEL"
         const val ARRAY_ADAPT = "ARRAY_ADAPT"
 
+        const val DOCID = "DOCID"
         const val NOTI = "NOTI"
         const val PHOTO = "PHOTO"
     }

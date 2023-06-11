@@ -29,7 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="22sp"
-            android:textColor="@color/princ"
+            android:textColor="@color/second"
             android:textStyle="bold"
             android:text="@string/empty" />
     </LinearLayout>
@@ -48,6 +48,26 @@
         android:paddingTop="65dp" />
 
     <Button
+        android:id="@+id/button_atendimento"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_above="@+id/button_history"
+        android:layout_alignStart="@+id/button_emergencyList"
+        android:layout_alignEnd="@+id/button_emergencyList"
+        android:layout_marginBottom="15dp"
+        android:text="Atendimento Pendente" />
+
+    <Button
+        android:id="@+id/button_history"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_above="@+id/button_details"
+        android:layout_alignStart="@+id/button_emergencyList"
+        android:layout_alignEnd="@+id/button_emergencyList"
+        android:layout_marginBottom="15dp"
+        android:text="Histórico de emergÊncias" />
+
+    <Button
         android:id="@+id/button_details"
         android:layout_width="wrap_content"
         android:layout_height="60dp"
@@ -59,7 +79,7 @@
 
     <Button
         android:id="@+id/button_emergencyList"
-        android:layout_width="wrap_content"
+        android:layout_width="260dp"
         android:layout_height="60dp"
         android:text="@string/lista_emergencias"
         android:layout_above="@+id/button_logout"
@@ -72,6 +92,7 @@
         android:layout_height="50dp"
         android:text="@string/logout"
         android:backgroundTint="#B80000"
+        android:textColor="@color/white"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="40dp"/>

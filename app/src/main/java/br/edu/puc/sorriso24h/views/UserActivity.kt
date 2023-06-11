@@ -24,6 +24,7 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var db : FirebaseFirestore
     private lateinit var messaging : FirebaseMessaging
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityUserBinding.inflate(layoutInflater)
@@ -42,6 +43,7 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
         binding.buttonLogout.setOnClickListener(this)
         binding.buttonEmergencyList.setOnClickListener(this)
         binding.buttonDetails.setOnClickListener(this)
+        binding.buttonAtendimento.setOnClickListener(this)
 
         binding.switchButton.setOnClickListener{
             if(binding.switchButton.isChecked) updateStatus(true)
@@ -53,7 +55,7 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
             .whereEqualTo("uid", auth.currentUser!!.uid)
             .get()
             .addOnCompleteListener {
-                doc ->
+                    doc ->
                 binding.emailUsuario.setText(doc.result.documents[0].get("nome").toString())
             }
     }
@@ -94,41 +96,66 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
             .whereEqualTo("uid", uid)
             .get()
             .addOnCompleteListener {
-            val doc : DocumentSnapshot = it.result.documents[0]
-            val docId : String = doc.id
+                val doc : DocumentSnapshot = it.result.documents[0]
+                val docId : String = doc.id
 
-            db.collection(Constants.DB.DENTISTAS)
-                .document(docId)
-                .update("fcmToken", token)
-                .addOnCompleteListener{}
-        }
+                db.collection(Constants.DB.DENTISTAS)
+                    .document(docId)
+                    .update("fcmToken", token)
+                    .addOnCompleteListener{}
+            }
     }
     private fun verifyStatus (){
         db.collection(Constants.DB.DENTISTAS)
-                .whereEqualTo(Constants.DB.FIELD.EMAIL_DB, SecurityPreferences(this).getString(Constants.KEY_SHARED.EMAIL_LOGIN))
-                .get()
-                .addOnCompleteListener {
-                    val doc : DocumentSnapshot = it.result.documents[0]
-                    val docId : String = doc.id
+            .whereEqualTo(Constants.DB.FIELD.EMAIL_DB, SecurityPreferences(this).getString(Constants.KEY_SHARED.EMAIL_LOGIN))
+            .get()
+            .addOnCompleteListener {
+                val doc : DocumentSnapshot = it.result.documents[0]
+                val docId : String = doc.id
 
-                    db.collection(Constants.DB.DENTISTAS)
-                        .document(docId)
-                        .addSnapshotListener{ doc, e ->
+                db.collection(Constants.DB.DENTISTAS)
+                    .document(docId)
+                    .addSnapshotListener{ doc, e ->
                         SecurityPreferences(this).storeString("sta", doc?.get("status").toString())
                     }
-                }
+            }
         if(SecurityPreferences(this).getString("sta").toString() == Constants.OTHERS.FALSE.lowercase()) return
         else if (SecurityPreferences(this).getString("sta").toString() == Constants.OTHERS.TRUE.lowercase()) {
             binding.switchButton.isChecked = true
         }
     }
+    private fun verifyService(){
+        db.collection(Constants.DB.DENTISTAS).whereEqualTo(Constants.DB.FIELD.UID, auth.currentUser!!.uid).get().addOnCompleteListener {
+            den ->
+            db.collection("Atendimentos").whereEqualTo("status", "pendente")
+                .get()
+                .addOnCompleteListener {
+                    var verivyPen = false
+                    for (cop: DocumentSnapshot in it.result.documents) {
+                        if (cop.get("dentista").toString() == den.result.documents[0].id) {
+                            SecurityPreferences(this).storeString("emergencyNoti", cop.get("emergencia").toString())
+                            verivyPen = true
+                            break
+                        }
+                    }
+                    if (verivyPen) {
+                        startActivity(Intent(this, ServiceConfirmActivity::class.java))
+                    } else {
+                        Snackbar.make(binding.root, "Sem Atendimento Pendente!", Snackbar.LENGTH_LONG)
+                            .setBackgroundTint(Color.RED)
+                            .show()
+                    }
+                }
+        }
+    }
     override fun onClick(v: View) {
         when(v.id) {
             R.id.button_logout -> {
+                updateStatus(false)
+                auth.signOut()
                 SecurityPreferences(this).storeString(Constants.KEY_SHARED.SAVE_LOGIN, "")
                 SecurityPreferences(this).storeString(Constants.KEY_SHARED.EMAIL_LOGIN, "")
                 SecurityPreferences(this).storeString(Constants.KEY_SHARED.PASSWORD_LOGIN, "")
-                auth.signOut()
                 startActivity(Intent(this, TelaLogin::class.java))
                 finish()
             }
@@ -137,6 +164,9 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
             }
             R.id.button_details -> {
                 startActivity(Intent(this, AccountDetailsActivity::class.java))
+            }
+            R.id.button_atendimento -> {
+                verifyService()
             }
         }
     }
