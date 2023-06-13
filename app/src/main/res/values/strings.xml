@@ -23,4 +23,8 @@
     <string name="sem_emergencias">Sem emergencias no momento!</string>
     <string name="aguarde">Aguarde...</string>
     <string name="empty">...</string>
+    <string name="detalhes_da_conta">Detalhes da Conta</string>
+    <string name="hist_rico_de_emerg_ncias">Histórico de emergÊncias</string>
+    <string name="atendimento_pendente">Atendimento Pendente</string>
+    <string name="ol">Olá,</string>
 </resources>

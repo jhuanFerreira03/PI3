@@ -39,16 +39,24 @@ class EmergencyDetailActivity : AppCompatActivity(), View.OnClickListener {
         messaging = FirebaseMessaging.getInstance()
 
         supportActionBar?.hide()
+        setInfos()
 
         binding.imageArrowBack.setColorFilter(ContextCompat.getColor(this, R.color.second))
 
-        binding.textNomeDetalhe.text = SecurityPreferences(this).getString(Constants.KEY_SHARED.ARRAY_NAME)?.uppercase()
-        binding.textTelefoneDetalhe.text = SecurityPreferences(this).getString(Constants.KEY_SHARED.ARRAY_TEL)?.uppercase()
+        //binding.textNomeDetalhe.text = SecurityPreferences(this).getString(Constants.KEY_SHARED.ARRAY_NAME)?.uppercase()
+        //binding.textTelefoneDetalhe.text = SecurityPreferences(this).getString(Constants.KEY_SHARED.ARRAY_TEL)?.uppercase()
 
         binding.btnVoltarRegister.setOnClickListener(this)
         binding.buttonAceitarEmergencia.setOnClickListener(this)
     }
-    private fun aceitarEmergencia(){
+    private fun setInfos(){
+        db.collection(Constants.DB.EMERGENCIAS).document(SecurityPreferences(this).getString("id").toString()).get().addOnCompleteListener {
+            result ->
+            binding.textNomeDetalhe.text = result.result[Constants.DB.FIELD.NAME_DB].toString()
+            binding.textTelefoneDetalhe.text = result.result[Constants.DB.FIELD.PHONE].toString()
+        }
+    }
+    private fun aceitarEmergencia() {
         db.collection(Constants.DB.EMERGENCIAS)
             .whereEqualTo(Constants.DB.FIELD.PHONE, SecurityPreferences(this).getString(Constants.KEY_SHARED.ARRAY_TEL).toString())
             .get()
@@ -86,7 +94,7 @@ class EmergencyDetailActivity : AppCompatActivity(), View.OnClickListener {
             }
     }
     override fun onClick(v: View) {
-        when (v.id){
+        when (v.id) {
             R.id.btn_voltar_register -> {
                 startActivity(Intent(this, EmergenciesActivity::class.java))
                 finish()

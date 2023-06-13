@@ -24,6 +24,7 @@ import com.google.firebase.messaging.FirebaseMessaging
 import br.edu.puc.sorriso24h.infra.Constants
 import br.edu.puc.sorriso24h.infra.SecurityPreferences
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.storage.FirebaseStorage
 import io.grpc.InternalChannelz.Security
@@ -95,9 +96,9 @@ class AccountDetailsActivity : AppCompatActivity(), View.OnClickListener {
 
                 try {
                     end2List = doc.result.documents[0].get("endereco_2").toString().split(',')
-                    if(end2List[0] != "null"){
+                    if(end2List[0] != "null") {
                         binding.textAddress2.text = end2List[0]
-                    }else{
+                    }else {
                         binding.textAddress2.visibility = View.INVISIBLE
                     }
                 }catch (_:Exception){binding.textAddress2.visibility = View.INVISIBLE}
@@ -224,7 +225,7 @@ class AccountDetailsActivity : AppCompatActivity(), View.OnClickListener {
         binding.imageButtonEditEmail.visibility = View.VISIBLE
         binding.imageButtonEditTelefone.visibility = View.VISIBLE
     }
-    private fun updateField(field: String){
+    private fun updateField(field: String) {
         if (binding.editAtt.text.trim().isEmpty()) {
             binding.editAtt.error = Constants.PHRASE.EMPTY_FIELD
             return
@@ -279,7 +280,7 @@ class AccountDetailsActivity : AppCompatActivity(), View.OnClickListener {
             R.id.text_address2 -> setAddress(Constants.KEY_SHARED.ADDRESS_2_REGISTER)
             R.id.text_address3 -> setAddress(Constants.KEY_SHARED.ADDRESS_3_REGISTER)
             R.id.imageButton_editName -> openEditAtt(Constants.DB.FIELD.NAME_DB)
-            R.id.imageButton_editEmail -> openEditAtt(Constants.DB.FIELD.EMAIL_DB)
+            //R.id.imageButton_editEmail -> openEditAtt(Constants.DB.FIELD.EMAIL_DB)
             R.id.imageButton_editTelefone -> openEditAtt(Constants.DB.FIELD.PHONE)
             R.id.button_att -> updateField(attField)
             R.id.button_cancelarAtt -> closeEditAtt()
@@ -288,7 +289,7 @@ class AccountDetailsActivity : AppCompatActivity(), View.OnClickListener {
             }
             R.id.image_photo_edit -> {
                 SecurityPreferences(this).storeString(Constants.KEY_SHARED.PHOTO, Constants.CAMERA.FRONT)
-                SecurityPreferences(applicationContext).storeString("deciderPicture", "detail")
+                SecurityPreferences(applicationContext).storeString(Constants.KEY_SHARED.DECIDER_PICTURE, "detail")
                 cameraProviderResult.launch(android.Manifest.permission.CAMERA)
             }
         }

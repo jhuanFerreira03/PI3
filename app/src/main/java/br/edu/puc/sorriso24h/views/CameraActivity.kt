@@ -104,9 +104,9 @@ class CameraActivity : AppCompatActivity() , View.OnClickListener{
                 object : ImageCapture.OnImageSavedCallback {
                     override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
                         val filearq = Uri.fromFile(file)
-                        SecurityPreferences(binding.root.context).storeString("ft_perfil", filearq.toString())
-                        if (SecurityPreferences(applicationContext).getString("deciderPicture").toString() == "detail"){
-                            val bm = MediaStore.Images.Media.getBitmap(contentResolver, SecurityPreferences(binding.root.context).getString("ft_perfil")!!.toUri())
+                        SecurityPreferences(binding.root.context).storeString(Constants.KEY_SHARED.FT_PERFIL, filearq.toString())
+                        if (SecurityPreferences(applicationContext).getString(Constants.KEY_SHARED.DECIDER_PICTURE).toString() == "detail"){
+                            val bm = MediaStore.Images.Media.getBitmap(contentResolver, SecurityPreferences(binding.root.context).getString(Constants.KEY_SHARED.FT_PERFIL)!!.toUri())
                             this@CameraActivity.runOnUiThread(java.lang.Runnable {
                                 binding.imagePop.setImageBitmap(bm)
                                 binding.cameraPreview.visibility = View.INVISIBLE
@@ -119,7 +119,7 @@ class CameraActivity : AppCompatActivity() , View.OnClickListener{
                                 binding.imageConfirm.visibility = View.VISIBLE
                             })
                         }
-                        else if(SecurityPreferences(binding.root.context).getString("deciderPicture").toString() == "register") {
+                        else if(SecurityPreferences(binding.root.context).getString(Constants.KEY_SHARED.DECIDER_PICTURE).toString() == "register") {
                             startActivity(Intent(binding.root.context, PhotoRegisterActivity::class.java))
                             finish()
                         }
@@ -140,9 +140,9 @@ class CameraActivity : AppCompatActivity() , View.OnClickListener{
         binding.progressCamera.visibility = View.VISIBLE
         storage.reference.child("images_user/${auth.currentUser?.uid}").delete()
         val riversRef = storage.reference.child("images_user/${auth.currentUser?.uid}")
-        val uploadTask = riversRef.putFile(SecurityPreferences(applicationContext).getString("ft_perfil")!!.toUri())
+        val uploadTask = riversRef.putFile(SecurityPreferences(applicationContext).getString(Constants.KEY_SHARED.FT_PERFIL)!!.toUri())
             .addOnCompleteListener{
-                SecurityPreferences(applicationContext).storeString("ft_perfil", "")
+                SecurityPreferences(applicationContext).storeString(Constants.KEY_SHARED.FT_PERFIL, "")
                 startActivity(Intent(binding.root.context, AccountDetailsActivity::class.java))
                 finish()
             }

@@ -54,15 +54,15 @@ class PhotoRegisterActivity : AppCompatActivity(), View.OnClickListener {
         setPhoto()
     }
     private fun setPhoto() {
-        if(SecurityPreferences(this).getString("ft_perfil").toString() != ""){
+        if(SecurityPreferences(this).getString(Constants.KEY_SHARED.FT_PERFIL).toString() != "") {
             //binding.imagePhotoPerfil.setImageURI(SecurityPreferences(this).getString("ft_string")!!.toUri())
-            val bm = MediaStore.Images.Media.getBitmap(contentResolver, SecurityPreferences(this).getString("ft_perfil")!!.toUri())
+            val bm = MediaStore.Images.Media.getBitmap(contentResolver, SecurityPreferences(this).getString(Constants.KEY_SHARED.FT_PERFIL)!!.toUri())
             binding.imagePhotoMini.setImageBitmap(bm)
             binding.imagePhotoMini.setBackgroundColor(ContextCompat.getColor(this, R.color.gray))
         }
     }
-    private val cameraProviderResult = registerForActivityResult(ActivityResultContracts.RequestPermission()){
-        if(it){
+    private val cameraProviderResult = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+        if(it) {
             startActivity(Intent(this, CameraActivity::class.java))
         } else {
             Snackbar.make(binding.root, "É necessário conceder permissão de camera!", Toast.LENGTH_LONG)
@@ -81,7 +81,7 @@ class PhotoRegisterActivity : AppCompatActivity(), View.OnClickListener {
                 finish()
             }
             R.id.btn_avancar_register -> {
-                if (SecurityPreferences(this).getString("ft_perfil").toString() == ""){
+                if (SecurityPreferences(this).getString(Constants.KEY_SHARED.FT_PERFIL).toString() == "") {
                     Snackbar.make(binding.root, "Tire uma foto!", Snackbar.LENGTH_LONG).setBackgroundTint(Color.rgb(229,0,37)).show()
                     return
                 }

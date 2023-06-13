@@ -19,7 +19,7 @@
             android:id="@+id/nome_usuario"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Olá,"
+            android:text="@string/ol"
             android:textSize="22sp"
             android:textColor="@color/black"
             android:layout_marginEnd="6dp"/>
@@ -39,7 +39,8 @@
         android:id="@+id/switchButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ativar Notificação"
+        android:text="Disponível para Emergências"
+        android:textStyle="bold"
         android:textSize="20sp"
         android:textColor="#000000"
         android:thumbTint="@color/teal_700"
@@ -51,11 +52,11 @@
         android:id="@+id/button_atendimento"
         android:layout_width="wrap_content"
         android:layout_height="60dp"
-        android:layout_above="@+id/button_history"
+        android:layout_above="@+id/button_emergencyList"
         android:layout_alignStart="@+id/button_emergencyList"
         android:layout_alignEnd="@+id/button_emergencyList"
         android:layout_marginBottom="15dp"
-        android:text="Atendimento Pendente" />
+        android:text="@string/atendimento_pendente" />
 
     <Button
         android:id="@+id/button_history"
@@ -65,26 +66,26 @@
         android:layout_alignStart="@+id/button_emergencyList"
         android:layout_alignEnd="@+id/button_emergencyList"
         android:layout_marginBottom="15dp"
-        android:text="Histórico de emergÊncias" />
+        android:text="@string/hist_rico_de_emerg_ncias" />
 
     <Button
         android:id="@+id/button_details"
         android:layout_width="wrap_content"
         android:layout_height="60dp"
-        android:layout_above="@+id/button_emergencyList"
+        android:layout_above="@+id/button_logout"
         android:layout_alignStart="@+id/button_emergencyList"
         android:layout_alignEnd="@+id/button_emergencyList"
-        android:layout_marginBottom="15dp"
-        android:text="Detalhes da Conta" />
+        android:layout_marginBottom="40dp"
+        android:text="@string/detalhes_da_conta" />
 
     <Button
         android:id="@+id/button_emergencyList"
         android:layout_width="260dp"
         android:layout_height="60dp"
         android:text="@string/lista_emergencias"
-        android:layout_above="@+id/button_logout"
+        android:layout_above="@+id/button_history"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="60dp"/>
+        android:layout_marginBottom="15dp"/>
 
     <Button
         android:id="@+id/button_logout"

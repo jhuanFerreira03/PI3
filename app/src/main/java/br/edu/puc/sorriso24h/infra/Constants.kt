@@ -23,6 +23,9 @@ class Constants {
         const val DOCID = "DOCID"
         const val NOTI = "NOTI"
         const val PHOTO = "PHOTO"
+
+        const val FT_PERFIL = "ft_perfil"
+        const val DECIDER_PICTURE = "deciderPicture"
     }
     object CAMERA {
         const val FRONT = "FRONT"
@@ -37,6 +40,7 @@ class Constants {
         const val ADD_DENTIST_FUNCTION = "addUsers"
         const val DENTISTAS = "Dentistas"
         const val EMERGENCIAS = "Emergencias"
+        const val ATENDIMENTOS = "Atendimentos"
         object FIELD {
             const val CLOSED_STATUS = "statusEncerrada"
             const val NAME_DB = "nome"

@@ -147,18 +147,21 @@
         android:elevation="@dimen/cardview_default_elevation"/>
 
     <ImageButton
-        android:layout_width="56dp"
-        android:layout_height="60dp"
+        android:id="@+id/image_btnSendLocation"
+        android:layout_width="53dp"
+        android:layout_height="59dp"
+        android:layout_marginBottom="7dp"
         android:background="@color/gray"
         android:src="@drawable/ic_place"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/button"
+        app:layout_constraintStart_toEndOf="@+id/button_sendLocation"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.837" />
+        app:layout_constraintVertical_bias="0.846" />
 
     <Button
+        android:id="@+id/button_sendLocation"
         android:layout_width="230dp"
         android:layout_height="60dp"
         android:text="Enviar localização"
@@ -170,8 +173,10 @@
         app:layout_constraintVertical_bias="0.837" />
 
     <ImageButton
+        android:id="@+id/image_btnGetLocation"
         android:layout_width="56dp"
         android:layout_height="60dp"
+        android:layout_marginEnd="56dp"
         android:background="@color/gray"
         android:src="@drawable/ic_near"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -182,7 +187,7 @@
         app:layout_constraintVertical_bias="0.944" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/button_getLocation"
         android:layout_width="230dp"
         android:layout_height="60dp"
         android:text="Solicitar localização"

@@ -36,6 +36,8 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
 
         supportActionBar?.hide()
 
+        setSec()
+
         updateToken()
         verifyStatus()
         setName()
@@ -44,19 +46,25 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
         binding.buttonEmergencyList.setOnClickListener(this)
         binding.buttonDetails.setOnClickListener(this)
         binding.buttonAtendimento.setOnClickListener(this)
+        binding.buttonHistory.setOnClickListener(this)
 
-        binding.switchButton.setOnClickListener{
+        binding.switchButton.setOnClickListener {
             if(binding.switchButton.isChecked) updateStatus(true)
             else updateStatus(false)
         }
     }
-    private fun setName(){
+    private fun setSec() {
+        db.collection(Constants.DB.DENTISTAS).whereEqualTo(Constants.DB.FIELD.UID, auth.currentUser!!.uid).get().addOnCompleteListener {
+            SecurityPreferences(this).storeString("UID", it.result.documents[0].id)
+        }
+    }
+    private fun setName() {
         db.collection(Constants.DB.DENTISTAS)
-            .whereEqualTo("uid", auth.currentUser!!.uid)
+            .whereEqualTo(Constants.DB.FIELD.UID, auth.currentUser!!.uid)
             .get()
             .addOnCompleteListener {
                     doc ->
-                binding.emailUsuario.setText(doc.result.documents[0].get("nome").toString())
+                binding.emailUsuario.text = doc.result.documents[0].get(Constants.DB.FIELD.NAME_DB).toString()
             }
     }
     private fun updateStatus(status: Boolean) {
@@ -73,7 +81,6 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
                 db.collection(Constants.DB.DENTISTAS)
                     .document(docId)
                     .update(dados as Map<String, Any>)
-                    .addOnCompleteListener {}
             }
         if (status) {
             Snackbar.make(binding.buttonLogout, "Notificações ativadas!", Snackbar.LENGTH_LONG)
@@ -88,12 +95,12 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
             SecurityPreferences(this).storeString(Constants.KEY_SHARED.NOTI, Constants.OTHERS.FALSE)
         }
     }
-    private fun updateToken(){
+    private fun updateToken() {
         val token : String = messaging.token.result
         val uid : String = auth.uid.toString()
 
         db.collection(Constants.DB.DENTISTAS)
-            .whereEqualTo("uid", uid)
+            .whereEqualTo(Constants.DB.FIELD.UID, uid)
             .get()
             .addOnCompleteListener {
                 val doc : DocumentSnapshot = it.result.documents[0]
@@ -105,7 +112,7 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
                     .addOnCompleteListener{}
             }
     }
-    private fun verifyStatus (){
+    private fun verifyStatus () {
         db.collection(Constants.DB.DENTISTAS)
             .whereEqualTo(Constants.DB.FIELD.EMAIL_DB, SecurityPreferences(this).getString(Constants.KEY_SHARED.EMAIL_LOGIN))
             .get()
@@ -127,7 +134,7 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
     private fun verifyService(){
         db.collection(Constants.DB.DENTISTAS).whereEqualTo(Constants.DB.FIELD.UID, auth.currentUser!!.uid).get().addOnCompleteListener {
             den ->
-            db.collection("Atendimentos").whereEqualTo("status", "pendente")
+            db.collection(Constants.DB.ATENDIMENTOS).whereEqualTo("status", "pendente")
                 .get()
                 .addOnCompleteListener {
                     var verivyPen = false
@@ -167,6 +174,9 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
             }
             R.id.button_atendimento -> {
                 verifyService()
+            }
+            R.id.button_history -> {
+                startActivity(Intent(this, ServiceHistoricActivity::class.java))
             }
         }
     }

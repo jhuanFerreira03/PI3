@@ -40,7 +40,6 @@ class ServiceConfirmActivity : AppCompatActivity(), View.OnClickListener{
         setInfo()
 
         binding.imageArrowBack.setColorFilter(ContextCompat.getColor(this, R.color.second))
-        Snackbar.make(binding.root, SecurityPreferences(this).getString("emergencyNoti").toString(), Snackbar.LENGTH_LONG).show()
 
         if(ActivityCompat.checkSelfPermission(this, android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.CALL_PHONE), REQUEST_PHONE_CALL)
@@ -48,18 +47,19 @@ class ServiceConfirmActivity : AppCompatActivity(), View.OnClickListener{
 
         binding.btnVoltarRegister.setOnClickListener(this)
         binding.imageCall.setOnClickListener(this)
+        binding.buttonSendLocation.setOnClickListener(this)
+        binding.buttonGetLocation.setOnClickListener(this)
+        binding.imageBtnSendLocation.setOnClickListener(this)
+        binding.imageBtnGetLocation.setOnClickListener(this)
 
     }
     private fun setInfo() {
-        db.collection("Emergencias").document(SecurityPreferences(this).getString("emergencyNoti").toString()).addSnapshotListener{
+        db.collection("Emergencias").document(SecurityPreferences(this).getString("emergencyNoti").toString()).addSnapshotListener {
             doc, e ->
             binding.textNome.text = doc!!["nome"].toString()
             binding.textTelefone.text = doc["telefone"].toString()
         }
     }
-    //Snackbar.make(binding.root, it.result.get("nome").toString(), Snackbar.LENGTH_LONG).show()
-    //binding.textNome.text = it.result.get("nome").toString()
-    //binding.textTelefone.text = it.result.get("telefone").toString()
     @SuppressLint("MissingPermission")
     private fun startCall() {
         val callint = Intent(Intent.ACTION_CALL)
@@ -74,13 +74,16 @@ class ServiceConfirmActivity : AppCompatActivity(), View.OnClickListener{
         if (requestCode == REQUEST_PHONE_CALL) startCall()
     }
     override fun onClick(v: View) {
-        when(v.id){
+        when(v.id) {
             R.id.btn_voltar_register -> {
                 startActivity(Intent(this, UserActivity::class.java))
                 finish()
             }
             R.id.image_call -> {
                 startCall()
+            }
+            R.id.button_sendLocation, R.id.image_btnSendLocation-> {
+                startActivity(Intent(this, MapsActivity::class.java))
             }
         }
     }

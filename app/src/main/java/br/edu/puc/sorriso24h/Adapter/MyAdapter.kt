@@ -27,10 +27,9 @@ class MyAdapter(var context: Context,var arrayList: ArrayList<User>) :
     override fun getItemCount(): Int {
         return arrayList.size
     }
-    fun attListener(lis : ListListener){
+    fun attListener(lis : ListListener) {
         this.listen = lis
     }
-
     class MyViewHolder(item: View, listen: ListListener) : RecyclerView.ViewHolder(item) {
         var nome : TextView
         var telefone : TextView
@@ -44,7 +43,8 @@ class MyAdapter(var context: Context,var arrayList: ArrayList<User>) :
         }
     }
 }
-class User{
-    lateinit var nome : String
-    lateinit var telefone : String
+class User {
+     lateinit var nome : String
+     lateinit var telefone : String
+     lateinit var id : String
 }

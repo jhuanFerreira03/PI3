@@ -2,11 +2,11 @@ package br.edu.puc.sorriso24h.views
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,20 +14,30 @@ import androidx.recyclerview.widget.RecyclerView
 import br.edu.puc.sorriso24h.Adapter.MyAdapter
 import br.edu.puc.sorriso24h.Adapter.User
 import br.edu.puc.sorriso24h.R
-import br.edu.puc.sorriso24h.databinding.ActivityEmergenciesBinding
+import br.edu.puc.sorriso24h.databinding.ActivityServiceHistoricBinding
 import br.edu.puc.sorriso24h.infra.Constants
 import br.edu.puc.sorriso24h.infra.SecurityPreferences
 import br.edu.puc.sorriso24h.listener.ListListener
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentChange
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.messaging.FirebaseMessaging
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import kotlin.coroutines.CoroutineContext
 
-class EmergenciesActivity : AppCompatActivity(), View.OnClickListener {
-    private lateinit var binding: ActivityEmergenciesBinding
-    private lateinit var auth: FirebaseAuth
-    private lateinit var db: FirebaseFirestore
+class ServiceHistoricActivity : AppCompatActivity(), View.OnClickListener {
+
+    private lateinit var binding : ActivityServiceHistoricBinding
+
+    private lateinit var auth : FirebaseAuth
+    private lateinit var db : FirebaseFirestore
     private lateinit var messaging : FirebaseMessaging
 
     private lateinit var recyclerView : RecyclerView
@@ -36,17 +46,17 @@ class EmergenciesActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityEmergenciesBinding.inflate(layoutInflater)
+        binding = ActivityServiceHistoricBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        auth = FirebaseAuth.getInstance()
-        db = FirebaseFirestore.getInstance()
-        messaging = FirebaseMessaging.getInstance()
 
         supportActionBar?.hide()
 
         binding.imageArrowBack.setColorFilter(ContextCompat.getColor(this, R.color.second))
         binding.btnVoltarRegister.setOnClickListener(this)
+
+        auth = FirebaseAuth.getInstance()
+        db = FirebaseFirestore.getInstance()
+        messaging = FirebaseMessaging.getInstance()
 
         recyclerView = findViewById(R.id.recycle)
         recyclerView.setHasFixedSize(true)
@@ -68,23 +78,17 @@ class EmergenciesActivity : AppCompatActivity(), View.OnClickListener {
         }
         myAdapter.attListener(listener)
 
-        EventChangeListener()
+        eventChangeListener()
+
     }
     @SuppressLint("NotifyDataSetChanged")
-    private fun EventChangeListener() {
-        db.collection(Constants.DB.EMERGENCIAS)
-            .whereEqualTo(Constants.DB.FIELD.CLOSED_STATUS, false)
-            .addSnapshotListener { result, erro ->
-                if (erro != null) {
-                    Log.e("Firestore error", erro.message.toString())
-                    return@addSnapshotListener
-                }
-                binding.progressLogin.isVisible = false
-                binding.textView3.isVisible = false
-                for (doc: DocumentChange in result!!.documentChanges) {
+    private fun eventChangeListener() {
+        db.collection(Constants.DB.ATENDIMENTOS)
+            .whereEqualTo("status", "fechado").addSnapshotListener { result, e ->
+                for (doc : DocumentChange in result!!.documentChanges) {
                     if (doc.type == DocumentChange.Type.ADDED) {
                         arrayList.add(doc.document.toObject(User().javaClass))
-                        arrayList[arrayList.count() - 1].id = doc.document.id
+                        arrayList[arrayList.count() - 1].id = doc.document["emergencia"].toString()
                     }
                     myAdapter.notifyDataSetChanged()
                 }
@@ -93,7 +97,7 @@ class EmergenciesActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View) {
         when(v.id){
             R.id.btn_voltar_register -> {
-                startActivity(Intent(this, UserActivity::class.java))
+                startActivity(Intent(myAdapter.context, UserActivity::class.java))
                 finish()
             }
         }
