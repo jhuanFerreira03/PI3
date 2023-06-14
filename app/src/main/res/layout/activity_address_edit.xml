@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.AddressEditActivity"
+    android:background="@color/gray">
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@color/princ"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <ImageView
+            android:id="@+id/image_arrow_back"
+            android:layout_width="40dp"
+            android:layout_height="32dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="15dp"
+            android:src="@drawable/ic_arrow" />
+
+        <Button
+            android:id="@+id/btn_voltar_register"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="120dp"
+            android:layout_height="70dp"
+            android:layout_alignStart="@+id/image_arrow_back"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="-3dp"
+            android:backgroundTint="@color/white"
+            android:text="@string/voltar"
+            android:textColor="#8380FF"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Selecione o endereço: "
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.958" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout3"
+        app:layout_constraintVertical_bias="0.251">
+
+        <TextView
+            android:id="@+id/text_address1"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_border"
+            android:maxLines="1"
+            android:padding="8dp"
+            android:text="Endereço 1"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/text_address2"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_border"
+            android:maxWidth="125dp"
+            android:maxLines="1"
+            android:padding="8dp"
+            android:text="Endereço 2"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/text_address3"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_border"
+            android:maxWidth="125dp"
+            android:maxLines="1"
+            android:padding="8dp"
+            android:text="Endereço 3"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/address_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="0.084"
+        tools:layout_editor_absoluteX="0dp">
+
+        <TextView
+            android:id="@+id/text_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/endere_o"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/address_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text_address"
+            android:layout_marginBottom="3dp"
+            android:background="@drawable/edittext_border"
+            android:hint="Nome do Endereço"
+            android:maxLines="1"
+            android:minHeight="48dp"
+            android:paddingStart="5dp" />
+
+        <EditText
+            android:id="@+id/address_street"
+            android:layout_width="270dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/address_name"
+            android:layout_marginBottom="3dp"
+            android:background="@drawable/edittext_border"
+            android:hint="Rua"
+            android:maxLines="1"
+            android:minHeight="48dp"
+            android:paddingStart="5dp" />
+
+        <EditText
+            android:id="@+id/address_number"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/address_name"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/address_street"
+            android:background="@drawable/edittext_border"
+            android:hint="Nº"
+            android:inputType="number"
+            android:maxLines="1"
+            android:minHeight="48dp"
+            android:paddingStart="5dp" />
+
+        <EditText
+            android:id="@+id/address_bairro"
+            android:layout_width="230dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/address_street"
+            android:layout_marginBottom="3dp"
+            android:background="@drawable/edittext_border"
+            android:hint="Bairro"
+            android:maxLines="1"
+            android:minHeight="48dp"
+            android:paddingStart="5dp" />
+
+        <EditText
+            android:id="@+id/address_cep"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/address_street"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="3dp"
+            android:layout_toEndOf="@+id/address_bairro"
+            android:background="@drawable/edittext_border"
+            android:hint="CEP"
+            android:inputType="number"
+            android:maxLength="8"
+            android:maxLines="1"
+            android:minHeight="48dp"
+            android:paddingStart="5dp" />
+
+        <EditText
+            android:id="@+id/address_cidade"
+            android:layout_width="270dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/address_bairro"
+            android:layout_marginBottom="3dp"
+            android:background="@drawable/edittext_border"
+            android:hint="Cidade"
+            android:maxLines="1"
+            android:minHeight="48dp"
+            android:paddingStart="5dp" />
+
+        <EditText
+            android:id="@+id/address_estado"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/address_bairro"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="3dp"
+            android:layout_toEndOf="@id/address_cidade"
+            android:background="@drawable/edittext_border"
+            android:hint="Estado"
+            android:maxLength="2"
+            android:maxLines="1"
+            android:minHeight="48dp"
+            android:paddingStart="5dp" />
+
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/add_address_button"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="84dp"
+        android:backgroundTint="#00AF07"
+        android:text="Salvar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.935"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/address_container"
+        app:layout_constraintVertical_bias="0.444" />
+
+    <Button
+        android:id="@+id/delete_address_button"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="84dp"
+        android:backgroundTint="#B80000"
+        android:text="Excluir"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.064"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/address_container"
+        app:layout_constraintVertical_bias="0.444" />
+
+    <RelativeLayout
+        android:id="@+id/Relative_Confirm"
+        android:layout_width="374dp"
+        android:layout_height="351dp"
+        android:background="@color/gray"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ATENÇÃO"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#FFB80000"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp" />
+
+        <TextView
+            android:id="@+id/text_tittle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="DESEJA REALMENTE EXCLUIR O ENDEREÇO"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/text_address_confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/text_tittle"
+            android:text="..."
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/button_cancelarExc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="16dp"
+            android:text="Cancelar" />
+
+        <Button
+            android:id="@+id/button_confirmExc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="#FFB80000"
+            android:text="Excluir" />
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

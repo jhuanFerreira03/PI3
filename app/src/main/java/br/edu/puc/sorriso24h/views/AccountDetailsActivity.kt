@@ -72,6 +72,8 @@ class AccountDetailsActivity : AppCompatActivity(), View.OnClickListener {
         binding.buttonCancelarAtt.setOnClickListener(this)
         binding.imagePhoto.setOnClickListener(this)
         binding.imagePhotoEdit.setOnClickListener(this)
+        binding.textEditAddress.setOnClickListener(this)
+        binding.imageButtonEditAddress.setOnClickListener(this)
 
         setInfos()
     }
@@ -91,12 +93,18 @@ class AccountDetailsActivity : AppCompatActivity(), View.OnClickListener {
                 binding.textAccountDetailEmail.text = doc.result.documents[0].get(Constants.DB.FIELD.EMAIL_DB).toString()
                 binding.textAccountDetailTelefone.text = doc.result.documents[0].get(Constants.DB.FIELD.PHONE).toString()
 
-                end1List = doc.result.documents[0].get("endereco").toString().split(',')
-                binding.textAddress1.text = end1List[0]
+                try {
+                    end1List = doc.result.documents[0].get("endereco").toString().split(',')
+                    if (end1List[0] != "null" && end1List[0] != "") {
+                        binding.textAddress1.text = end1List[0]
+                    }else{
+                        binding.textAddress1.visibility = View.INVISIBLE
+                    }
+                }catch (_:Exception){binding.textAddress1.visibility = View.INVISIBLE}
 
                 try {
                     end2List = doc.result.documents[0].get("endereco_2").toString().split(',')
-                    if(end2List[0] != "null") {
+                    if(end2List[0] != "null" && end2List[0] != "") {
                         binding.textAddress2.text = end2List[0]
                     }else {
                         binding.textAddress2.visibility = View.INVISIBLE
@@ -104,17 +112,16 @@ class AccountDetailsActivity : AppCompatActivity(), View.OnClickListener {
                 }catch (_:Exception){binding.textAddress2.visibility = View.INVISIBLE}
                 try {
                     end3List = doc.result.documents[0].get("endereco_3").toString().split(',')
-                    if (end3List[0] != "null") {
+                    if (end3List[0] != "null" && end3List[0] != "") {
                         binding.textAddress3.text = end3List[0]
                     }else{
                         binding.textAddress3.visibility = View.INVISIBLE
                     }
                 }catch (e:Exception){binding.textAddress3.visibility = View.INVISIBLE }
-                setAddress(Constants.KEY_SHARED.ADDRESS_1_REGISTER)
             }
     }
-    private fun setAddress(addrees : String){
-        if (addrees == Constants.KEY_SHARED.ADDRESS_1_REGISTER && binding.textAddress1.text != "Endereço 1"){
+    private fun setAddress(addrees : String) {
+        if (addrees == Constants.KEY_SHARED.ADDRESS_1_REGISTER && binding.textAddress1.text != "Endereço 1") {
             binding.textAddress1.setTextColor(ContextCompat.getColor(this, R.color.second))
             binding.textAddress1.setBackgroundColor(ContextCompat.getColor(this, R.color.gray))
             binding.textAccountDetailStreet.text = end1List[1]
@@ -174,7 +181,7 @@ class AccountDetailsActivity : AppCompatActivity(), View.OnClickListener {
             }
         }
     }
-    private fun openEditAtt(field: String){
+    private fun openEditAtt(field: String) {
         binding.editAtt.hint = "Novo $field"
 
         attField = field
@@ -291,6 +298,9 @@ class AccountDetailsActivity : AppCompatActivity(), View.OnClickListener {
                 SecurityPreferences(this).storeString(Constants.KEY_SHARED.PHOTO, Constants.CAMERA.FRONT)
                 SecurityPreferences(applicationContext).storeString(Constants.KEY_SHARED.DECIDER_PICTURE, "detail")
                 cameraProviderResult.launch(android.Manifest.permission.CAMERA)
+            }
+            R.id.imageButtonEditAddress, R.id.text_editAddress -> {
+                startActivity(Intent(this, AddressEditActivity::class.java))
             }
         }
     }

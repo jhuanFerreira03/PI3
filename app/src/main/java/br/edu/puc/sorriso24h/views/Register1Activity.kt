@@ -43,7 +43,7 @@ class Register1Activity : AppCompatActivity(), View.OnClickListener {
 
         supportActionBar?.hide()
 
-        SecurityPreferences(this).storeString("ft_perfil", "")
+        SecurityPreferences(this).storeString(Constants.KEY_SHARED.FT_PERFIL, "")
 
         binding.imageArrowBack.setColorFilter(ContextCompat.getColor(this, R.color.second))
         binding.imageArrowNext.setColorFilter(ContextCompat.getColor(this, R.color.second))
