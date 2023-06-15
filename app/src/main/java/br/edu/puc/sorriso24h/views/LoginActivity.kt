@@ -1,30 +1,26 @@
 package br.edu.puc.sorriso24h.views
 
 import android.content.Intent
-import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import br.edu.puc.sorriso24h.R
-import br.edu.puc.sorriso24h.databinding.ActivityTelaLoginBinding
+import br.edu.puc.sorriso24h.databinding.ActivityLoginBinding
 import br.edu.puc.sorriso24h.infra.Constants
 import br.edu.puc.sorriso24h.infra.SecurityPreferences
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.functions.FirebaseFunctions
 import com.google.firebase.storage.FirebaseStorage
-import com.google.gson.GsonBuilder
-import java.io.File
 
-class TelaLogin : AppCompatActivity(), View.OnClickListener {
+class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var functions: FirebaseFunctions
     private lateinit var storage : FirebaseStorage
 
-    private lateinit var binding:ActivityTelaLoginBinding
+    private lateinit var binding:ActivityLoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,13 +28,12 @@ class TelaLogin : AppCompatActivity(), View.OnClickListener {
         storage = FirebaseStorage.getInstance()
         //verifyUserlogado()
 
-        binding = ActivityTelaLoginBinding.inflate(layoutInflater)
+        binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
 
         supportActionBar?.hide()
 
-        setLogo()
 
         binding.progressLogin.visibility = View.INVISIBLE
         binding.checkManter.isChecked = true
@@ -60,10 +55,10 @@ class TelaLogin : AppCompatActivity(), View.OnClickListener {
         autenUser(binding.email.text.toString().trim(), binding.password.text.toString().trim(), true)
     }
 
-    private fun autenUser(email:String, senha:String, save:Boolean){
+    private fun autenUser(email:String, senha:String, save:Boolean) {
         auth.signInWithEmailAndPassword(email, senha)
             .addOnCompleteListener {auten ->
-                if(auten.isSuccessful){
+                if(auten.isSuccessful) {
                     if(save) {
                         if (binding.checkManter.isChecked) {
                             SecurityPreferences(this).storeString(
@@ -119,13 +114,6 @@ class TelaLogin : AppCompatActivity(), View.OnClickListener {
                 binding.email.setText("")
                 binding.password.setText("")
             }
-        }
-    }
-    private fun setLogo(){
-        val file : File = File.createTempFile("tempfile", ".jpg")
-        storage.getReference("logo/sorriso_24h_logoo.png").getFile(file).addOnSuccessListener {
-            binding.imageLogo.setBackgroundColor(ContextCompat.getColor(this, R.color.gray))
-            binding.imageLogo.setImageBitmap(BitmapFactory.decodeFile(file.absolutePath))
         }
     }
 }

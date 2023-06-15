@@ -3,6 +3,7 @@ package br.edu.puc.sorriso24h.views
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.Geocoder
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -11,14 +12,19 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import br.edu.puc.sorriso24h.R
 import br.edu.puc.sorriso24h.databinding.ActivityServiceConfirmBinding
+import br.edu.puc.sorriso24h.infra.Constants
 import br.edu.puc.sorriso24h.infra.SecurityPreferences
+import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.GeoPoint
 import com.google.firebase.messaging.FirebaseMessaging
+import java.lang.Exception
+import java.util.Locale
 
-class ServiceConfirmActivity : AppCompatActivity(), View.OnClickListener{
+class ServiceConfirmActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var binding : ActivityServiceConfirmBinding
     private lateinit var auth : FirebaseAuth
@@ -39,8 +45,6 @@ class ServiceConfirmActivity : AppCompatActivity(), View.OnClickListener{
 
         setInfo()
 
-        binding.imageArrowBack.setColorFilter(ContextCompat.getColor(this, R.color.second))
-
         if(ActivityCompat.checkSelfPermission(this, android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.CALL_PHONE), REQUEST_PHONE_CALL)
         }
@@ -52,13 +56,31 @@ class ServiceConfirmActivity : AppCompatActivity(), View.OnClickListener{
         binding.imageBtnSendLocation.setOnClickListener(this)
         binding.imageBtnGetLocation.setOnClickListener(this)
 
+        db.collection(Constants.DB.ATENDIMENTOS).document(SecurityPreferences(this).getString(Constants.KEY_SHARED.ATENDIMENTO_ID).toString()).addSnapshotListener{
+            doc, e ->
+            try {
+                if (doc!!.data!!["statusPendente"] == true) {
+                    val x = doc!!.data!!["geolocalizacaoEmergencia"] as GeoPoint
+                    SecurityPreferences(this).storeString("latitude", x.latitude.toString())
+                    SecurityPreferences(this).storeString("longitude", x.longitude.toString())
+                }
+            } catch (e: Exception) {
+                Snackbar.make(binding.root, e.message.toString(), Snackbar.LENGTH_LONG).show()
+            }
+        }
+
     }
     private fun setInfo() {
-        db.collection("Emergencias").document(SecurityPreferences(this).getString("emergencyNoti").toString()).addSnapshotListener {
+        db.collection(Constants.DB.ATENDIMENTOS).document(SecurityPreferences(this).getString(Constants.KEY_SHARED.ATENDIMENTO_ID).toString()).addSnapshotListener {
             doc, e ->
-            binding.textNome.text = doc!!["nome"].toString()
-            binding.textTelefone.text = doc["telefone"].toString()
+            binding.textNome.text = doc!![Constants.DB.FIELD.NAME_DB].toString()
+            binding.textTelefone.text = doc[Constants.DB.FIELD.PHONE].toString()
         }
+    }
+    private fun setStatus(){
+        db.collection(Constants.DB.ATENDIMENTOS)
+            .document(SecurityPreferences(this).getString(Constants.KEY_SHARED.ATENDIMENTO_ID).toString())
+            .update("statusPendente", false)
     }
     @SuppressLint("MissingPermission")
     private fun startCall() {
@@ -68,7 +90,6 @@ class ServiceConfirmActivity : AppCompatActivity(), View.OnClickListener{
 
         startActivity(callint)
     }
-
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == REQUEST_PHONE_CALL) startCall()
@@ -82,8 +103,13 @@ class ServiceConfirmActivity : AppCompatActivity(), View.OnClickListener{
             R.id.image_call -> {
                 startCall()
             }
-            R.id.button_sendLocation, R.id.image_btnSendLocation-> {
+            R.id.button_getLocation, R.id.image_btnGetLocation-> {
                 startActivity(Intent(this, MapsActivity::class.java))
+                setStatus()
+            }
+            R.id.button_sendLocation, R.id.image_btnSendLocation -> {
+                startActivity(Intent(this, SendLocationActivity::class.java))
+                setStatus()
             }
         }
     }

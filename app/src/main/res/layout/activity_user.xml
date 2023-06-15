@@ -80,7 +80,7 @@
 
     <Button
         android:id="@+id/button_emergencyList"
-        android:layout_width="260dp"
+        android:layout_width="285dp"
         android:layout_height="60dp"
         android:text="@string/lista_emergencias"
         android:layout_above="@+id/button_history"

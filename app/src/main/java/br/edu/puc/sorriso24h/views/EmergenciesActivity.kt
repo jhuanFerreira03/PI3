@@ -45,7 +45,6 @@ class EmergenciesActivity : AppCompatActivity(), View.OnClickListener {
 
         supportActionBar?.hide()
 
-        binding.imageArrowBack.setColorFilter(ContextCompat.getColor(this, R.color.second))
         binding.btnVoltarRegister.setOnClickListener(this)
 
         recyclerView = findViewById(R.id.recycle)
@@ -59,9 +58,7 @@ class EmergenciesActivity : AppCompatActivity(), View.OnClickListener {
 
         val listener = object : ListListener {
             override fun onClick(adapterPosition: Int) {
-                SecurityPreferences(myAdapter.context).storeString(Constants.KEY_SHARED.ARRAY_NAME, arrayList[adapterPosition].nome.trim())
-                SecurityPreferences(myAdapter.context).storeString(Constants.KEY_SHARED.ARRAY_TEL, arrayList[adapterPosition].telefone.trim())
-                SecurityPreferences(myAdapter.context).storeString("id", arrayList[adapterPosition].id.trim())
+                SecurityPreferences(myAdapter.context).storeString(Constants.KEY_SHARED.EMERGENCY_ID, arrayList[adapterPosition].id.trim())
                 SecurityPreferences(myAdapter.context).storeInt(Constants.KEY_SHARED.ARRAY_ADAPT, adapterPosition)
                 startActivity(Intent(myAdapter.context, EmergencyDetailActivity::class.java))
             }

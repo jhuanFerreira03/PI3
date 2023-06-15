@@ -37,8 +37,6 @@ class AddressEditActivity : AppCompatActivity(), View.OnClickListener {
         binding = ActivityAddressEditBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.imageArrowBack.setColorFilter(ContextCompat.getColor(this, R.color.second))
-
         supportActionBar?.hide()
 
         auth = FirebaseAuth.getInstance()
@@ -55,10 +53,9 @@ class AddressEditActivity : AppCompatActivity(), View.OnClickListener {
 
         setInfos()
     }
-
     private fun setInfos() {
         db.collection(Constants.DB.DENTISTAS)
-            .whereEqualTo("uid", auth.currentUser!!.uid)
+            .whereEqualTo(Constants.DB.FIELD.UID, auth.currentUser!!.uid)
             .get()
             .addOnCompleteListener {
                     doc ->
@@ -66,56 +63,67 @@ class AddressEditActivity : AppCompatActivity(), View.OnClickListener {
                     end1List = doc.result.documents[0].get("endereco").toString().split(',')
                     if (end1List[0] != "null" && end1List[0] != "") {
                         binding.textAddress1.text = end1List[0]
-                    }else{
-                        binding.textAddress1.visibility = View.INVISIBLE
+                    }else {
+                        end1List = mutableListOf("", "", "", "", "", "", "")
                     }
-                }catch (_:Exception){binding.textAddress1.visibility = View.INVISIBLE}
+                }catch (_:Exception){binding.textAddress1.isEnabled = false}
                 try {
                     end2List = doc.result.documents[0].get("endereco_2").toString().split(',')
                     if(end2List[0] != "null" && end2List[0] != "") {
                         binding.textAddress2.text = end2List[0]
                     }else {
-                        binding.textAddress2.visibility = View.INVISIBLE
+                        end2List = mutableListOf("", "", "", "", "", "", "")
                     }
-                }catch (_:Exception){binding.textAddress2.visibility = View.INVISIBLE}
+                }catch (_:Exception){binding.textAddress2.isEnabled = false}
                 try {
                     end3List = doc.result.documents[0].get("endereco_3").toString().split(',')
                     if (end3List[0] != "null" && end3List[0] != "") {
                         binding.textAddress3.text = end3List[0]
-                    }else{
-                        binding.textAddress3.visibility = View.INVISIBLE
+                    }else {
+                        end3List = mutableListOf("", "", "", "", "", "", "")
                     }
-                }catch (e:Exception){binding.textAddress3.visibility = View.INVISIBLE }
+                }catch (e:Exception){binding.textAddress3.isEnabled = false }
             }
     }
     private fun setAddress(addrees : String) {
-        if (addrees == Constants.KEY_SHARED.ADDRESS_1_REGISTER && binding.textAddress1.text != "Endereço 1") {
-            attAdd = end1List[0]
+        if (addrees == Constants.KEY_SHARED.ADDRESS_1_REGISTER ) {
             attField = "endereco"
+            attAdd = "Endereço"
             binding.textAddress1.setTextColor(ContextCompat.getColor(this, R.color.second))
             binding.textAddress1.setBackgroundColor(ContextCompat.getColor(this, R.color.gray))
-
-            binding.addressName.setText(end1List[0])
-            binding.addressStreet.setText(end1List[1])
-            binding.addressNumber.setText(end1List[2])
-            binding.addressBairro.setText(end1List[3])
-            binding.addressCep.setText(end1List[4])
-            binding.addressCidade.setText(end1List[5])
-            binding.addressEstado.setText(end1List[6])
 
             binding.textAddress2.setTextColor(ContextCompat.getColor(this, R.color.white))
             binding.textAddress3.setTextColor(ContextCompat.getColor(this, R.color.white))
             binding.textAddress2.setBackgroundColor(ContextCompat.getColor(this, R.color.second))
             binding.textAddress3.setBackgroundColor(ContextCompat.getColor(this, R.color.second))
+            if (binding.textAddress1.text != "Endereço 1") {
+                attAdd = end1List[0]
+                attField = "endereco"
 
-            return
+                binding.addressName.setText(end1List[0])
+                binding.addressStreet.setText(end1List[1])
+                binding.addressNumber.setText(end1List[2])
+                binding.addressBairro.setText(end1List[3])
+                binding.addressCep.setText(end1List[4])
+                binding.addressCidade.setText(end1List[5])
+                binding.addressEstado.setText(end1List[6])
+
+                return
+            }
         }
         else if (addrees == Constants.KEY_SHARED.ADDRESS_2_REGISTER) {
+            attAdd = "Endereço"
+            attField = "endereco_2"
+            binding.textAddress2.setTextColor(ContextCompat.getColor(this, R.color.second))
+            binding.textAddress2.setBackgroundColor(ContextCompat.getColor(this, R.color.gray))
+
+            binding.textAddress1.setTextColor(ContextCompat.getColor(this, R.color.white))
+            binding.textAddress3.setTextColor(ContextCompat.getColor(this, R.color.white))
+            binding.textAddress1.setBackgroundColor(ContextCompat.getColor(this, R.color.second))
+            binding.textAddress3.setBackgroundColor(ContextCompat.getColor(this, R.color.second))
             if (binding.textAddress2.text.toString() != "Endereço 2") {
                 attAdd = end2List[0]
                 attField = "endereco_2"
-                binding.textAddress2.setTextColor(ContextCompat.getColor(this, R.color.second))
-                binding.textAddress2.setBackgroundColor(ContextCompat.getColor(this, R.color.gray))
 
                 binding.addressName.setText(end2List[0])
                 binding.addressStreet.setText(end2List[1])
@@ -125,20 +133,23 @@ class AddressEditActivity : AppCompatActivity(), View.OnClickListener {
                 binding.addressCidade.setText(end2List[5])
                 binding.addressEstado.setText(end2List[6])
 
-                binding.textAddress1.setTextColor(ContextCompat.getColor(this, R.color.white))
-                binding.textAddress3.setTextColor(ContextCompat.getColor(this, R.color.white))
-                binding.textAddress1.setBackgroundColor(ContextCompat.getColor(this, R.color.second))
-                binding.textAddress3.setBackgroundColor(ContextCompat.getColor(this, R.color.second))
-
                 return
             }
         }
         else if (addrees == Constants.KEY_SHARED.ADDRESS_3_REGISTER) {
+
+            attAdd = "Endereço"
+            attField = "endereco_3"
+            binding.textAddress3.setTextColor(ContextCompat.getColor(this, R.color.second))
+            binding.textAddress3.setBackgroundColor(ContextCompat.getColor(this, R.color.gray))
+
+            binding.textAddress1.setTextColor(ContextCompat.getColor(this, R.color.white))
+            binding.textAddress2.setTextColor(ContextCompat.getColor(this, R.color.white))
+            binding.textAddress1.setBackgroundColor(ContextCompat.getColor(this, R.color.second))
+            binding.textAddress2.setBackgroundColor(ContextCompat.getColor(this, R.color.second))
             if (binding.textAddress3.text.toString().trim() != "Endereço 3") {
                 attAdd = end3List[0]
                 attField = "endereco_3"
-                binding.textAddress3.setTextColor(ContextCompat.getColor(this, R.color.second))
-                binding.textAddress3.setBackgroundColor(ContextCompat.getColor(this, R.color.gray))
 
                 binding.addressName.setText(end3List[0])
                 binding.addressStreet.setText(end3List[1])
@@ -148,10 +159,6 @@ class AddressEditActivity : AppCompatActivity(), View.OnClickListener {
                 binding.addressCidade.setText(end3List[5])
                 binding.addressEstado.setText(end3List[6])
 
-                binding.textAddress1.setTextColor(ContextCompat.getColor(this, R.color.white))
-                binding.textAddress2.setTextColor(ContextCompat.getColor(this, R.color.white))
-                binding.textAddress1.setBackgroundColor(ContextCompat.getColor(this, R.color.second))
-                binding.textAddress2.setBackgroundColor(ContextCompat.getColor(this, R.color.second))
 
                 return
             }
@@ -179,35 +186,35 @@ class AddressEditActivity : AppCompatActivity(), View.OnClickListener {
         binding.textView10.visibility = View.VISIBLE
     }
     private fun verifyAddress():Boolean{
-        if(binding.addressName.text.toString().trim().isEmpty()){
+        if(binding.addressName.text.toString().trim().isEmpty()) {
             binding.addressName.error = Constants.PHRASE.EMPTY_FIELD
             return false
         }
-        if(binding.addressStreet.text.toString().trim().isEmpty()){
+        if(binding.addressStreet.text.toString().trim().isEmpty()) {
             binding.addressStreet.error = Constants.PHRASE.EMPTY_FIELD
             return false
         }
-        if(binding.addressNumber.text.toString().trim().isEmpty()){
+        if(binding.addressNumber.text.toString().trim().isEmpty()) {
             binding.addressNumber.error = Constants.PHRASE.EMPTY_FIELD
             return false
         }
-        if(binding.addressBairro.text.toString().trim().isEmpty()){
+        if(binding.addressBairro.text.toString().trim().isEmpty()) {
             binding.addressBairro.error = Constants.PHRASE.EMPTY_FIELD
             return false
         }
-        if(binding.addressCep.text.toString().trim().isEmpty()){
+        if(binding.addressCep.text.toString().trim().isEmpty()) {
             binding.addressCep.error = Constants.PHRASE.EMPTY_FIELD
             return false
         }
-        if(binding.addressCep.text.toString().trim().length != 8){
+        if(binding.addressCep.text.toString().trim().length != 8) {
             binding.addressCep.error = Constants.PHRASE.MIN_LENGHT
             return false
         }
-        if(binding.addressCidade.text.toString().trim().isEmpty()){
+        if(binding.addressCidade.text.toString().trim().isEmpty()) {
             binding.addressCidade.error = Constants.PHRASE.EMPTY_FIELD
             return false
         }
-        if(binding.addressEstado.text.toString().trim().isEmpty()){
+        if(binding.addressEstado.text.toString().trim().isEmpty()) {
             binding.addressEstado.error = Constants.PHRASE.EMPTY_FIELD
             return false
         }

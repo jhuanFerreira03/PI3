@@ -1,5 +1,6 @@
 package br.edu.puc.sorriso24h.views
 
+import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -15,28 +16,28 @@ import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
+@SuppressLint("MissingFirebaseInstanceTokenRefresh")
 class MyFirebaseMessagingService: FirebaseMessagingService() {
     private val channelId = "notification_channel"
     private val channelName = "br.edu.puc.sorriso24h"
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         val dados = remoteMessage.data ?: return
 
-        SecurityPreferences(this).storeString(Constants.KEY_SHARED.ARRAY_NAME, dados["nome"].toString())
-        SecurityPreferences(this).storeString(Constants.KEY_SHARED.ARRAY_TEL, dados["telefone"].toString())
-        if(dados["nome"] != null && dados["telefone"] != null) {
+        if(dados[Constants.DB.FIELD.NAME_DB] != null && dados[Constants.DB.FIELD.PHONE] != null) {
             generateNotification(
                 dados["title"].toString(),
-                dados["nome"].toString() + " " + dados["telefone"].toString(),
+                dados[Constants.DB.FIELD.NAME_DB].toString() + " " + dados[Constants.DB.FIELD.PHONE].toString(),
                 "first"
             )
+            SecurityPreferences(this).storeString(Constants.KEY_SHARED.EMERGENCY_ID, dados["id"].toString())
         }
-        else{
+        else {
             generateNotification(
                 dados["title"].toString(),
                 "Clique para ver os detalhes",
                 "second"
             )
-            SecurityPreferences(this).storeString("emergencyNoti", dados["em"].toString())
+            SecurityPreferences(this).storeString(Constants.KEY_SHARED.ATENDIMENTO_ID, dados["id"].toString())
         }
     }
     private fun getRemoteView(title: String, message: String): RemoteViews {

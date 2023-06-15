@@ -27,8 +27,8 @@
 
     <ImageButton
         android:id="@+id/button_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="82dp"
+        android:layout_height="73dp"
         android:backgroundTint="@color/material_on_background_disabled"
         android:src="@drawable/baseline_keyboard_backspace_24"
         app:layout_constraintBottom_toBottomOf="parent"

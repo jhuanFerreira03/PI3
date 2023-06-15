@@ -19,6 +19,15 @@
         android:theme="@style/Theme.sorriso24h"
         tools:targetApi="31">
         <activity
+            android:name=".views.SendLocationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.ServiceActivity"
+            android:exported="false" />
+        <activity
             android:name=".views.AddressEditActivity"
             android:exported="false" />
         <activity

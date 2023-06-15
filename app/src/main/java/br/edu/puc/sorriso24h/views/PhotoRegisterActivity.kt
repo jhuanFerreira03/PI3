@@ -42,9 +42,6 @@ class PhotoRegisterActivity : AppCompatActivity(), View.OnClickListener {
 
         supportActionBar?.hide()
 
-        binding.imageArrowBack.setColorFilter(ContextCompat.getColor(this, R.color.second))
-        binding.imageArrowNext.setColorFilter(ContextCompat.getColor(this, R.color.second))
-
         SecurityPreferences(this).storeString(Constants.KEY_SHARED.PHOTO, Constants.CAMERA.FRONT)
 
         binding.buttonOpenCam.setOnClickListener(this)
@@ -73,7 +70,7 @@ class PhotoRegisterActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View) {
         when(v.id) {
             R.id.button_openCam -> {
-                SecurityPreferences(applicationContext).storeString("deciderPicture", "register")
+                SecurityPreferences(applicationContext).storeString(Constants.KEY_SHARED.DECIDER_PICTURE, "register")
                 cameraProviderResult.launch(android.Manifest.permission.CAMERA)
             }
             R.id.btn_voltar_register -> {

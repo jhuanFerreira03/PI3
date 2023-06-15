@@ -7,19 +7,32 @@ import android.os.Bundle
 import android.view.View
 import br.edu.puc.sorriso24h.R
 import br.edu.puc.sorriso24h.databinding.ActivityMapsBinding
+import br.edu.puc.sorriso24h.databinding.ActivityServiceConfirmBinding
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.messaging.FirebaseMessaging
 import java.lang.Exception
 import java.util.Locale
+import br.edu.puc.sorriso24h.infra.Constants
+import br.edu.puc.sorriso24h.infra.SecurityPreferences
+import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.GeoPoint
 
 class MapsActivity : AppCompatActivity() {
     private lateinit var binding : ActivityMapsBinding
 
     lateinit var place : Place
+
+    private lateinit var auth : FirebaseAuth
+    private lateinit var db : FirebaseFirestore
+    private lateinit var messaging : FirebaseMessaging
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +40,10 @@ class MapsActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         supportActionBar?.hide()
+
+        auth = FirebaseAuth.getInstance()
+        db = FirebaseFirestore.getInstance()
+        messaging = FirebaseMessaging.getInstance()
 
         onLat()
         val mapFragment = supportFragmentManager.findFragmentById(R.id.fragment_map) as SupportMapFragment
@@ -39,23 +56,18 @@ class MapsActivity : AppCompatActivity() {
             }
         }
     }
-    private fun onLat(){
-        val x = "Av. Brg. Faria Lima, 3477 - 18º Andar - Itaim Bibi, São Paulo - SP, 04538-133"
-
-        val geo = Geocoder(this, Locale.getDefault())
-
+    private fun onLat() {
         try {
-            val list: MutableList<Address> = geo.getFromLocationName(x, 1) as MutableList<Address>
-            if (list.size > 0) {
-                val address : Address = list[0]
-
-                place = Place("sla", LatLng(address.latitude, address.longitude), "sla")
-            }
-        }
-        catch (_:Exception){
+            place = Place("Localização socorrista",
+                LatLng(
+                    SecurityPreferences(this).getString("latitude")!!.toDouble(),
+                    SecurityPreferences(this).getString("longitude")!!.toDouble()
+                ),
+                "Endereço Socorrista")
+        } catch (_: Exception) {
         }
     }
-    private fun addPlace(googleMap: GoogleMap){
+    private fun addPlace(googleMap: GoogleMap) {
         googleMap.addMarker(
             MarkerOptions()
                 .title(place.name)

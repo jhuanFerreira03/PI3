@@ -20,12 +20,17 @@ class Constants {
         const val ARRAY_TEL = "ARRAY_TEL"
         const val ARRAY_ADAPT = "ARRAY_ADAPT"
 
-        const val DOCID = "DOCID"
         const val NOTI = "NOTI"
         const val PHOTO = "PHOTO"
 
+        const val STA = "sta"
         const val FT_PERFIL = "ft_perfil"
         const val DECIDER_PICTURE = "deciderPicture"
+        const val PHOTO_VIEW = "photoView"
+        const val PHOTO_VIEW_DECIDER = "photoViewDecider"
+        const val EMERGENCY_DETAIL = "emergencyDetail"
+        const val EMERGENCY_ID = "emergencyId"
+        const val ATENDIMENTO_ID = "atendimentoId"
     }
     object CAMERA {
         const val FRONT = "FRONT"
@@ -47,6 +52,9 @@ class Constants {
             const val EMAIL_DB = "email"
             const val PHONE = "telefone"
             const val UID = "uid"
+            const val STATUS = "status"
+            const val DENTISTA = "dentista"
+            const val EMERGENCIA = "emergencia"
         }
     }
 

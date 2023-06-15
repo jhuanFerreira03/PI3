@@ -18,11 +18,10 @@ class SuccessfulRegisterActivity : AppCompatActivity(), View.OnClickListener {
 
         binding.buttonBackToLogin.setOnClickListener(this)
     }
-
     override fun onClick(v: View) {
         when(v.id){
             R.id.button_backToLogin -> {
-                startActivity(Intent(this, TelaLogin::class.java))
+                startActivity(Intent(this, LoginActivity::class.java))
                 finish()
             }
         }

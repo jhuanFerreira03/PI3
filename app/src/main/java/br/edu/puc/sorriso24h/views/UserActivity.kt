@@ -55,7 +55,7 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
     }
     private fun setSec() {
         db.collection(Constants.DB.DENTISTAS).whereEqualTo(Constants.DB.FIELD.UID, auth.currentUser!!.uid).get().addOnCompleteListener {
-            SecurityPreferences(this).storeString("UID", it.result.documents[0].id)
+            SecurityPreferences(this).storeString(Constants.DB.FIELD.UID.uppercase(), it.result.documents[0].id)
         }
     }
     private fun setName() {
@@ -69,7 +69,7 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
     }
     private fun updateStatus(status: Boolean) {
         val dados = hashMapOf(
-            "status" to status
+            Constants.DB.FIELD.STATUS to status
         )
         db.collection(Constants.DB.DENTISTAS)
             .whereEqualTo(Constants.DB.FIELD.UID, auth.currentUser!!.uid)
@@ -123,24 +123,24 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
                 db.collection(Constants.DB.DENTISTAS)
                     .document(docId)
                     .addSnapshotListener{ doc, e ->
-                        SecurityPreferences(this).storeString("sta", doc?.get("status").toString())
+                        SecurityPreferences(this).storeString(Constants.KEY_SHARED.STA, doc?.get(Constants.DB.FIELD.STATUS).toString())
                     }
             }
-        if(SecurityPreferences(this).getString("sta").toString() == Constants.OTHERS.FALSE.lowercase()) return
-        else if (SecurityPreferences(this).getString("sta").toString() == Constants.OTHERS.TRUE.lowercase()) {
+        if(SecurityPreferences(this).getString(Constants.KEY_SHARED.STA).toString() == Constants.OTHERS.FALSE.lowercase()) return
+        else if (SecurityPreferences(this).getString(Constants.KEY_SHARED.STA).toString() == Constants.OTHERS.TRUE.lowercase()) {
             binding.switchButton.isChecked = true
         }
     }
     private fun verifyService(){
         db.collection(Constants.DB.DENTISTAS).whereEqualTo(Constants.DB.FIELD.UID, auth.currentUser!!.uid).get().addOnCompleteListener {
             den ->
-            db.collection(Constants.DB.ATENDIMENTOS).whereEqualTo("status", "pendente")
+            db.collection(Constants.DB.ATENDIMENTOS).whereEqualTo("statusPendente", true)
                 .get()
                 .addOnCompleteListener {
                     var verivyPen = false
                     for (cop: DocumentSnapshot in it.result.documents) {
-                        if (cop.get("dentista").toString() == den.result.documents[0].id) {
-                            SecurityPreferences(this).storeString("emergencyNoti", cop.get("emergencia").toString())
+                        if (cop.get(Constants.DB.FIELD.DENTISTA).toString() == den.result.documents[0].id) {
+                            SecurityPreferences(this).storeString(Constants.KEY_SHARED.ATENDIMENTO_ID, cop.id)
                             verivyPen = true
                             break
                         }
@@ -163,7 +163,7 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
                 SecurityPreferences(this).storeString(Constants.KEY_SHARED.SAVE_LOGIN, "")
                 SecurityPreferences(this).storeString(Constants.KEY_SHARED.EMAIL_LOGIN, "")
                 SecurityPreferences(this).storeString(Constants.KEY_SHARED.PASSWORD_LOGIN, "")
-                startActivity(Intent(this, TelaLogin::class.java))
+                startActivity(Intent(this, LoginActivity::class.java))
                 finish()
             }
             R.id.button_emergencyList -> {

@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import br.edu.puc.sorriso24h.R
 import br.edu.puc.sorriso24h.databinding.ActivityMainBinding
@@ -40,7 +41,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     finish()
                 }
             }.addOnFailureListener{
-                startActivity(Intent(this, TelaLogin::class.java))
+                startActivity(Intent(this, LoginActivity::class.java))
                 finish()
             }
     }
@@ -55,7 +56,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     SecurityPreferences(this).getString(Constants.KEY_SHARED.PASSWORD_LOGIN).toString())
             }
         } else {
-            startActivity(Intent(this, TelaLogin::class.java))
+            startActivity(Intent(this, LoginActivity::class.java))
             finish()
         }
     }

@@ -51,7 +51,6 @@ class ServiceHistoricActivity : AppCompatActivity(), View.OnClickListener {
 
         supportActionBar?.hide()
 
-        binding.imageArrowBack.setColorFilter(ContextCompat.getColor(this, R.color.second))
         binding.btnVoltarRegister.setOnClickListener(this)
 
         auth = FirebaseAuth.getInstance()
@@ -69,11 +68,9 @@ class ServiceHistoricActivity : AppCompatActivity(), View.OnClickListener {
 
         val listener = object : ListListener {
             override fun onClick(adapterPosition: Int) {
-                SecurityPreferences(myAdapter.context).storeString(Constants.KEY_SHARED.ARRAY_NAME, arrayList[adapterPosition].nome.trim())
-                SecurityPreferences(myAdapter.context).storeString(Constants.KEY_SHARED.ARRAY_TEL, arrayList[adapterPosition].telefone.trim())
-                SecurityPreferences(myAdapter.context).storeString("id", arrayList[adapterPosition].id.trim())
+                SecurityPreferences(myAdapter.context).storeString(Constants.KEY_SHARED.ATENDIMENTO_ID, arrayList[adapterPosition].id.trim())
                 SecurityPreferences(myAdapter.context).storeInt(Constants.KEY_SHARED.ARRAY_ADAPT, adapterPosition)
-                startActivity(Intent(myAdapter.context, EmergencyDetailActivity::class.java))
+                startActivity(Intent(myAdapter.context, ServiceActivity::class.java))
             }
         }
         myAdapter.attListener(listener)
@@ -84,18 +81,21 @@ class ServiceHistoricActivity : AppCompatActivity(), View.OnClickListener {
     @SuppressLint("NotifyDataSetChanged")
     private fun eventChangeListener() {
         db.collection(Constants.DB.ATENDIMENTOS)
-            .whereEqualTo("status", "fechado").addSnapshotListener { result, e ->
+            .whereEqualTo("statusPendente", false).addSnapshotListener { result, e ->
                 for (doc : DocumentChange in result!!.documentChanges) {
                     if (doc.type == DocumentChange.Type.ADDED) {
-                        arrayList.add(doc.document.toObject(User().javaClass))
-                        arrayList[arrayList.count() - 1].id = doc.document["emergencia"].toString()
+                        val docc = doc.document.data
+                        if (docc.containsValue(SecurityPreferences(this).getString(Constants.DB.FIELD.UID.uppercase()).toString())) {
+                            arrayList.add(doc.document.toObject(User().javaClass))
+                            arrayList[arrayList.count() - 1].id = doc.document.id
+                        }
                     }
                     myAdapter.notifyDataSetChanged()
                 }
             }
     }
     override fun onClick(v: View) {
-        when(v.id){
+        when(v.id) {
             R.id.btn_voltar_register -> {
                 startActivity(Intent(myAdapter.context, UserActivity::class.java))
                 finish()

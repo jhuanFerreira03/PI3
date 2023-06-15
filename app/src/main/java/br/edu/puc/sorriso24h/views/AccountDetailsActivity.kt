@@ -30,6 +30,7 @@ import com.google.firebase.storage.FirebaseStorage
 import io.grpc.InternalChannelz.Security
 import org.w3c.dom.Text
 import java.io.File
+import kotlin.math.round
 
 class AccountDetailsActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -59,8 +60,6 @@ class AccountDetailsActivity : AppCompatActivity(), View.OnClickListener {
         messaging = FirebaseMessaging.getInstance()
         storage = FirebaseStorage.getInstance()
 
-        binding.imageArrowBack.setColorFilter(ContextCompat.getColor(this, R.color.second))
-
         binding.btnVoltarRegister.setOnClickListener(this)
         binding.textAddress1.setOnClickListener(this)
         binding.textAddress2.setOnClickListener(this)
@@ -75,6 +74,8 @@ class AccountDetailsActivity : AppCompatActivity(), View.OnClickListener {
         binding.textEditAddress.setOnClickListener(this)
         binding.imageButtonEditAddress.setOnClickListener(this)
 
+        countStars()
+
         setInfos()
     }
     private fun setInfos(){
@@ -85,7 +86,7 @@ class AccountDetailsActivity : AppCompatActivity(), View.OnClickListener {
             binding.progressMain.visibility = View.INVISIBLE
         }
         db.collection(Constants.DB.DENTISTAS)
-            .whereEqualTo("uid", auth.currentUser!!.uid)
+            .whereEqualTo(Constants.DB.FIELD.UID, auth.currentUser!!.uid)
             .get()
             .addOnCompleteListener {
                 doc ->
@@ -98,26 +99,32 @@ class AccountDetailsActivity : AppCompatActivity(), View.OnClickListener {
                     if (end1List[0] != "null" && end1List[0] != "") {
                         binding.textAddress1.text = end1List[0]
                     }else{
-                        binding.textAddress1.visibility = View.INVISIBLE
+                        //binding.textAddress1.isEnabled = false
                     }
-                }catch (_:Exception){binding.textAddress1.visibility = View.INVISIBLE}
+                }catch (_:Exception){
+                //binding.textAddress1.isEnabled = false}
+                }
 
                 try {
                     end2List = doc.result.documents[0].get("endereco_2").toString().split(',')
                     if(end2List[0] != "null" && end2List[0] != "") {
                         binding.textAddress2.text = end2List[0]
                     }else {
-                        binding.textAddress2.visibility = View.INVISIBLE
+                        //binding.textAddress2.isEnabled = false
                     }
-                }catch (_:Exception){binding.textAddress2.visibility = View.INVISIBLE}
+                }catch (_:Exception){
+                //binding.textAddress2.isEnabled = false}
+                }
                 try {
                     end3List = doc.result.documents[0].get("endereco_3").toString().split(',')
                     if (end3List[0] != "null" && end3List[0] != "") {
                         binding.textAddress3.text = end3List[0]
                     }else{
-                        binding.textAddress3.visibility = View.INVISIBLE
+                        //binding.textAddress3.isEnabled = false
                     }
-                }catch (e:Exception){binding.textAddress3.visibility = View.INVISIBLE }
+                }catch (e:Exception){
+                //binding.textAddress3.isEnabled = false }
+                }
             }
     }
     private fun setAddress(addrees : String) {
@@ -277,6 +284,27 @@ class AccountDetailsActivity : AppCompatActivity(), View.OnClickListener {
             binding.imagePhotoEdit.visibility = View.VISIBLE
         }
     }
+    private fun countStars() {
+        var sum = 0.0
+        var count = 0.0
+        db.collection(Constants.DB.DENTISTAS).whereEqualTo(Constants.DB.FIELD.UID, auth.currentUser!!.uid).get().addOnCompleteListener {
+            db.collection(Constants.DB.ATENDIMENTOS).whereEqualTo(Constants.DB.FIELD.DENTISTA, it.result.documents[0].id).get().addOnCompleteListener {
+                docs ->
+                for (doc : DocumentSnapshot in docs.result.documents) {
+                    val docc = doc.data as HashMap<String?, Any?>
+                    if (docc.containsKey("estrelasProfissional") && docc["estrelasProfissional"] != null && docc["estrelasProfissional"] != "") {
+                        val aux = docc["estrelasProfissional"].toString()
+                        sum += aux.toDouble()
+                        count++
+                    }
+                }
+                if(count != 0.0) {
+                    val x = sum / count
+                    binding.imageCount.text = round(x).toString()
+                }
+            }
+        }
+    }
     override fun onClick(v: View) {
         when(v.id) {
             R.id.btn_voltar_register -> {
@@ -292,6 +320,8 @@ class AccountDetailsActivity : AppCompatActivity(), View.OnClickListener {
             R.id.button_att -> updateField(attField)
             R.id.button_cancelarAtt -> closeEditAtt()
             R.id.image_photo -> {
+                SecurityPreferences(this).storeString(Constants.KEY_SHARED.PHOTO_VIEW, "images_user/${auth.currentUser!!.uid}")
+                SecurityPreferences(this).storeString(Constants.KEY_SHARED.PHOTO_VIEW_DECIDER, "account")
                 startActivity(Intent(this, PhotoViewActivity::class.java))
             }
             R.id.image_photo_edit -> {

@@ -178,7 +178,7 @@ class CameraActivity : AppCompatActivity() , View.OnClickListener{
             }, 50)
         }, 100)
     }
-    override fun onClick(v: View){
+    override fun onClick(v: View) {
         when(v.id) {
             R.id.button_takePhoto -> {
                 takePhoto()

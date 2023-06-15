@@ -45,9 +45,6 @@ class Register1Activity : AppCompatActivity(), View.OnClickListener {
 
         SecurityPreferences(this).storeString(Constants.KEY_SHARED.FT_PERFIL, "")
 
-        binding.imageArrowBack.setColorFilter(ContextCompat.getColor(this, R.color.second))
-        binding.imageArrowNext.setColorFilter(ContextCompat.getColor(this, R.color.second))
-
         binding.btnAvancarRegister.setOnClickListener(this)
         binding.btnVoltarRegister.setOnClickListener(this)
         binding.addAddressButton.setOnClickListener(this)
@@ -74,7 +71,7 @@ class Register1Activity : AppCompatActivity(), View.OnClickListener {
             binding.editTelefoneRegister.error = Constants.PHRASE.EMPTY_FIELD
             return
         }
-        if(countAddress == 0){
+        if(countAddress == 0) {
             Toast.makeText(this, Constants.PHRASE.NO_ADDRESS, Toast.LENGTH_SHORT).show()
             return
         }
@@ -87,43 +84,43 @@ class Register1Activity : AppCompatActivity(), View.OnClickListener {
         startActivity(Intent(this, PhotoRegisterActivity::class.java))
     }
 
-    private fun verifyAddress():Boolean{
-        if(binding.addressName.text.toString().trim().isEmpty()){
+    private fun verifyAddress():Boolean {
+        if(binding.addressName.text.toString().trim().isEmpty()) {
             binding.addressName.error = Constants.PHRASE.EMPTY_FIELD
             return false
         }
-        if(binding.addressStreet.text.toString().trim().isEmpty()){
+        if(binding.addressStreet.text.toString().trim().isEmpty()) {
             binding.addressStreet.error = Constants.PHRASE.EMPTY_FIELD
             return false
         }
-        if(binding.addressNumber.text.toString().trim().isEmpty()){
+        if(binding.addressNumber.text.toString().trim().isEmpty()) {
             binding.addressNumber.error = Constants.PHRASE.EMPTY_FIELD
             return false
         }
-        if(binding.addressBairro.text.toString().trim().isEmpty()){
+        if(binding.addressBairro.text.toString().trim().isEmpty()) {
             binding.addressBairro.error = Constants.PHRASE.EMPTY_FIELD
             return false
         }
-        if(binding.addressCep.text.toString().trim().isEmpty()){
+        if(binding.addressCep.text.toString().trim().isEmpty()) {
             binding.addressCep.error = Constants.PHRASE.EMPTY_FIELD
             return false
         }
-        if(binding.addressCep.text.toString().trim().length != 8){
+        if(binding.addressCep.text.toString().trim().length != 8) {
             binding.addressCep.error = Constants.PHRASE.MIN_LENGHT
             return false
         }
-        if(binding.addressCidade.text.toString().trim().isEmpty()){
+        if(binding.addressCidade.text.toString().trim().isEmpty()) {
             binding.addressCidade.error = Constants.PHRASE.EMPTY_FIELD
             return false
         }
-        if(binding.addressEstado.text.toString().trim().isEmpty()){
+        if(binding.addressEstado.text.toString().trim().isEmpty()) {
             binding.addressEstado.error = Constants.PHRASE.EMPTY_FIELD
             return false
         }
         return true
     }
 
-    private fun addAddress(){
+    private fun addAddress() {
         if(!verifyAddress()) return
         val address: String = binding.addressName.text.toString().trim().lowercase() + "," +
                 binding.addressStreet.text.toString().trim().lowercase() + "," +
@@ -176,7 +173,7 @@ class Register1Activity : AppCompatActivity(), View.OnClickListener {
                     .show()
             }
             R.id.btn_voltar_register -> {
-                startActivity(Intent(this, TelaLogin::class.java))
+                startActivity(Intent(this, LoginActivity::class.java))
                 finish()
             }
         }

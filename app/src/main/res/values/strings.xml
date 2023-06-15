@@ -24,7 +24,16 @@
     <string name="aguarde">Aguarde...</string>
     <string name="empty">...</string>
     <string name="detalhes_da_conta">Detalhes da Conta</string>
-    <string name="hist_rico_de_emerg_ncias">Histórico de emergÊncias</string>
+    <string name="hist_rico_de_emerg_ncias">Histórico de Atendimentos</string>
     <string name="atendimento_pendente">Atendimento Pendente</string>
     <string name="ol">Olá,</string>
+    <string name="escolha_a_localiza_o_que_deseja_enviar">Escolha a localização que deseja enviar:</string>
+    <string name="localiza_o_atual">Localização atual</string>
+    <string name="endere_os">Endereços</string>
+    <string name="avalia_o">Avaliação</string>
+    <string name="nota_para_o_dentista">Nota para o Dentista:</string>
+    <string name="nota_para_o_app">Nota para o App:</string>
+    <string name="coment_rio_sobre_o_atendimento">Comentário sobre o atendimento</string>
+    <string name="detalhes_do_atendimento">Detalhes do Atendimento</string>
+    <string name="coment_rio_sobre_o_app">Comentário sobre o App</string>
 </resources>

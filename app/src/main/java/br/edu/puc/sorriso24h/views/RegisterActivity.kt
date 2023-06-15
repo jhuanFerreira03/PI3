@@ -51,7 +51,6 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener{
 
         FirebaseApp.initializeApp(this)
 
-        binding.imageArrowBack.setColorFilter(ContextCompat.getColor(this, R.color.second))
         binding.progressRegister.visibility = View.INVISIBLE
 
         auth = FirebaseAuth.getInstance()
@@ -108,7 +107,7 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener{
                     }
                     //val filearq = Uri.fromFile(file)
                     val riversRef = storage.reference.child("images_user/${auth.currentUser?.uid}")
-                    val uploadTask = riversRef.putFile(SecurityPreferences(this).getString("ft_perfil")!!.toUri())
+                    val uploadTask = riversRef.putFile(SecurityPreferences(this).getString(Constants.KEY_SHARED.FT_PERFIL)!!.toUri())
                     uploadTask.addOnFailureListener {
                         Snackbar.make(binding.root, "Imagem enviada!", Snackbar.LENGTH_LONG).setBackgroundTint(Color.GREEN).show()
                     }.addOnSuccessListener {
@@ -125,6 +124,7 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener{
                     is FirebaseNetworkException -> Constants.PHRASE.NO_INTERNET
                     else -> Constants.PHRASE.GENERIC_ERROR
                 }
+                binding.progressRegister.visibility = View.INVISIBLE
                 Snackbar.make(binding.buttonRegister, messageError, Snackbar.LENGTH_LONG).show()
             }
     }

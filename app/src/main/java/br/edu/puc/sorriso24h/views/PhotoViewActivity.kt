@@ -8,6 +8,8 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import br.edu.puc.sorriso24h.R
 import br.edu.puc.sorriso24h.databinding.ActivityPhotoViewBinding
+import br.edu.puc.sorriso24h.infra.Constants
+import br.edu.puc.sorriso24h.infra.SecurityPreferences
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.messaging.FirebaseMessaging
@@ -37,13 +39,12 @@ class PhotoViewActivity : AppCompatActivity(), View.OnClickListener {
 
         binding.buttonBack.setOnClickListener(this)
         binding.progressMain.visibility = View.VISIBLE
-        binding.buttonBack.setColorFilter(ContextCompat.getColor(this, R.color.princ))
 
         setImage()
     }
     private fun setImage() {
         val file : File = File.createTempFile("tempfile", ".jpg")
-        storage.getReference("images_user/${auth.currentUser!!.uid}").getFile(file).addOnSuccessListener {
+        storage.getReference(SecurityPreferences(this).getString(Constants.KEY_SHARED.PHOTO_VIEW).toString()).getFile(file).addOnSuccessListener {
             binding.imagePrinc.setBackgroundColor(ContextCompat.getColor(this, R.color.gray))
             binding.imagePrinc.setImageBitmap(BitmapFactory.decodeFile(file.absolutePath))
             binding.progressMain.visibility = View.INVISIBLE
@@ -52,7 +53,12 @@ class PhotoViewActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View) {
         when(v.id){
             R.id.button_back -> {
-                startActivity(Intent(this, AccountDetailsActivity::class.java))
+                if (SecurityPreferences(this).getString(Constants.KEY_SHARED.PHOTO_VIEW_DECIDER) == "account") {
+                    startActivity(Intent(this, AccountDetailsActivity::class.java))
+                }
+                else if(SecurityPreferences(this).getString(Constants.KEY_SHARED.PHOTO_VIEW_DECIDER) == "emergencyDetail") {
+                    startActivity(Intent(this, EmergencyDetailActivity::class.java))
+                }
                 finish()
             }
         }
